@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -8,7 +9,6 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  Platform,
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 var RNFS = require('react-native-fs');
@@ -32,7 +32,6 @@ const topbarheight = hasNotch()
   ? getStatusBarHeight() + verticalScale(36.5)
   : getStatusBarHeight() + verticalScale(48);
 const leftpad = scale(19);
-const y = verticalScale(30);
 const z = hasNotch()
   ? topbarheight + verticalScale(70)
   : topbarheight + verticalScale(74);
@@ -77,7 +76,7 @@ const styles_profilepage = StyleSheet.create({
   },
   overlayViewDescription: {
     paddingHorizontal: leftpad,
-    paddingTop: verticalScale(15),
+    paddingTop: leftpad / 2,
     width: '100%',
     height: undefined,
   },
@@ -114,15 +113,19 @@ const styles_profilepage = StyleSheet.create({
     color: '#868686',
   },
   tagscontainer: {
-    marginTop: 7,
-    marginBottom: 10,
+    paddingTop: 7,
+    paddingBottom: 4,
+    paddingRight: 0,
+    marginBottom: 13,
     alignItems: 'center',
     flexDirection: 'row',
-    width: 500,
-    height: width * 0.0966183574879227,
+    flexWrap: 'wrap',
+    width: undefined,
+    height: undefined, //width * 0.0966183574879227,
   },
   tags: {
     paddingHorizontal: scale(7),
+    marginVertical: 6,
     marginRight: scale(9),
     width: undefined,
     height: 22.6,
@@ -174,6 +177,26 @@ const styles_profilepage = StyleSheet.create({
     color: 'white',
     fontSize: moderateScale(15),
   },
+  title_loading: {
+    marginBottom: 5,
+    width: '70%',
+    height: '10%',
+    backgroundColor: 'grey',
+    borderRadius: 10,
+  },
+  description_loading: {
+    marginVertical: 7,
+    height: '2.9%',
+    borderRadius: 10,
+    backgroundColor: 'grey',
+  },
+  author_loading: {
+    marginTop: 2,
+    width: ' 20%',
+    height: '10%',
+    borderRadius: 10,
+    backgroundColor: 'grey',
+  },
 });
 function ProfilePage({route}) {
   const {id} = route.params;
@@ -190,6 +213,7 @@ function ProfilePage({route}) {
   useEffect(() => {
     RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
       e => {
+        setdidload(false);
         fetch(url + '?id=' + `${id}` + `&src=${e}`)
           .then(response => response.json())
           .then(responseJson => {
@@ -206,6 +230,11 @@ function ProfilePage({route}) {
   let how_many_chapers = 0;
   let how_many_chapers_extra = 0;
   let genres = [];
+  let chapters_button = new Array(how_many_chapers);
+  let genres_button = new Array(genres.length);
+  let Title_Text;
+  let Not_Title_Text;
+  let i, oo;
   if (didload) {
     author = jason.author;
     let o;
@@ -217,33 +246,87 @@ function ProfilePage({route}) {
     description = jason.description;
     how_many_chapers_extra =
       description.length > 300 ? (description.length - 300) / 25 / 0.83 : 0;
-  }
-
-  let chapters_button = new Array(how_many_chapers);
-  let genres_button = new Array(genres.length);
-  let i, oo;
-  for (i = 0; i < how_many_chapers; i++) {
-    chapters_button[i] = (
-      <View style={styles_profilepage.chapterbutton}>
-        <View style={styles_profilepage.chapterbutton_tag} />
-        <TouchableOpacity style={styles_profilepage.chapterbutton_}>
-          <Text style={styles_profilepage.chapterbutton_name}>
-            {chapters_data[i].title}
+    for (i = 0; i < how_many_chapers; i++) {
+      chapters_button[i] = (
+        <View style={styles_profilepage.chapterbutton}>
+          <View style={styles_profilepage.chapterbutton_tag} />
+          <TouchableOpacity style={styles_profilepage.chapterbutton_}>
+            <Text style={styles_profilepage.chapterbutton_name}>
+              {chapters_data[i].title}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    for (oo = 0; oo < genres.length; oo++) {
+      genres_button[oo] = (
+        <View style={styles_profilepage.tags}>
+          <Text style={styles_profilepage.tagstext}>
+            {genres[oo].toUpperCase()}
           </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-  for (oo = 0; oo < genres.length; oo++) {
-    genres_button[oo] = (
-      <View style={styles_profilepage.tags}>
-        <Text style={styles_profilepage.tagstext}>
-          {genres[oo].toUpperCase()}
+        </View>
+      );
+    }
+    Title_Text = (
+      <View style={styles_profilepage.overlayViewInsideTitle}>
+        <Text
+          numberOfLines={4}
+          ellipsizeMode="tail"
+          style={styles_profilepage.title}>
+          {id_name}
         </Text>
+        <Text style={styles_profilepage.author}>{author}</Text>
+      </View>
+    );
+    Not_Title_Text = (
+      <View style={styles_profilepage.overlayViewDescription}>
+        <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
+        <Text style={styles_profilepage.description}>{description}</Text>
+        <Text style={styles_profilepage.subtitle}>GENRE</Text>
+        <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
+        <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
+        {chapters_button}
+      </View>
+    );
+  } else {
+    Title_Text = (
+      <View style={styles_profilepage.overlayViewInsideTitle}>
+        <View style={styles_profilepage.title_loading} />
+        <View style={styles_profilepage.author_loading} />
+      </View>
+    );
+    Not_Title_Text = (
+      <View style={styles_profilepage.overlayViewDescription}>
+        <View
+          style={[styles_profilepage.description_loading, {width: '40%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '60%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '40%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '50%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '20%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '20%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '60%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '30%'}]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, {width: '10%'}]}
+        />
       </View>
     );
   }
-
   return (
     <View style={styles_profilepage.container_2}>
       <StatusBar
@@ -286,26 +369,9 @@ function ProfilePage({route}) {
               />
               <Image style={styles_profilepage.coverImage} source={id_cover} />
             </View>
-            <View style={styles_profilepage.overlayViewInsideTitle}>
-              <Text
-                numberOfLines={4}
-                ellipsizeMode="tail"
-                style={styles_profilepage.title}>
-                {id_name}
-              </Text>
-              <Text style={styles_profilepage.author}>{author}</Text>
-            </View>
+            {Title_Text}
           </View>
-          <View style={styles_profilepage.overlayViewDescription}>
-            <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
-            <Text style={styles_profilepage.description}>{description}</Text>
-            <Text style={styles_profilepage.subtitle}>GENRE</Text>
-            <View style={styles_profilepage.tagscontainer}>
-              {genres_button}
-            </View>
-            <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
-            {chapters_button}
-          </View>
+          {Not_Title_Text}
         </View>
       </ScrollView>
     </View>
