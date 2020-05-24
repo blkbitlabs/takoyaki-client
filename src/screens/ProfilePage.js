@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+var RNFS = require('react-native-fs');
 import {hasNotch} from 'react-native-device-info';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 const {width, height} = Dimensions.get('window');
@@ -117,7 +118,7 @@ const styles_profilepage = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
     flexDirection: 'row',
-    width: width,
+    width: 500,
     height: width * 0.0966183574879227,
   },
   tags: {
@@ -178,7 +179,7 @@ function ProfilePage({route}) {
   const {id} = route.params;
   const {id_name} = route.params;
   const {id_cover} = route.params;
-  let url = 'https://takoyaki.chetasr.co/manga?id=' + id;
+  let url = 'https://takoyaki.chetasr.co/manga';
   const [jason, set_jason] = useState({
     author: 'chetas',
     chapters: [],
@@ -187,21 +188,30 @@ function ProfilePage({route}) {
   });
   let [didload, setdidload] = useState(false);
   useEffect(() => {
-    fetch(url)
-      .then(response => response.json())
-      .then(responseJson => {
-        set_jason(responseJson.result);
-        setdidload(true);
-      })
-      .catch(error => console.error(error));
-  }, [url]);
+    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
+      e => {
+        fetch(url + '?id=' + `${id}` + `&src=${e}`)
+          .then(response => response.json())
+          .then(responseJson => {
+            set_jason(responseJson.result);
+            setdidload(true);
+          })
+          .catch(error => console.error(error));
+      },
+    );
+  }, [id, url]);
   let author = 'NIL';
   let chapters_data = [];
   let description = 'NIL';
   let how_many_chapers = 0;
   let how_many_chapers_extra = 0;
+  let genres = [];
   if (didload) {
     author = jason.author;
+    let o;
+    for (o = 0; o < jason.genres.length; o++) {
+      genres[o] = jason.genres[o];
+    }
     chapters_data = jason.chapters;
     how_many_chapers = jason.chapters_number;
     description = jason.description;
@@ -210,7 +220,8 @@ function ProfilePage({route}) {
   }
 
   let chapters_button = new Array(how_many_chapers);
-  let i;
+  let genres_button = new Array(genres.length);
+  let i, oo;
   for (i = 0; i < how_many_chapers; i++) {
     chapters_button[i] = (
       <View style={styles_profilepage.chapterbutton}>
@@ -220,6 +231,15 @@ function ProfilePage({route}) {
             {chapters_data[i].title}
           </Text>
         </TouchableOpacity>
+      </View>
+    );
+  }
+  for (oo = 0; oo < genres.length; oo++) {
+    genres_button[oo] = (
+      <View style={styles_profilepage.tags}>
+        <Text style={styles_profilepage.tagstext}>
+          {genres[oo].toUpperCase()}
+        </Text>
       </View>
     );
   }
@@ -267,7 +287,12 @@ function ProfilePage({route}) {
               <Image style={styles_profilepage.coverImage} source={id_cover} />
             </View>
             <View style={styles_profilepage.overlayViewInsideTitle}>
-              <Text style={styles_profilepage.title}>{id_name}</Text>
+              <Text
+                numberOfLines={4}
+                ellipsizeMode="tail"
+                style={styles_profilepage.title}>
+                {id_name}
+              </Text>
               <Text style={styles_profilepage.author}>{author}</Text>
             </View>
           </View>
@@ -276,15 +301,7 @@ function ProfilePage({route}) {
             <Text style={styles_profilepage.description}>{description}</Text>
             <Text style={styles_profilepage.subtitle}>GENRE</Text>
             <View style={styles_profilepage.tagscontainer}>
-              <View style={styles_profilepage.tags}>
-                <Text style={styles_profilepage.tagstext}>ACTION</Text>
-              </View>
-              <View style={styles_profilepage.tags}>
-                <Text style={styles_profilepage.tagstext}>ADVENTURE</Text>
-              </View>
-              <View style={styles_profilepage.tags}>
-                <Text style={styles_profilepage.tagstext}>COMEDY</Text>
-              </View>
+              {genres_button}
             </View>
             <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
             {chapters_button}

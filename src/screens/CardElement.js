@@ -59,7 +59,6 @@ function CardElement(props) {
 
   //TEST WORKS !
   let path = RNFS.CachesDirectoryPath + '/' + String(props.id) + '.jpg';
-  console.log('PAaaaaath' + path);
   useEffect(() => {
     setloading(true);
     RNFS.downloadFile({fromUrl: props.imgsrc.uri, toFile: path}).promise.then(
@@ -101,7 +100,12 @@ function CardElement(props) {
   return (
     <View style={[styles_CardElement.Card, {marginLeft: props.marg}]}>
       {imageee}
-      <Text style={styles_CardElement.insideText}>{taaxt}</Text>
+      <Text
+        numberOfLines={2}
+        ellipsizeMode="tail"
+        style={styles_CardElement.insideText}>
+        {props.name}
+      </Text>
       <Text style={styles_CardElement.insideTextGenre}>{props.time}</Text>
     </View>
   );

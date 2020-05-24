@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+var RNFS = require('react-native-fs');
 import NewTopBar from '../navigation/NewTopBar';
 const {width, height} = Dimensions.get('window');
 const guidelineBaseWidth = 350;
@@ -64,6 +65,30 @@ const styles_Settings = StyleSheet.create({
   },
 });
 export function Settings_page({navigation}) {
+  function lets_see(x) {
+    RNFS.writeFile(
+      RNFS.CachesDirectoryPath + '/' + 'Source.txt',
+      `${x}`,
+      'utf8',
+    );
+  }
+  function cachecleared() {
+    console.log('wot');
+    RNFS.readDir(RNFS.CachesDirectoryPath)
+      .then(e => {
+        let okay;
+        for (okay = 0; okay < e.length; okay++) {
+          RNFS.unlink(e[okay].path)
+            .then(console.log('File Deleted'))
+            .catch(eror => {
+              console.log('On delete gave error : ' + eror);
+            });
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
   return (
     <NewTopBar>
       <View style={styles_Settings.container}>
@@ -71,12 +96,50 @@ export function Settings_page({navigation}) {
           <Text style={styles_Settings.textt}>SOURCE</Text>
           <View style={styles_Settings.chapterbutton}>
             <View style={styles_Settings.chapterbutton_tag} />
-            <TouchableOpacity style={styles_Settings.chapterbutton_}>
-              <Text style={styles_Settings.chapterbutton_name}>xyz</Text>
+            <TouchableOpacity
+              style={styles_Settings.chapterbutton_}
+              onPress={() => {
+                lets_see('mgedn');
+              }}>
+              <Text style={styles_Settings.chapterbutton_name}>MangaEden</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles_Settings.chapterbutton}>
+            <View style={styles_Settings.chapterbutton_tag} />
+            <TouchableOpacity
+              style={styles_Settings.chapterbutton_}
+              onPress={() => {
+                lets_see('mgdx');
+              }}>
+              <Text style={styles_Settings.chapterbutton_name}>Mangadex</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles_Settings.chapterbutton}>
+            <View style={styles_Settings.chapterbutton_tag} />
+            <TouchableOpacity
+              style={styles_Settings.chapterbutton_}
+              onPress={() => {
+                lets_see('nhn');
+              }}>
+              <Text style={styles_Settings.chapterbutton_name}>NHentai</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles_Settings.row_1_container} />
+        <View style={styles_Settings.row_1_container}>
+          <Text style={styles_Settings.textt}>STORAGE</Text>
+          <View style={styles_Settings.chapterbutton}>
+            <View style={styles_Settings.chapterbutton_tag} />
+            <TouchableOpacity
+              style={styles_Settings.chapterbutton_}
+              onPress={() => {
+                cachecleared();
+              }}>
+              <Text style={styles_Settings.chapterbutton_name}>
+                CLEAR CACHE
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </NewTopBar>
   );

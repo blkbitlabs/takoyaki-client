@@ -10,6 +10,7 @@ import {
 import CardElement from '../screens/CardElement';
 import CardLoading from '../screens/CardLoading';
 import {hasNotch} from 'react-native-device-info';
+var RNFS = require('react-native-fs');
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 const {width, height} = Dimensions.get('window');
 const guidelineBaseWidth = 350;
@@ -69,19 +70,23 @@ function Home({navigation}) {
   const [didfetch_2, set_did_fetch_2] = useState(false);
   const [didfetch_3, set_did_fetch_3] = useState(false);
   useEffect(() => {
-    fetch('https://takoyaki.chetasr.co/home')
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson.status === 'ok') {
-          setnewData(responseJson.result.lastupdate);
-          set_did_fetch_1(true);
-          setnewData_2(responseJson.result.top);
-          set_did_fetch_2(true);
-          setnewData_3(responseJson.result.recent);
-          set_did_fetch_3(true);
-        }
-      })
-      .catch(error => console.log(`UseEffect gave : ${error}`));
+    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
+      e => {
+        fetch(`https://takoyaki.chetasr.co/home?${e}`)
+          .then(response => response.json())
+          .then(responseJson => {
+            if (responseJson.status === 'ok') {
+              setnewData(responseJson.result.lastupdate);
+              set_did_fetch_1(true);
+              setnewData_2(responseJson.result.top);
+              set_did_fetch_2(true);
+              setnewData_3(responseJson.result.recent);
+              set_did_fetch_3(true);
+            }
+          })
+          .catch(error => console.log(`UseEffect gave : ${error}`));
+      },
+    );
   }, []);
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -90,19 +95,23 @@ function Home({navigation}) {
     set_did_fetch_1(false);
     set_did_fetch_2(false);
     set_did_fetch_3(false);
-    fetch('https://takoyaki.chetasr.co/home')
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson.status === 'ok') {
-          setnewData(responseJson.result.lastupdate);
-          set_did_fetch_1(true);
-          setnewData_2(responseJson.result.top);
-          set_did_fetch_2(true);
-          setnewData_3(responseJson.result.recent);
-          set_did_fetch_3(true);
-        }
-      })
-      .catch(error => console.log(` Refresh gave : ${error}`));
+    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
+      e => {
+        fetch(`https://takoyaki.chetasr.co/home?src=${e}`)
+          .then(response => response.json())
+          .then(responseJson => {
+            if (responseJson.status === 'ok') {
+              setnewData(responseJson.result.lastupdate);
+              set_did_fetch_1(true);
+              setnewData_2(responseJson.result.top);
+              set_did_fetch_2(true);
+              setnewData_3(responseJson.result.recent);
+              set_did_fetch_3(true);
+            }
+          })
+          .catch(error => console.log(` Refresh gave : ${error}`));
+      },
+    );
 
     wait(700).then(() => setRefreshing(false));
   }, []);
