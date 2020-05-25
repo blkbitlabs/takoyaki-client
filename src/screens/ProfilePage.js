@@ -198,10 +198,12 @@ const styles_profilepage = StyleSheet.create({
     backgroundColor: 'grey',
   },
 });
-function ProfilePage({route}) {
+function ProfilePage({route, navigation}) {
   const {id} = route.params;
   const {id_name} = route.params;
   const {id_cover} = route.params;
+  const [srcc, set_srcc] = useState('');
+  //const {nav_mangaa} = route.params;
   let url = 'https://takoyaki.chetasr.co/manga';
   const [jason, set_jason] = useState({
     author: 'chetas',
@@ -214,6 +216,7 @@ function ProfilePage({route}) {
     RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
       e => {
         setdidload(false);
+        set_srcc(e);
         fetch(url + '?id=' + `${id}` + `&src=${e}`)
           .then(response => response.json())
           .then(responseJson => {
@@ -235,7 +238,7 @@ function ProfilePage({route}) {
   let Title_Text;
   let Not_Title_Text;
   let i, oo;
-  if (didload) {
+  if (didload && (srcc != '')) {
     author = jason.author;
     let o;
     for (o = 0; o < jason.genres.length; o++) {
@@ -247,10 +250,18 @@ function ProfilePage({route}) {
     how_many_chapers_extra =
       description.length > 300 ? (description.length - 300) / 25 / 0.83 : 0;
     for (i = 0; i < how_many_chapers; i++) {
+      let hmmkthen = String(chapters_data[i].id);
       chapters_button[i] = (
         <View style={styles_profilepage.chapterbutton}>
           <View style={styles_profilepage.chapterbutton_tag} />
-          <TouchableOpacity style={styles_profilepage.chapterbutton_}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('MangaReader', {
+                id_chap: hmmkthen,
+                id_src: srcc,
+              });
+            }}
+            style={styles_profilepage.chapterbutton_}>
             <Text style={styles_profilepage.chapterbutton_name}>
               {chapters_data[i].title}
             </Text>

@@ -11,24 +11,21 @@ function SplashScreeen({navigation}) {
         flex: 1,
         flexDirection: 'row', //column ????
         backgroundColor: 'black',
-        justifyContent: 'center',
-        alignItems: 'center',
       }}>
       <View
         style={{
-          height: height,
-          width: width,
+          height: '100%',
+          width: '100%',
           backgroundColor: 'black',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <LottieView
           style={{
-            height: 300,
-            width: 400,
-            justifyContent: 'center',
+            height: 400,
+            width: 500,
           }}
-          resizeMode="center"
+          resizeMode="cover"
           source={require('./TakoyakiSplash.json')}
           loop={false}
           autoPlay={true}

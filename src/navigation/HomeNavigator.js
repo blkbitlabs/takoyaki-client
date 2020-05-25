@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from '../screens/Home';
 import ProfilePage from '../screens/ProfilePage';
+import MangaPage from '../screens/MangaPage';
 import {createStackNavigator} from '@react-navigation/stack';
 import Topbar from './Topbar';
 
@@ -19,6 +20,11 @@ function HomeNavigator() {
       <Stack.Screen
         name="ProfilePage"
         component={ProfilePage}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MangaReader"
+        component={MangaPage}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

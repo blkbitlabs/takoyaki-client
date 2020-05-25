@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 function SplashScreenNav() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreeen" hea>
+      <Stack.Navigator initialRouteName="SplashScreeen">
         <Stack.Screen
           name="SplashScreeen"
           component={SplashScreeen}
