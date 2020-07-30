@@ -1,0 +1,9 @@
+rm -rf final && \
+react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios && \
+xcodebuild -workspace ios/manga_app.xcworkspace -configuration Release -scheme manga_app -destination generic/platform=iOS -derivedDataPath ./final build && \
+mkdir Payload && \
+mv final/Build/Products/Release-iphoneos/manga_app.app Payload/manga_app.app && \
+ditto -c -k --sequesterRsrc --keepParent Payload manga_app.ipa && \
+rm -rf final && \
+rm -rf ios/main.jsbundle && \
+rm -rf Payload
