@@ -85,7 +85,6 @@ export function Settings_page({navigation}) {
   let sourecomponent = new Array(ids.length);
   let printthis;
   if (test) {
-    // console.log('hmm');
     let i;
     for (i = 0; i < ids.length; i++) {
       const prooops = {
@@ -105,13 +104,6 @@ export function Settings_page({navigation}) {
       </View>
     );
   }
-  // function lets_see(x) {
-  //   RNFS.writeFile(
-  //     RNFS.CachesDirectoryPath + '/' + 'Source.txt',
-  //     `${x}`,
-  //     'utf8',
-  //   );
-  // }
   function cachecleared() {
     console.log('wot');
     RNFS.readDir(RNFS.CachesDirectoryPath)

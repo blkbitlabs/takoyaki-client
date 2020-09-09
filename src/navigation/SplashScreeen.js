@@ -9,7 +9,7 @@ function SplashScreeen({navigation}) {
     <View
       style={{
         flex: 1,
-        flexDirection: 'row', //column ????
+        flexDirection: 'row', 
         backgroundColor: 'black',
       }}>
       <View
