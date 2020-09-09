@@ -74,7 +74,6 @@ const styles_CardElement = StyleSheet.create({
 function CardElement(props) {
   const [isloading, setloading] = useState(false);
   let imageee;
-
   //TEST WORKS !
   let path = RNFS.CachesDirectoryPath + '/' + String(props.id) + '.jpg';
   useEffect(() => {

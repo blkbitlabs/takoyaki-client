@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 var RNFS = require('react-native-fs');
+import Source from './Source';
 import NewTopBar from '../navigation/NewTopBar';
 const {width, height} = Dimensions.get('window');
 const guidelineBaseWidth = 350;
@@ -30,7 +31,7 @@ const styles_Settings = StyleSheet.create({
     color: 'white',
   },
   row_1_container: {
-    height: '37%',
+    height: undefined,
     marginBottom: 10,
     paddingLeft: scale(19),
     width: width,
@@ -65,13 +66,52 @@ const styles_Settings = StyleSheet.create({
   },
 });
 export function Settings_page({navigation}) {
-  function lets_see(x) {
-    RNFS.writeFile(
-      RNFS.CachesDirectoryPath + '/' + 'Source.txt',
-      `${x}`,
-      'utf8',
+  const [test, settest] = useState(false);
+  const [ids, setids] = useState([]);
+  const [names, setnames] = useState([]);
+  useEffect(() => {
+    settest(false);
+    fetch('https://takoyaki.chetasr.co/sources')
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson.status === 'ok') {
+          // console.log(responseJson.result.ids);
+          setnames(responseJson.result.names);
+          setids(responseJson.result.ids);
+          settest(true);
+        }
+      });
+  }, []);
+  let sourecomponent = new Array(ids.length);
+  let printthis;
+  if (test) {
+    // console.log('hmm');
+    let i;
+    for (i = 0; i < ids.length; i++) {
+      const prooops = {
+        name_: names[i],
+        id_: ids[i],
+      };
+      sourecomponent[i] = <Source {...prooops} />;
+    }
+    printthis = sourecomponent;
+  } else {
+    printthis = (
+      <View style={styles_Settings.chapterbutton}>
+        <View style={styles_Settings.chapterbutton_tag} />
+        <TouchableOpacity style={styles_Settings.chapterbutton_}>
+          <Text style={styles_Settings.chapterbutton_name}>..loading</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
+  // function lets_see(x) {
+  //   RNFS.writeFile(
+  //     RNFS.CachesDirectoryPath + '/' + 'Source.txt',
+  //     `${x}`,
+  //     'utf8',
+  //   );
+  // }
   function cachecleared() {
     console.log('wot');
     RNFS.readDir(RNFS.CachesDirectoryPath)
@@ -94,36 +134,7 @@ export function Settings_page({navigation}) {
       <View style={styles_Settings.container}>
         <View style={styles_Settings.row_1_container}>
           <Text style={styles_Settings.textt}>SOURCE</Text>
-          <View style={styles_Settings.chapterbutton}>
-            <View style={styles_Settings.chapterbutton_tag} />
-            <TouchableOpacity
-              style={styles_Settings.chapterbutton_}
-              onPress={() => {
-                lets_see('mgedn');
-              }}>
-              <Text style={styles_Settings.chapterbutton_name}>MangaEden</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles_Settings.chapterbutton}>
-            <View style={styles_Settings.chapterbutton_tag} />
-            <TouchableOpacity
-              style={styles_Settings.chapterbutton_}
-              onPress={() => {
-                lets_see('mgdx');
-              }}>
-              <Text style={styles_Settings.chapterbutton_name}>Mangadex</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles_Settings.chapterbutton}>
-            <View style={styles_Settings.chapterbutton_tag} />
-            <TouchableOpacity
-              style={styles_Settings.chapterbutton_}
-              onPress={() => {
-                lets_see('nhn');
-              }}>
-              <Text style={styles_Settings.chapterbutton_name}>NHentai</Text>
-            </TouchableOpacity>
-          </View>
+          {printthis}
         </View>
         <View style={styles_Settings.row_1_container}>
           <Text style={styles_Settings.textt}>STORAGE</Text>

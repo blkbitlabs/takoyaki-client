@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { Icon } from 'react-native-eva-icons';
 import {
   View,
   Text,
@@ -10,11 +11,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {BlurView} from '@react-native-community/blur';
+import { BlurView, VibrancyView } from '@react-native-community/blur';
 var RNFS = require('react-native-fs');
-import {hasNotch} from 'react-native-device-info';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-const {width, height} = Dimensions.get('window');
+import { hasNotch } from 'react-native-device-info';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
 const scale = size => (width / guidelineBaseWidth) * size;
@@ -58,7 +59,7 @@ const styles_profilepage = StyleSheet.create({
   overlayViewInside: {
     flexDirection: 'row',
     width: '100%',
-    height: 180,
+    height: (174) + (leftpad / 2),
   },
   overlayViewInsideImageContainer: {
     justifyContent: 'center',
@@ -75,7 +76,7 @@ const styles_profilepage = StyleSheet.create({
     paddingRight: '16%',
   },
   overlayViewDescription: {
-    paddingHorizontal: leftpad,
+    paddingHorizontal: leftpad - (70 - 66),
     paddingTop: leftpad / 2,
     width: '100%',
     height: undefined,
@@ -98,14 +99,14 @@ const styles_profilepage = StyleSheet.create({
     fontSize: moderateScale(18),
   },
   coverImage: {
-    width: 126,
+    width: 126 + 6,
     height: 168,
     borderRadius: 12.5,
   },
   coverImagebg: {
     position: 'absolute',
     borderRadius: 15,
-    width: 132,
+    width: 132 + 6,
     height: 174,
   },
   author: {
@@ -131,7 +132,7 @@ const styles_profilepage = StyleSheet.create({
     height: 22.6,
     justifyContent: 'center',
     borderRadius: 40,
-    backgroundColor: '#423F46',
+    backgroundColor: 'rgba(255,255,255,0.2)',
   },
   tagstext: {
     alignSelf: 'center',
@@ -159,7 +160,7 @@ const styles_profilepage = StyleSheet.create({
     height: '100%',
     width: '98.4%',
     justifyContent: 'center',
-    backgroundColor: '#423F46',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     borderBottomRightRadius: 7,
     borderTopRightRadius: 7,
   },
@@ -197,11 +198,33 @@ const styles_profilepage = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'grey',
   },
+  newbuttons_container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: leftpad - (70 - 66),
+    marginTop: 4,
+    width: '100%',
+    height: (height / width) * 20,
+  },
+  newbuttons: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 8,
+    width: '47%',
+    height: '100%',
+  },
+  newbuttonfont: {
+    color: 'white',
+    opacity: 1,
+    fontFamily: 'SFProDisplay-Regular',
+    alignSelf: 'center',
+    paddingTop: scale(9.5),
+    fontSize: moderateScale(17),
+  }
 });
-function ProfilePage({route, navigation}) {
-  const {id} = route.params;
-  const {id_name} = route.params;
-  const {id_cover} = route.params;
+function ProfilePage({ route, navigation }) {
+  const { id } = route.params;
+  const { id_name } = route.params;
+  const { id_cover } = route.params;
   const [srcc, set_srcc] = useState('');
   //const {nav_mangaa} = route.params;
   let url = 'https://takoyaki.chetasr.co/manga';
@@ -211,6 +234,16 @@ function ProfilePage({route, navigation}) {
     chapters_number: 0,
     description: 'NIL',
   });
+  const xml = `
+  <svg width="32" height="32" viewBox="0 0 32 32">
+    <style>
+      .red {
+        fill: #ff0000;
+      }
+    </style>
+    <rect class="red" x="0" y="0" width="32" height="32" />
+  </svg>
+`;
   let [didload, setdidload] = useState(false);
   useEffect(() => {
     RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
@@ -238,7 +271,7 @@ function ProfilePage({route, navigation}) {
   let Title_Text;
   let Not_Title_Text;
   let i, oo;
-  if (didload && (srcc != '')) {
+  if (didload && srcc != '') {
     author = jason.author;
     let o;
     for (o = 0; o < jason.genres.length; o++) {
@@ -252,21 +285,21 @@ function ProfilePage({route, navigation}) {
     for (i = 0; i < how_many_chapers; i++) {
       let hmmkthen = String(chapters_data[i].id);
       chapters_button[i] = (
-        <View style={styles_profilepage.chapterbutton}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('MangaReader', {
+              id_chap: hmmkthen,
+              id_src: srcc,
+            });
+          }}
+          style={styles_profilepage.chapterbutton}>
           <View style={styles_profilepage.chapterbutton_tag} />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('MangaReader', {
-                id_chap: hmmkthen,
-                id_src: srcc,
-              });
-            }}
-            style={styles_profilepage.chapterbutton_}>
+          <View style={styles_profilepage.chapterbutton_}>
             <Text style={styles_profilepage.chapterbutton_name}>
               {chapters_data[i].title}
             </Text>
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
       );
     }
     for (oo = 0; oo < genres.length; oo++) {
@@ -309,31 +342,31 @@ function ProfilePage({route, navigation}) {
     Not_Title_Text = (
       <View style={styles_profilepage.overlayViewDescription}>
         <View
-          style={[styles_profilepage.description_loading, {width: '40%'}]}
+          style={[styles_profilepage.description_loading, { width: '40%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '60%'}]}
+          style={[styles_profilepage.description_loading, { width: '60%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '40%'}]}
+          style={[styles_profilepage.description_loading, { width: '40%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '50%'}]}
+          style={[styles_profilepage.description_loading, { width: '50%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '20%'}]}
+          style={[styles_profilepage.description_loading, { width: '20%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '20%'}]}
+          style={[styles_profilepage.description_loading, { width: '20%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '60%'}]}
+          style={[styles_profilepage.description_loading, { width: '60%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '30%'}]}
+          style={[styles_profilepage.description_loading, { width: '30%' }]}
         />
         <View
-          style={[styles_profilepage.description_loading, {width: '10%'}]}
+          style={[styles_profilepage.description_loading, { width: '10%' }]}
         />
       </View>
     );
@@ -361,9 +394,9 @@ function ProfilePage({route, navigation}) {
               (verticalScale(64.7) + z) +
               (hasNotch()
                 ? verticalScale(35) *
-                  chaptersheight(how_many_chapers + how_many_chapers_extra)
+                chaptersheight(how_many_chapers + how_many_chapers_extra + (height / width) * 20)
                 : verticalScale(42) *
-                  chaptersheight(how_many_chapers + how_many_chapers_extra)),
+                chaptersheight(how_many_chapers + how_many_chapers_extra + (height / width) * 20)),
             marginTop: z,
           }}
           blurType="extraDark"
@@ -381,6 +414,16 @@ function ProfilePage({route, navigation}) {
               <Image style={styles_profilepage.coverImage} source={id_cover} />
             </View>
             {Title_Text}
+          </View>
+          <View style={styles_profilepage.newbuttons_container}>
+            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
+              <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
+              <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
+            <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
+              <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
+            </TouchableOpacity>
           </View>
           {Not_Title_Text}
         </View>

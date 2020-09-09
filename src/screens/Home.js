@@ -22,6 +22,11 @@ const moderateScale = (size, factor = 0.5) =>
 const topbarheight = hasNotch()
   ? getStatusBarHeight() + verticalScale(36.5)
   : getStatusBarHeight() + verticalScale(48);
+
+const bottombarheight = hasNotch()
+  ? getStatusBarHeight() + verticalScale(29.5)
+  : getStatusBarHeight() + verticalScale(32);
+
 const leftpad = scale(19);
 const styles_Home = StyleSheet.create({
   containerParent: {
@@ -34,6 +39,7 @@ const styles_Home = StyleSheet.create({
     flex: 1,
     backgroundColor: '#141414',
     paddingTop: topbarheight + (hasNotch() ? 7 : 9),
+    paddingBottom: bottombarheight,
   },
   container: {
     flexDirection: 'column',

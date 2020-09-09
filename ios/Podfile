@@ -81,6 +81,7 @@ target 'Takoyakii' do
 
   pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
 
+
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'TakoyakiiTests' do

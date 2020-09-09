@@ -2,7 +2,8 @@ import React from 'react';
 import Home from '../screens/Home';
 import ProfilePage from '../screens/ProfilePage';
 import MangaPage from '../screens/MangaPage';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack'
+import {useRoute} from '@react-navigation/native';
 import Topbar from './Topbar';
 
 const Stack = createStackNavigator();
