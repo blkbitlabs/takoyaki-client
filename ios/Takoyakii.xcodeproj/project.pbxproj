@@ -535,7 +535,6 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Takoyakii/Pods-Takoyakii-resources.sh",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
