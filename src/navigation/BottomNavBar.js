@@ -66,83 +66,99 @@ function BottomNavBar({state, descriptors, navigation}) {
     </View>
   );*/
   return (
-    <VibrancyView
-      style={{
-        flexDirection: 'row',
-        position: 'absolute',
-        paddingTop: '3%',
-        justifyContent: 'space-evenly',
-        backgroundColor: 'transparent',
-        bottom: 0,
-        left: 0,
-        width: width,
-        height: hasNotch()
-          ? getStatusBarHeight() + verticalScale(29.5)
-          : getStatusBarHeight() + verticalScale(32),
-      }}
-      blurType="extraDark"
-      blurAmount={40}
-      blurRadius={30}>
-      {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+    <View>
+      <VibrancyView style={{
+      flexDirection: 'row',
+      position: 'absolute',
+      paddingTop: '3%',
+      justifyContent: 'space-evenly',
+      backgroundColor: 'transparent',
+      bottom: 0,
+      left: 0,
+      width: width,
+      height: hasNotch()
+        ? getStatusBarHeight() + verticalScale(29.5)
+        : getStatusBarHeight() + verticalScale(32),
+    }}>
+      </VibrancyView>
+      <View
+    style={{
+      flexDirection: 'row',
+      position: 'absolute',
+      paddingTop: '3%',
+      justifyContent: 'space-evenly',
+      backgroundColor: 'transparent',
+      bottom: 0,
+      left: 0,
+      width: width,
+      height: hasNotch()
+        ? getStatusBarHeight() + verticalScale(29.5)
+        : getStatusBarHeight() + verticalScale(32),
+    }}
+    blurType="extraDark"
+    blurAmount={40}
+    blurRadius={30}>
+    {state.routes.map((route, index) => {
+      const {options} = descriptors[route.key];
+      const label =
+        options.tabBarLabel !== undefined
+          ? options.tabBarLabel
+          : options.title !== undefined
+          ? options.title
+          : route.name;
 
-        /*  const icon =
-          options.tabBarIcon !== undefined
-            ? options.tabBarIcon
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+      /*  const icon =
+        options.tabBarIcon !== undefined
+          ? options.tabBarIcon
+          : options.title !== undefined
+          ? options.title
+          : route.name;
 */
-        const isFocused = state.index === index;
+      const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+      const onPress = () => {
+        const event = navigation.emit({
+          type: 'tabPress',
+          target: route.key,
+          canPreventDefault: true,
+        });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-        let okaythen;
-        if (label !== 'Download') {
-          let y = label.toLowerCase();
-          let waitwtf = isFocused ? '#0475FF' : 'white';
-          okaythen = <MaterialIcons name={y} color={waitwtf} size={27} />;
-        } else {
-          let waitwtf_ = isFocused ? '#0475FF' : 'white';
-          okaythen = <Ionicons name="md-download" color={waitwtf_} size={27} />;
+        if (!isFocused && !event.defaultPrevented) {
+          navigation.navigate(route.name);
         }
+      };
 
-        return (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityStates={isFocused ? ['selected'] : []}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{flex: 1, alignItems: 'center'}}>
-            {okaythen}
-          </TouchableOpacity>
-        );
-      })}
-    </VibrancyView>
+      const onLongPress = () => {
+        navigation.emit({
+          type: 'tabLongPress',
+          target: route.key,
+        });
+      };
+      let okaythen;
+      if (label !== 'Download') {
+        let y = label.toLowerCase();
+        let waitwtf = isFocused ? '#0475FF' : 'white';
+        okaythen = <MaterialIcons name={y} color={waitwtf} size={27} />;
+      } else {
+        let waitwtf_ = isFocused ? '#0475FF' : 'white';
+        okaythen = <Ionicons name="md-download" color={waitwtf_} size={27} />;
+      }
+
+      return (
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityStates={isFocused ? ['selected'] : []}
+          accessibilityLabel={options.tabBarAccessibilityLabel}
+          testID={options.tabBarTestID}
+          onPress={onPress}
+          onLongPress={onLongPress}
+          style={{flex: 1, alignItems: 'center'}}>
+          {okaythen}
+        </TouchableOpacity>
+      );
+    })}
+  </View></View>
+    
   );
 }
 
