@@ -1,4 +1,4 @@
-/* Settings Page - blkbit inc. */
+/* Source Component - blkbit inc. */
 
 /* NPM Imports */
 import React from 'react';
