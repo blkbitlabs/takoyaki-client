@@ -16,7 +16,7 @@ const scale = size => (width / guidelineBaseWidth) * size;
 const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
 
-const styles_CardElement = StyleSheet.create({
+const styles_CardElement = StyleSheet.create({ 
   Card: {
     width: scale(125),
     marginHorizontal: scale(8),
@@ -96,7 +96,7 @@ function CardElement(props) {
           />
         </TouchableOpacity>
         <View style={{height: '25%', width: '100%'}}>
-          <View style={styles_CardElement.insideText_} />
+          <View style={styles_CardElement.insideText_} /> 
           <View style={styles_CardElement.insideTextGenre_} />
         </View>
       </View>
@@ -115,7 +115,7 @@ function CardElement(props) {
         }}>
         <Image
           source={{uri: 'file://' + path}}
-          style={styles_CardElement.insideCardImage}
+          style={styles_CardElement.insideCardImage} 
         />
       </TouchableOpacity>
     );
