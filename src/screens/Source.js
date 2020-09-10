@@ -58,7 +58,7 @@ function Source(props) {
       `${x}`,
       "utf8"
     );
-    console.log("Stored source " + x)
+    console.log("Stored source " + x);
   }
 
   return (
