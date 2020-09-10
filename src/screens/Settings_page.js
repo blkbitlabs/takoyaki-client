@@ -99,7 +99,7 @@ export function Settings_page({ navigation }) {
       });
   }
 
-  const [fetch, fetched] = useState(false);
+  const [isfetched, fetched] = useState(false);
   const [id_array, set_id_array] = useState([]);
   const [name_array, set_name_array] = useState([]);
 
@@ -120,7 +120,7 @@ export function Settings_page({ navigation }) {
   let source_component = new Array(id_array.length);
   let source_components_list;
 
-  if (fetch) {
+  if (isfetched) {
     for (let i = 0; i < id_array.length; i++) {
       const source_props = {
         name_: name_array[i],
@@ -132,8 +132,8 @@ export function Settings_page({ navigation }) {
   } else {
     source_components_list = (
       <View style={styles.setting_container}>
-        <TouchableOpacity style={styles_Settings.setting_background}>
-          <Text style={styles_Settings.chapterbutton_name}>..loading</Text>
+        <TouchableOpacity style={styles.setting_background}>
+          <Text style={styles.chapterbutton_name}>..loading</Text>
         </TouchableOpacity>
       </View>
     );
