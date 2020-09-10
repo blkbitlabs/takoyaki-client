@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 function SplashScreenNav() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreeen">
+      <Stack.Navigator initialRouteName="SplashScreeen" >
         <Stack.Screen
           name="SplashScreeen"
           component={SplashScreeen}
@@ -18,7 +18,10 @@ function SplashScreenNav() {
         <Stack.Screen
           name="MainStackNavigator"
           component={MainStackNavigator}
-          options={{headerShown: false}}
+          options={{
+            gestureEnabled: false,
+            headerShown: false
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
