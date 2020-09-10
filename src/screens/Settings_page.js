@@ -1,157 +1,163 @@
-import React, {useState, useEffect} from 'react';
+/* Settings Page - blkbit inc. */
+
+/* NPM Imports */
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   Dimensions,
-} from 'react-native';
-var RNFS = require('react-native-fs');
-import Source from './Source';
-import NewTopBar from '../navigation/NewTopBar';
-import {hasNotch} from 'react-native-device-info';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-const {width, height} = Dimensions.get('window');
+} from "react-native";
+import { hasNotch } from "react-native-device-info";
+import { getStatusBarHeight } from "react-native-status-bar-height";
+
+/* Local Imports */
+import Source from "./Source";
+import NewTopBar from "../navigation/NewTopBar";
+
+/* Variables */
+var RNFS = require("react-native-fs");
+
+/* Constants */
+const { width, height } = Dimensions.get("window");
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
-const scale = size => (width / guidelineBaseWidth) * size;
-const verticalScale = size => (height / guidelineBaseHeight) * size;
-const styles_Settings = StyleSheet.create({
+const scale = (size) => (width / guidelineBaseWidth) * size;
+const verticalScale = (size) => (height / guidelineBaseHeight) * size;
+
+/* Styles */
+const styles = StyleSheet.create({
   body: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flex: 1,
     paddingTop: hasNotch()
-    ? getStatusBarHeight() + verticalScale(36.5) + 20
-    : getStatusBarHeight() + verticalScale(51) + 20,
-    //justifyContent: 'center',
-    position: 'absolute',
+      ? getStatusBarHeight() + verticalScale(36.5) + 20
+      : getStatusBarHeight() + verticalScale(51) + 20,
+    position: "absolute",
     height: height,
     width: width,
-    backgroundColor: 'black',
-    alignItems: 'flex-start',
+    backgroundColor: "black",
+    alignItems: "flex-start",
   },
-  textt: {
-    fontFamily: 'SFProDisplay-Bold',
+
+  settings_block_title: {
+    fontFamily: "SFProDisplay-Bold",
     fontSize: 20,
-    color: 'white',
+    color: "white",
   },
-  row_1_container: {
+
+  settings_block: {
     height: undefined,
     marginBottom: 10,
     paddingLeft: scale(19),
     width: width,
   },
-  chapterbutton: {
+
+  setting_container: {
     marginTop: scale(16),
-    alignItems: 'center',
+    alignItems: "center",
     width: width - scale(40),
     height: verticalScale(35),
-    borderRadius: 10,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
-  chapterbutton_: {
-    height: '100%',
-    width: '98.4%',
-    justifyContent: 'center',
-    backgroundColor: '#2B2B2B',
+
+  setting_background: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    backgroundColor: "#2B2B2B",
     borderRadius: 10,
   },
-  blue_text: {
-    fontFamily: 'SFProDisplay-Regular',
-    color: '#007AFF',
+
+  option_text_blue: {
+    fontFamily: "SFProDisplay-Regular",
+    color: "#007AFF",
     fontSize: 17,
     paddingLeft: 20,
   },
-  chapterbutton_name: {
-    fontFamily: 'SFProDisplay-Light',
-    color: 'white',
-    fontSize: 15,
-  },
 });
-export function Settings_page({navigation}) {
-  const [test, settest] = useState(false);
-  const [ids, setids] = useState([]);
-  const [names, setnames] = useState([]);
+
+/* Main Code */
+export function Settings_page({ navigation }) {
+  /* Settings Page Generator */
+
+  function clear_cache() {
+    /* Clears cache */
+    RNFS.readDir(RNFS.CachesDirectoryPath)
+      .then((files) => {
+        for (let i = 0; i < files.length; i++) {
+          RNFS.unlink(files[i].path)
+            .then(console.log("Deleted file " + files[i].path))
+            .catch((error) => {
+              console.error("File delete error: " + error.message);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
+  const [fetch, fetched] = useState(false);
+  const [id_array, set_id_array] = useState([]);
+  const [name_array, set_name_array] = useState([]);
+
   useEffect(() => {
-    settest(false);
-    fetch('https://takoyaki.chetasr.co/sources')
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson.status === 'ok') {
-          // console.log(responseJson.result.ids);
-          setnames(responseJson.result.names);
-          setids(responseJson.result.ids);
-          settest(true);
+    fetched(false);
+    fetch("https://takoyaki.chetasr.co/sources")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.status === "ok") {
+          console.log("Fetched data " + JSON.stringify(responseJson));
+          set_name_array(responseJson.result.names);
+          set_id_array(responseJson.result.ids);
+          fetched(true);
         }
       });
   }, []);
-  let sourecomponent = new Array(ids.length);
-  let printthis;
-  if (test) {
-    // console.log('hmm');
-    let i;
-    for (i = 0; i < ids.length; i++) {
-      const prooops = {
-        name_: names[i],
-        id_: ids[i],
+
+  let source_component = new Array(id_array.length);
+  let source_components_list;
+
+  if (fetch) {
+    for (let i = 0; i < id_array.length; i++) {
+      const source_props = {
+        name_: name_array[i],
+        id_: id_array[i],
       };
-      sourecomponent[i] = <Source {...prooops} />;
+      source_component[i] = <Source {...source_props} />;
     }
-    printthis = sourecomponent;
+    source_components_list = source_component;
   } else {
-    printthis = (
-      <View style={styles_Settings.chapterbutton}>
-        <TouchableOpacity style={styles_Settings.chapterbutton_}>
+    source_components_list = (
+      <View style={styles.setting_container}>
+        <TouchableOpacity style={styles_Settings.setting_background}>
           <Text style={styles_Settings.chapterbutton_name}>..loading</Text>
         </TouchableOpacity>
       </View>
     );
   }
-  // function lets_see(x) {
-  //   RNFS.writeFile(
-  //     RNFS.CachesDirectoryPath + '/' + 'Source.txt',
-  //     `${x}`,
-  //     'utf8',
-  //   );
-  // }
-  function cachecleared() {
-    console.log('wot');
-    RNFS.readDir(RNFS.CachesDirectoryPath)
-      .then(e => {
-        let okay;
-        for (okay = 0; okay < e.length; okay++) {
-          RNFS.unlink(e[okay].path)
-            .then(console.log('File Deleted'))
-            .catch(eror => {
-              console.log('On delete gave error : ' + eror);
-            });
-        }
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }
+
   return (
     <NewTopBar>
-      <View style={styles_Settings.body}>
-        <View style={styles_Settings.row_1_container}>
-          <Text style={styles_Settings.textt}>Source Settings</Text>
-          {printthis}
+      <View style={styles.body}>
+        <View style={styles.settings_block}>
+          <Text style={styles.settings_block_title}>Source Settings</Text>
+          {source_components_list}
         </View>
-        <View style={styles_Settings.row_1_container}>
-          <Text style={styles_Settings.textt}>Cache Settings</Text>
-          <View style={styles_Settings.chapterbutton}>
-            <View style={styles_Settings.chapterbutton_}>
+        <View style={styles.settings_block}>
+          <Text style={styles.settings_block_title}>Cache Settings</Text>
+          <View style={styles.setting_container}>
+            <View style={styles.setting_background}>
               <TouchableOpacity
                 onPress={() => {
-                  cachecleared();
-                }}>
-                <Text style={styles_Settings.blue_text}>
-                  Clear Cache
-                </Text>
+                  clear_cache();
+                }}
+              >
+                <Text style={styles.option_text_blue}>Clear Cache</Text>
               </TouchableOpacity>
             </View>
-            
           </View>
         </View>
       </View>
