@@ -107,15 +107,7 @@ export function Settings_page({navigation}) {
       </View>
     );
   }
-  // function lets_see(x) {
-  //   RNFS.writeFile(
-  //     RNFS.CachesDirectoryPath + '/' + 'Source.txt',
-  //     `${x}`,
-  //     'utf8',
-  //   );
-  // }
   function cachecleared() {
-    console.log('wot');
     RNFS.readDir(RNFS.CachesDirectoryPath)
       .then(e => {
         let okay;

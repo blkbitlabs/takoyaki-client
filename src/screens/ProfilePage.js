@@ -226,7 +226,6 @@ function ProfilePage({ route, navigation }) {
   const { id_name } = route.params;
   const { id_cover } = route.params;
   const [srcc, set_srcc] = useState('');
-  //const {nav_mangaa} = route.params;
   let url = 'https://takoyaki.chetasr.co/manga';
   const [jason, set_jason] = useState({
     author: 'chetas',
@@ -260,6 +259,14 @@ function ProfilePage({ route, navigation }) {
       },
     );
   }, [id, url]);
+  function savethis(){
+    let arr = [id, id_name, (JSON.stringify(id_cover["uri"])).substring(1,((JSON.stringify(id_cover["uri"])).length) - 1)]
+   RNFS.writeFile(
+      RNFS.CachesDirectoryPath + '/' + 'Favdb.txt',
+      `${arr + ','}`,
+      'utf8',
+    );
+  }
   let author = 'NIL';
   let chapters_data = [];
   let description = 'NIL';
@@ -416,7 +423,7 @@ function ProfilePage({ route, navigation }) {
             {Title_Text}
           </View>
           <View style={styles_profilepage.newbuttons_container}>
-            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
+            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} onPress={() => savethis(id)} >
               <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
               <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
             </TouchableOpacity>
