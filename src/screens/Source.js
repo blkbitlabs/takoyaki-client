@@ -52,11 +52,13 @@ function Source(props) {
 
   function store_source_id(x) {
     /* Store source id in file */
+
     RNFS.writeFile(
       RNFS.CachesDirectoryPath + "/" + "Source.txt",
       `${x}`,
       "utf8"
     );
+    console.log("Stored source " + x)
   }
 
   return (
