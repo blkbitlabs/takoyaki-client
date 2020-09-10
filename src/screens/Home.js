@@ -38,7 +38,7 @@ const styles_Home = StyleSheet.create({
   containerParent_: {
     flex: 1,
     backgroundColor: '#141414',
-    paddingTop: topbarheight + (hasNotch() ? 7 : 9),
+    //paddingTop: topbarheight + (hasNotch() ? 7 : 9),
     paddingBottom: bottombarheight,
   },
   container: {
@@ -279,6 +279,8 @@ function Home({navigation}) {
     <View style={styles_Home.containerParent}>
       <ScrollView
         horizontal={false}
+        contentInset={{top: topbarheight + (hasNotch() ? 7 : 9)}}
+        contentOffset={{y: -topbarheight - (hasNotch() ? 7 : 9)}}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
