@@ -27,24 +27,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: width - scale(40),
     height: verticalScale(35),
-    borderRadius: 9,
     flexDirection: "row",
   },
 
   source_background: {
-    paddingHorizontal: 10,
-    height: verticalScale(40),
-    width: "98.4%",
+    height: "100%",
+    width: "100%",
     justifyContent: "center",
-    backgroundColor: "#423F46",
-    borderBottomRightRadius: 7,
-    borderTopRightRadius: 7,
+    backgroundColor: "#2B2B2B",
+    borderRadius: 10,
   },
 
   source_text: {
     fontFamily: "SFProDisplay-Regular",
     color: "white",
     fontSize: 17,
+    paddingLeft: 20,
   },
 });
 
