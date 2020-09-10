@@ -9,25 +9,30 @@ import {
 var RNFS = require('react-native-fs');
 import Source from './Source';
 import NewTopBar from '../navigation/NewTopBar';
+import {hasNotch} from 'react-native-device-info';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 const {width, height} = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
 const scale = size => (width / guidelineBaseWidth) * size;
 const verticalScale = size => (height / guidelineBaseHeight) * size;
 const styles_Settings = StyleSheet.create({
-  container: {
+  body: {
     flexDirection: 'column',
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: hasNotch()
+    ? getStatusBarHeight() + verticalScale(36.5) + 20
+    : getStatusBarHeight() + verticalScale(51) + 20,
+    //justifyContent: 'center',
     position: 'absolute',
     height: height,
     width: width,
-    backgroundColor: '#141414',
-    alignItems: 'center',
+    backgroundColor: 'black',
+    alignItems: 'flex-start',
   },
   textt: {
     fontFamily: 'SFProDisplay-Bold',
-    fontSize: 29,
+    fontSize: 20,
     color: 'white',
   },
   row_1_container: {
@@ -41,23 +46,21 @@ const styles_Settings = StyleSheet.create({
     alignItems: 'center',
     width: width - scale(40),
     height: verticalScale(35),
-    borderRadius: 9,
+    borderRadius: 10,
     flexDirection: 'row',
   },
   chapterbutton_: {
     height: '100%',
     width: '98.4%',
     justifyContent: 'center',
-    backgroundColor: '#423F46',
-    borderBottomRightRadius: 7,
-    borderTopRightRadius: 7,
+    backgroundColor: '#2B2B2B',
+    borderRadius: 10,
   },
-  chapterbutton_tag: {
-    width: '1.6%',
-    height: '100%',
-    backgroundColor: '#5F5F5F',
-    borderBottomLeftRadius: 7,
-    borderTopLeftRadius: 7,
+  blue_text: {
+    fontFamily: 'SFProDisplay-Regular',
+    color: '#007AFF',
+    fontSize: 17,
+    paddingLeft: 20,
   },
   chapterbutton_name: {
     fontFamily: 'SFProDisplay-Light',
@@ -98,7 +101,6 @@ export function Settings_page({navigation}) {
   } else {
     printthis = (
       <View style={styles_Settings.chapterbutton}>
-        <View style={styles_Settings.chapterbutton_tag} />
         <TouchableOpacity style={styles_Settings.chapterbutton_}>
           <Text style={styles_Settings.chapterbutton_name}>..loading</Text>
         </TouchableOpacity>
@@ -131,24 +133,25 @@ export function Settings_page({navigation}) {
   }
   return (
     <NewTopBar>
-      <View style={styles_Settings.container}>
+      <View style={styles_Settings.body}>
         <View style={styles_Settings.row_1_container}>
-          <Text style={styles_Settings.textt}>SOURCE</Text>
+          <Text style={styles_Settings.textt}>Source Settings</Text>
           {printthis}
         </View>
         <View style={styles_Settings.row_1_container}>
-          <Text style={styles_Settings.textt}>STORAGE</Text>
+          <Text style={styles_Settings.textt}>Cache Settings</Text>
           <View style={styles_Settings.chapterbutton}>
-            <View style={styles_Settings.chapterbutton_tag} />
-            <TouchableOpacity
-              style={styles_Settings.chapterbutton_}
-              onPress={() => {
-                cachecleared();
-              }}>
-              <Text style={styles_Settings.chapterbutton_name}>
-                CLEAR CACHE
-              </Text>
-            </TouchableOpacity>
+            <View style={styles_Settings.chapterbutton_}>
+              <TouchableOpacity
+                onPress={() => {
+                  cachecleared();
+                }}>
+                <Text style={styles_Settings.blue_text}>
+                  Clear Cache
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
           </View>
         </View>
       </View>
