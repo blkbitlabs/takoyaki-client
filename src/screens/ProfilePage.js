@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  SafeAreaView
 } from 'react-native';
 import { BlurView, VibrancyView } from '@react-native-community/blur';
 var RNFS = require('react-native-fs');
