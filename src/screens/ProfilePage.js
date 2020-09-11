@@ -332,12 +332,6 @@ function ProfilePage({ route, navigation }) {
       </View>
     );
     Not_Title_Text = (
-      <View style={styles_profilepage.overlayViewDescription}>
-        <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
-        <Text style={styles_profilepage.description}>{description}</Text>
-        <Text style={styles_profilepage.subtitle}>GENRES</Text>
-        <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
-        <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
         <SafeAreaView style={{flex: 1}}>
           <FlatList>
             data={jason.chapters}
@@ -361,7 +355,6 @@ function ProfilePage({ route, navigation }) {
             keyExtractor={(item) => item.id}
           </FlatList>
         </SafeAreaView>      
-      </View>
     );
   } else {
     Title_Text = (
@@ -445,7 +438,14 @@ function ProfilePage({ route, navigation }) {
               <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
             </TouchableOpacity>
           </View>
+          
         </View>
+        <View style={styles_profilepage.overlayViewDescription}></View>
+        <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
+        <Text style={styles_profilepage.description}>{description}</Text>
+        <Text style={styles_profilepage.subtitle}>GENRES</Text>
+        <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
+        <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
       </ScrollView>
       <View >
         {Not_Title_Text}
