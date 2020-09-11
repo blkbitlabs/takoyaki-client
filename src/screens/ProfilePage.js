@@ -46,7 +46,7 @@ const styles_profilepage = StyleSheet.create({
     resizeMode: 'cover',
   },
   container_2: {
-    flex: 1,
+    
   },
   overlayView: {
     //marginTop: topbarheight + leftpad,
