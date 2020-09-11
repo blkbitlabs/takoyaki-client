@@ -50,12 +50,12 @@ const styles_profilepage = StyleSheet.create({
     flex: 1,
   },
   overlayView: {
-    marginTop: topbarheight + leftpad,
+    //marginTop: topbarheight + leftpad,
     width: width,
     height: height,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    position: 'absolute',
+    //position: 'absolute',
     flexDirection: 'column',
   },
   overlayViewInside: {
@@ -353,7 +353,7 @@ function ProfilePage({ route, navigation }) {
                 <View style={styles_profilepage.chapterbutton_tag} />
                 <View style={styles_profilepage.chapterbutton_}>
                   <Text style={styles_profilepage.chapterbutton_name}>
-                    {item.title}
+                    {"Anushka"}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -419,17 +419,6 @@ function ProfilePage({ route, navigation }) {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <BlurView
-          style={{
-            height:
-              height -
-              (verticalScale(64.7) + z) +
-              (hasNotch()
-                ? verticalScale(35) *
-                chaptersheight(how_many_chapers + how_many_chapers_extra + (height / width) * 20)
-                : verticalScale(42) *
-                chaptersheight(how_many_chapers + how_many_chapers_extra + (height / width) * 20)),
-            marginTop: z,
-          }}
           blurType="extraDark"
           blurAmount={10}
         />
