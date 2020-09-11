@@ -1,22 +1,26 @@
-import React, {useState, useEffect, Component} from 'react';
+/* Home Page - blkbit inc. */
+
+/* NPM Imports */
+import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  RefreshControl,
+  Dimensions, RefreshControl, ScrollView, StyleSheet, Text, View
 } from 'react-native';
+import { hasNotch } from 'react-native-device-info';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
+/* Local Imports */
 import CardElement from '../screens/CardElement';
 import CardLoading from '../screens/CardLoading';
-import {hasNotch} from 'react-native-device-info';
+
+/* Variables */
 var RNFS = require('react-native-fs');
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-const {width, height} = Dimensions.get('window');
+
+/* Constants */
+const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
-const scale = size => (width / guidelineBaseWidth) * size;
-const verticalScale = size => (height / guidelineBaseHeight) * size;
+const scale = (size) => (width / guidelineBaseWidth) * size;
+const verticalScale = (size) => (height / guidelineBaseHeight) * size;
 const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
 const topbarheight = hasNotch()
@@ -28,293 +32,287 @@ const bottombarheight = hasNotch()
   : getStatusBarHeight() + verticalScale(32);
 
 const leftpad = scale(19);
-const styles_Home = StyleSheet.create({
-  containerParent: {
+
+/* Styles */
+const styles = StyleSheet.create({
+  parent_container: {
     flex: 1,
-    paddingTop: 0, //topbarheight + (hasNotch() ? 7 : 9),
-    backgroundColor: '#141414',
+    paddingTop: 0,
+    backgroundColor: '#141414'
   },
 
-  containerParent_: {
+  body_container: {
     flex: 1,
     backgroundColor: '#141414',
-    //paddingTop: topbarheight + (hasNotch() ? 7 : 9),
-    paddingBottom: bottombarheight,
+    paddingBottom: bottombarheight
   },
-  container: {
+
+  section_container: {
     flexDirection: 'column',
     height: 1.85 * scale(140),
     marginTop: verticalScale(4),
-    marginBottom: verticalScale(7),
+    marginBottom: verticalScale(7)
   },
-  Heading: {
+
+  heading_text: {
     fontFamily: 'SFProDisplay-Heavy',
     paddingLeft: leftpad,
     fontSize: moderateScale(22),
     marginBottom: 5,
-    color: 'white',
+    color: 'white'
   },
-  rowContainer: {
-    flexDirection: 'row',
-  },
-  test: {
-    width: 100,
-    height: 100,
-    opacity: 0.1,
-  },
+
+  card_row_container: {
+    flexDirection: 'row'
+  }
 });
+
+/* Main Code */
 function wait(timeout) {
-  return new Promise(resolve => {
+  /* Async wait for duration */
+
+  return new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });
 }
-function Home({navigation}) {
-  const [data, setnewData] = useState([]);
-  const [data_2, setnewData_2] = useState([]);
-  const [data_3, setnewData_3] = useState([]);
-  const [didfetch_1, set_did_fetch_1] = useState(false);
-  const [didfetch_2, set_did_fetch_2] = useState(false);
-  const [didfetch_3, set_did_fetch_3] = useState(false);
+
+function Home({ navigation }) {
+  /* Home Page Generator */
+
+  const [last_updated_data, set_last_updated] = useState([]);
+  const [top_data, set_top_data] = useState([]);
+  const [new_data, set_new_data] = useState([]);
+  const [isfetched_last_updated, set_fetched_last_updated] = useState(false);
+  const [isfetched_top, set_fetched_top] = useState(false);
+  const [isfetched_new, set_fetched_new] = useState(false);
+
   useEffect(() => {
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
-      e => {
-        fetch(`https://takoyaki.chetasr.co/home?${e}`)
-          .then(response => response.json())
-          .then(responseJson => {
-            if (responseJson.status === 'ok') {
-              setnewData(responseJson.result.lastupdate);
-              set_did_fetch_1(true);
-              setnewData_2(responseJson.result.top);
-              set_did_fetch_2(true);
-              setnewData_3(responseJson.result.recent);
-              set_did_fetch_3(true);
-            }
-          })
-          .catch(error => console.log(`UseEffect gave : ${error}`));
-      },
-    );
+    RNFS.readFile(
+      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
+      'utf8'
+    ).then((source) => {
+      fetch(`https://takoyaki.chetasr.co/home?src=${source}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.status === 'ok') {
+            set_last_updated(responseJson.result.lastupdate);
+            set_fetched_last_updated(true);
+            set_top_data(responseJson.result.top);
+            set_fetched_top(true);
+            set_new_data(responseJson.result.recent);
+            set_fetched_new(true);
+          }
+        })
+        .catch((error) => console.error(`useEffect gave: ${error}`));
+    });
   }, []);
 
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    set_did_fetch_1(false);
-    set_did_fetch_2(false);
-    set_did_fetch_3(false);
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
-      e => {
-        fetch(`https://takoyaki.chetasr.co/home?src=${e}`)
-          .then(response => response.json())
-          .then(responseJson => {
-            if (responseJson.status === 'ok') {
-              setnewData(responseJson.result.lastupdate);
-              set_did_fetch_1(true);
-              setnewData_2(responseJson.result.top);
-              set_did_fetch_2(true);
-              setnewData_3(responseJson.result.recent);
-              set_did_fetch_3(true);
-            }
-          })
-          .catch(error => console.log(` Refresh gave : ${error}`));
-      },
-    );
+    set_fetched_last_updated(false);
+    set_fetched_top(false);
+    set_fetched_new(false);
+    RNFS.readFile(
+      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
+      'utf8'
+    ).then((source) => {
+      fetch(`https://takoyaki.chetasr.co/home?src=${source}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.status === 'ok') {
+            set_last_updated(responseJson.result.lastupdate);
+            set_fetched_last_updated(true);
+            set_top_data(responseJson.result.top);
+            set_fetched_top(true);
+            set_new_data(responseJson.result.recent);
+            set_fetched_new(true);
+          }
+        })
+        .catch((error) => console.error(`Refresh gave: ${error}`));
+    });
 
     wait(700).then(() => setRefreshing(false));
   }, []);
 
-  //data or Last Updated
-  let number_of_elements = data.length;
-  const argums = new Array(number_of_elements);
-  const LastUpdated = new Array(number_of_elements);
-  let j;
-  if (didfetch_1) {
-    for (j = 0; j < number_of_elements; j++) {
-      argums[j] = data[j];
-    }
-    let i;
-    for (i = 0; i < number_of_elements; i++) {
+  const last_updated_component = new Array(last_updated_data.length);
+  if (isfetched_last_updated) {
+    for (let i = 0; i < last_updated_data.length; i++) {
       if (i !== 0) {
-        const proops = {
+        const props = {
           imgsrc: {
-            uri: argums[i].cover,
+            uri: last_updated_data[i].cover
           },
-          name: argums[i].name,
-          time: argums[i].time,
-          id: argums[i].id,
-          nav: navigation,
+          name: last_updated_data[i].name,
+          time: last_updated_data[i].time,
+          id: last_updated_data[i].id,
+          nav: navigation
         };
-        LastUpdated[i] = <CardElement {...proops} />;
+        last_updated_component[i] = <CardElement {...props} />;
       } else {
-        const proops = {
+        const props = {
           imgsrc: {
-            uri: argums[i].cover,
+            uri: last_updated_data[i].cover
           },
-          name: argums[i].name,
-          time: argums[i].time,
-          id: argums[i].id,
+          name: last_updated_data[i].name,
+          time: last_updated_data[i].time,
+          id: last_updated_data[i].id,
           marg: leftpad,
-          nav: navigation,
+          nav: navigation
         };
-        LastUpdated[i] = <CardElement {...proops} />;
+        last_updated_component[i] = <CardElement {...props} />;
       }
     }
   } else {
-    let h;
-    for (h = 0; h < 8; h++) {
+    for (let h = 0; h < 8; h++) {
       if (h !== 0) {
-        const prooops = {
-          loading: !didfetch_1,
-          marg: 0,
+        const props = {
+          loading: !isfetched_last_updated,
+          marg: 0
         };
-        LastUpdated[h] = <CardLoading {...prooops} />;
+        last_updated_component[h] = <CardLoading {...props} />;
       } else {
-        const prooops = {
-          loading: !didfetch_1,
-          marg: leftpad,
+        const props = {
+          loading: !isfetched_last_updated,
+          marg: leftpad
         };
-        LastUpdated[h] = <CardLoading {...prooops} />;
-      }
-    }
-  }
-  //data_2 or Top Titles
-  let number_of_elements_2 = data_2.length;
-  let k;
-  const TopTitles = new Array(number_of_elements_2);
-  if (didfetch_2) {
-    for (k = 0; k < number_of_elements_2; k++) {
-      if (k !== 0) {
-        const proops_2 = {
-          imgsrc: {
-            uri: data_2[k].cover,
-          },
-          name: data_2[k].name,
-          time: data_2[k].time,
-          id: data_2[k].id,
-          nav: navigation,
-        };
-        TopTitles[k] = <CardElement {...proops_2} />;
-      } else {
-        const proops_2 = {
-          imgsrc: {
-            uri: data_2[k].cover,
-          },
-          name: data_2[k].name,
-          time: data_2[k].time,
-          id: data_2[k].id,
-          marg: leftpad,
-          nav: navigation,
-        };
-        TopTitles[k] = <CardElement {...proops_2} />;
-      }
-    }
-  } else {
-    let c;
-    for (c = 0; c < 8; c++) {
-      if (c !== 0) {
-        const prooops = {
-          loading: !didfetch_2,
-          marg: 0,
-        };
-        TopTitles[c] = <CardLoading {...prooops} />;
-      } else {
-        const prooops = {
-          loading: !didfetch_2,
-          marg: leftpad,
-        };
-        TopTitles[c] = <CardLoading {...prooops} />;
+        last_updated_component[h] = <CardLoading {...props} />;
       }
     }
   }
 
-  //data_3 or New Releases
-  let number_of_elements_3 = data_3.length;
-  let p;
-  const NewReleases = new Array(number_of_elements_3);
-  if (didfetch_3) {
-    for (p = 0; p < number_of_elements_3; p++) {
-      if (p !== 0) {
-        const proops_3 = {
+  const top_component = new Array(top_data.length);
+  if (isfetched_top) {
+    for (let k = 0; k < top_data.length; k++) {
+      if (k !== 0) {
+        const props = {
           imgsrc: {
-            uri: data_3[p].cover,
+            uri: top_data[k].cover
           },
-          name: data_3[p].name,
-          time: data_3[p].time,
-          id: data_3[p].id,
-          nav: navigation,
+          name: top_data[k].name,
+          time: top_data[k].time,
+          id: top_data[k].id,
+          nav: navigation
         };
-        NewReleases[p] = <CardElement {...proops_3} />;
+        top_component[k] = <CardElement {...props} />;
       } else {
-        const proops_3 = {
+        const props = {
           imgsrc: {
-            uri: data_3[p].cover,
+            uri: top_data[k].cover
           },
-          name: data_3[p].name,
-          time: data_3[p].time,
-          id: data_3[p].id,
+          name: top_data[k].name,
+          time: top_data[k].time,
+          id: top_data[k].id,
           marg: leftpad,
-          nav: navigation,
+          nav: navigation
         };
-        NewReleases[p] = <CardElement {...proops_3} />;
+        top_component[k] = <CardElement {...props} />;
       }
     }
   } else {
-    let f;
-    for (f = 0; f < 8; f++) {
-      if (f !== 0) {
-        const prooops = {
-          loading: !didfetch_3,
-          marg: 0,
+    for (let c = 0; c < 8; c++) {
+      if (c !== 0) {
+        const props = {
+          loading: !isfetched_top,
+          marg: 0
         };
-        NewReleases[f] = <CardLoading {...prooops} />;
+        top_component[c] = <CardLoading {...props} />;
       } else {
-        const prooops = {
-          loading: !didfetch_3,
-          marg: leftpad,
+        const props = {
+          loading: !isfetched_top,
+          marg: leftpad
         };
-        NewReleases[f] = <CardLoading {...prooops} />;
+        top_component[c] = <CardLoading {...props} />;
       }
     }
   }
+
+  const new_releases_component = new Array(new_data.length);
+  if (isfetched_new) {
+    for (let p = 0; p < new_data.length; p++) {
+      if (p !== 0) {
+        const props = {
+          imgsrc: {
+            uri: new_data[p].cover
+          },
+          name: new_data[p].name,
+          time: new_data[p].time,
+          id: new_data[p].id,
+          nav: navigation
+        };
+        new_releases_component[p] = <CardElement {...props} />;
+      } else {
+        const props = {
+          imgsrc: {
+            uri: new_data[p].cover
+          },
+          name: new_data[p].name,
+          time: new_data[p].time,
+          id: new_data[p].id,
+          marg: leftpad,
+          nav: navigation
+        };
+        new_releases_component[p] = <CardElement {...props} />;
+      }
+    }
+  } else {
+    for (let f = 0; f < 8; f++) {
+      if (f !== 0) {
+        const props = {
+          loading: !isfetched_new,
+          marg: 0
+        };
+        new_releases_component[f] = <CardLoading {...props} />;
+      } else {
+        const props = {
+          loading: !isfetched_new,
+          marg: leftpad
+        };
+        new_releases_component[f] = <CardLoading {...props} />;
+      }
+    }
+  }
+
   return (
-    <View style={styles_Home.containerParent}>
+    <View style={styles.parent_container}>
       <ScrollView
         horizontal={false}
-        contentInset={{top: topbarheight + (hasNotch() ? 7 : 9)}}
-        contentOffset={{y: -topbarheight - (hasNotch() ? 7 : 9)}}
+        contentInset={{ top: topbarheight + (hasNotch() ? 7 : 9) }}
+        contentOffset={{ y: -topbarheight - (hasNotch() ? 7 : 9) }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            tintColor="#E50914"
+            tintColor='#E50914'
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
         }>
-        <View style={styles_Home.containerParent_}>
-          <View style={styles_Home.container}>
-            <Text style={styles_Home.Heading}>Last Updated</Text>
+        <View style={styles.body_container}>
+          <View style={styles.section_container}>
+            <Text style={styles.heading_text}>Last Updated</Text>
             <ScrollView
               horizontal={true}
-              style={styles_Home.rowContainer}
+              style={styles.card_row_container}
               showsHorizontalScrollIndicator={false}>
-              {LastUpdated}
+              {last_updated_component}
             </ScrollView>
           </View>
-          <View style={styles_Home.container}>
-            <Text style={styles_Home.Heading}>Top Titles</Text>
+          <View style={styles.section_container}>
+            <Text style={styles.heading_text}>Top Titles</Text>
             <ScrollView
               horizontal={true}
-              style={styles_Home.rowContainer}
+              style={styles.card_row_container}
               showsHorizontalScrollIndicator={false}>
-              {TopTitles}
+              {top_component}
             </ScrollView>
           </View>
-          <View style={styles_Home.container}>
-            <Text style={styles_Home.Heading}>New Releases</Text>
+          <View style={styles.section_container}>
+            <Text style={styles.heading_text}>New Releases</Text>
             <ScrollView
               horizontal={true}
-              style={styles_Home.rowContainer}
+              style={styles.card_row_container}
               showsHorizontalScrollIndicator={false}>
-              {NewReleases}
+              {new_releases_component}
             </ScrollView>
           </View>
         </View>
@@ -323,4 +321,5 @@ function Home({navigation}) {
   );
 }
 
+/* Exports */
 export default Home;
