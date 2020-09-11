@@ -1,106 +1,45 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from "react";
-import { View, StyleSheet, Text, StatusBar, Dimensions } from "react-native";
-import { VibrancyView } from "@react-native-community/blur";
-import { hasNotch } from "react-native-device-info";
-import { getStatusBarHeight } from "react-native-status-bar-height";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import MaterialIcons from "react-native-vector-icons/dist/MaterialIcons";
-import Ionicons from "react-native-vector-icons/dist/Ionicons";
-import { Icon } from "react-native-eva-icons";
-const { width, height } = Dimensions.get("window");
+/* BottomNavBar - blkbit inc. */
+
+/* NPM Imports */
+import React from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { VibrancyView } from '@react-native-community/blur';
+import { hasNotch } from 'react-native-device-info';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Icon } from 'react-native-eva-icons';
+
+/* Constants */
+const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
-const scale = (size) => (width / guidelineBaseWidth) * size;
 const verticalScale = (size) => (height / guidelineBaseHeight) * size;
-const moderateScale = (size, factor = 0.5) =>
-  size + (scale(size) - size) * factor;
-const styles_topbar = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  topBar: {
-    position: "absolute",
+
+/* Styles */
+const styles = StyleSheet.create({
+  blur_view: {
+    flexDirection: 'row',
+    position: 'absolute',
+    paddingTop: '3%',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'transparent',
     bottom: 0,
     left: 0,
     width: width,
     height: hasNotch()
-      ? getStatusBarHeight() + verticalScale(36.5)
-      : getStatusBarHeight() + verticalScale(51),
-  },
-  topBarText: {
-    marginTop: hasNotch()
-      ? getStatusBarHeight() - 3.3
-      : getStatusBarHeight() + verticalScale(6.8),
-    alignSelf: "flex-start",
-    paddingLeft: scale(19),
-    position: "absolute",
-    fontFamily: "LuTuna",
-    fontSize: moderateScale(28),
-    color: "white",
-  },
-  buttons: {
-    position: "absolute",
-    backgroundColor: "red",
-    width: width,
-    height: hasNotch()
-      ? getStatusBarHeight() + verticalScale(200.5)
-      : getStatusBarHeight() + verticalScale(51),
-  },
+      ? getStatusBarHeight() + verticalScale(29.5)
+      : getStatusBarHeight() + verticalScale(32)
+  }
 });
+
+/* Main Code */
 function BottomNavBar({ state, descriptors, navigation }) {
-  /* return (
-    <View>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#black"
-        opacity={0.8}
-      />
-      {props.children}
-      <VibrancyView
-        style={styles_topbar.topBar}
-        blurType="extraDark"
-        blurAmount={40}
-        blurRadius={30}
-      />
-      <TouchableOpacity style={styles_topbar.buttons} />
-    </View>
-  );*/
+  /* BottomNavBar Generator */
+
   return (
     <View>
-      <VibrancyView
-        style={{
-          flexDirection: "row",
-          position: "absolute",
-          paddingTop: "3%",
-          justifyContent: "space-evenly",
-          backgroundColor: "transparent",
-          bottom: 0,
-          left: 0,
-          width: width,
-          height: hasNotch()
-            ? getStatusBarHeight() + verticalScale(29.5)
-            : getStatusBarHeight() + verticalScale(32),
-        }}
-      ></VibrancyView>
-      <View
-        style={{
-          flexDirection: "row",
-          position: "absolute",
-          paddingTop: "3%",
-          justifyContent: "space-evenly",
-          backgroundColor: "transparent",
-          bottom: 0,
-          left: 0,
-          width: width,
-          height: hasNotch()
-            ? getStatusBarHeight() + verticalScale(29.5)
-            : getStatusBarHeight() + verticalScale(32),
-        }}
-        blurType="extraDark"
-        blurAmount={40}
-        blurRadius={30}
-      >
+      <VibrancyView style={styles.blur_view}></VibrancyView>
+      <View style={styles.blur_view}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label =
@@ -109,21 +48,13 @@ function BottomNavBar({ state, descriptors, navigation }) {
               : options.title !== undefined
               ? options.title
               : route.name;
-
-          /*  const icon =
-        options.tabBarIcon !== undefined
-          ? options.tabBarIcon
-          : options.title !== undefined
-          ? options.title
-          : route.name;
-*/
           const isFocused = state.index === index;
 
           const onPress = () => {
             const event = navigation.emit({
-              type: "tabPress",
+              type: 'tabPress',
               target: route.key,
-              canPreventDefault: true,
+              canPreventDefault: true
             });
 
             if (!isFocused && !event.defaultPrevented) {
@@ -133,26 +64,30 @@ function BottomNavBar({ state, descriptors, navigation }) {
 
           const onLongPress = () => {
             navigation.emit({
-              type: "tabLongPress",
-              target: route.key,
+              type: 'tabLongPress',
+              target: route.key
             });
           };
-          let okaythen;
-          let y = label.toLowerCase();
-          let waitwtf = isFocused ? "#0475FF" : "white";
-          okaythen = <Icon name={y} fill={waitwtf} width={27} height={27} />;
+
+          let icon_component = (
+            <Icon
+              name={label.toLowerCase()}
+              fill={isFocused ? '#0475FF' : 'white'}
+              width={27}
+              height={27}
+            />
+          );
 
           return (
             <TouchableOpacity
-              accessibilityRole="button"
-              accessibilityStates={isFocused ? ["selected"] : []}
+              accessibilityRole='button'
+              accessibilityStates={isFocused ? ['selected'] : []}
               accessibilityLabel={options.tabBarAccessibilityLabel}
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{ flex: 1, alignItems: "center" }}
-            >
-              {okaythen}
+              style={{ flex: 1, alignItems: 'center' }}>
+              {icon_component}
             </TouchableOpacity>
           );
         })}
@@ -161,4 +96,5 @@ function BottomNavBar({ state, descriptors, navigation }) {
   );
 }
 
+/* Exports */
 export default BottomNavBar;

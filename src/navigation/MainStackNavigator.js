@@ -1,4 +1,4 @@
-/* Source Component - blkbit inc. */
+/* MainStackNavigator - blkbit inc. */
 
 /* NPM Imports */
 import "react-native-gesture-handler";
