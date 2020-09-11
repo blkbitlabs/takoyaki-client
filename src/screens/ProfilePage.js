@@ -336,21 +336,22 @@ function ProfilePage({ route, navigation }) {
           <FlatList>
             data={jason.chapters}
             renderItem={(item) => 
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('MangaReader', {
-                    id_chap: item.id,
-                    id_src: srcc,
-                  });
-                }}
-                style={styles_profilepage.chapterbutton}>
-                <View style={styles_profilepage.chapterbutton_tag} />
-                <View style={styles_profilepage.chapterbutton_}>
-                  <Text style={styles_profilepage.chapterbutton_name}>
-                    {"Anushka"}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              // <TouchableOpacity
+              //   onPress={() => {
+              //     navigation.navigate('MangaReader', {
+              //       id_chap: item.id,
+              //       id_src: srcc,
+              //     });
+              //   }}
+              //   style={styles_profilepage.chapterbutton}>
+              //   <View style={styles_profilepage.chapterbutton_tag} />
+              //   <View style={styles_profilepage.chapterbutton_}>
+              //     <Text style={styles_profilepage.chapterbutton_name}>
+              //       {"Anushka"}
+              //     </Text>
+              //   </View>
+              // </TouchableOpacity>
+              <Text>{"Anushka"}</Text>  
             }
             keyExtractor={(item) => item.id}
           </FlatList>
