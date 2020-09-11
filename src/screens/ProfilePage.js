@@ -52,7 +52,7 @@ const styles_profilepage = StyleSheet.create({
   overlayView: {
     //marginTop: topbarheight + leftpad,
     width: width,
-    height: height,
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     //position: 'absolute',
@@ -336,22 +336,21 @@ function ProfilePage({ route, navigation }) {
           <FlatList>
             data={jason.chapters}
             renderItem={(item) => 
-              // <TouchableOpacity
-              //   onPress={() => {
-              //     navigation.navigate('MangaReader', {
-              //       id_chap: item.id,
-              //       id_src: srcc,
-              //     });
-              //   }}
-              //   style={styles_profilepage.chapterbutton}>
-              //   <View style={styles_profilepage.chapterbutton_tag} />
-              //   <View style={styles_profilepage.chapterbutton_}>
-              //     <Text style={styles_profilepage.chapterbutton_name}>
-              //       {"Anushka"}
-              //     </Text>
-              //   </View>
-              // </TouchableOpacity>
-              <Text>{"Anushka"}</Text>  
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('MangaReader', {
+                    id_chap: item.id,
+                    id_src: srcc,
+                  });
+                }}
+                style={styles_profilepage.chapterbutton}>
+                <View style={styles_profilepage.chapterbutton_tag} />
+                <View style={styles_profilepage.chapterbutton_}>
+                  <Text style={styles_profilepage.chapterbutton_name}>
+                    {item.title}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             }
             keyExtractor={(item) => item.id}
           </FlatList>
@@ -439,12 +438,7 @@ function ProfilePage({ route, navigation }) {
               <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
             </TouchableOpacity>
           </View>
-          <View style={styles_profilepage.overlayViewDescription}></View>
-        <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
-        <Text style={styles_profilepage.description}>{description}</Text>
-        <Text style={styles_profilepage.subtitle}>GENRES</Text>
-        <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
-        <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
+          
         </View>
         
       </ScrollView>
