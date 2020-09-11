@@ -41,7 +41,6 @@ const z = hasNotch()
 const styles_profilepage = StyleSheet.create({
   container: {
     width: width,
-    height: height,
     flex: 1,
     position: 'absolute',
     resizeMode: 'cover',
@@ -52,7 +51,7 @@ const styles_profilepage = StyleSheet.create({
   overlayView: {
     //marginTop: topbarheight + leftpad,
     width: width,
-    flex: 1,
+    height: 200,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     //position: 'absolute',
