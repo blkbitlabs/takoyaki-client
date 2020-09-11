@@ -465,7 +465,7 @@ function ProfilePage({ route, navigation }) {
     <SafeAreaView style={{flex: 1, backgroundColor: "black"}}>
     <FlatList>
       data={jason.chapters}
-      renderItem={(item) => chapterButton}
+      renderItem={(item) => chapterButton(item)}
       keyExtractor={(item) => item.id}
     </FlatList>
   </SafeAreaView> 
