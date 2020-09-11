@@ -27,28 +27,28 @@ function MainStackNavigator({navgation}) {
         name="HomeNavigator"
         component={HomeNavigator}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'home',
         }}
       />
       <Tab.Screen
         name="Favorites"
         component={Favorites}
         options={{
-          tabBarLabel: 'Favorite',
+          tabBarLabel: 'star',
         }}
       />
       <Tab.Screen
         name="Download"
         component={Download}
         options={{
-          tabBarLabel: 'Download',
+          tabBarLabel: 'download',
         }}
       />
       <Tab.Screen
         name="Settings_page"
         component={Settings_page}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'settings',
         }}
       />
     </Tab.Navigator>
