@@ -442,7 +442,7 @@ function ProfilePage({ route, navigation }) {
         
     //   </ScrollView>
       
-    <SafeAreaView style={{flex: 1, backgroundColor: "green"}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: "black"}}>
     <FlatList>
       data={jason.chapters}
       renderItem={(item) => 
