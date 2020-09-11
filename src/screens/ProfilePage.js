@@ -442,7 +442,29 @@ function ProfilePage({ route, navigation }) {
         
     //   </ScrollView>
       
-        {Not_Title_Text}
+    <SafeAreaView style={{flex: 1, backgroundColor: "green"}}>
+    <FlatList>
+      data={jason.chapters}
+      renderItem={(item) => 
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('MangaReader', {
+              id_chap: item.id,
+              id_src: srcc,
+            });
+          }}
+          style={styles_profilepage.chapterbutton}>
+          <View style={styles_profilepage.chapterbutton_tag} />
+          <View style={styles_profilepage.chapterbutton_}>
+            <Text style={styles_profilepage.chapterbutton_name}>
+              {item.title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      }
+      keyExtractor={(item) => item.id}
+    </FlatList>
+  </SafeAreaView> 
       
     //</View>
   );
