@@ -395,56 +395,56 @@ function ProfilePage({ route, navigation }) {
     );
   }
   return (
-    <View style={styles_profilepage.container_2}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#6a51ae"
-        opacity={0.8}
-      />
-      <Image
-        source={id_cover}
-        blurRadius={27}
-        style={styles_profilepage.container}
-      />
-      <ScrollView style={{backgroundColor: "black"}}
-        horizontal={false}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
-        <BlurView
-          blurType="extraDark"
-          blurAmount={10}
-        />
-        <View style={styles_profilepage.overlayView}>
-          <View style={styles_profilepage.overlayViewInside}>
-            <View style={styles_profilepage.overlayViewInsideImageContainer}>
-              <BlurView
-                style={styles_profilepage.coverImagebg}
-                blurType="extraDark"
-                blurAmount={70}
-                blurRadius={200}
-              />
-              <Image style={styles_profilepage.coverImage} source={id_cover} />
-            </View>
-            {Title_Text}
-          </View>
-          <View style={styles_profilepage.newbuttons_container}>
-            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} onPress={() => savethis(id)} >
-              <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
-              <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
-            <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
-              <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
-            </TouchableOpacity>
-          </View>
+    // <View style={styles_profilepage.container_2}>
+    //   <StatusBar
+    //     barStyle="light-content"
+    //     backgroundColor="#6a51ae"
+    //     opacity={0.8}
+    //   />
+    //   <Image
+    //     source={id_cover}
+    //     blurRadius={27}
+    //     style={styles_profilepage.container}
+    //   />
+    //   <ScrollView style={{backgroundColor: "black"}}
+    //     horizontal={false}
+    //     showsHorizontalScrollIndicator={false}
+    //     showsVerticalScrollIndicator={false}>
+    //     <BlurView
+    //       blurType="extraDark"
+    //       blurAmount={10}
+    //     />
+    //     <View style={styles_profilepage.overlayView}>
+    //       <View style={styles_profilepage.overlayViewInside}>
+    //         <View style={styles_profilepage.overlayViewInsideImageContainer}>
+    //           <BlurView
+    //             style={styles_profilepage.coverImagebg}
+    //             blurType="extraDark"
+    //             blurAmount={70}
+    //             blurRadius={200}
+    //           />
+    //           <Image style={styles_profilepage.coverImage} source={id_cover} />
+    //         </View>
+    //         {Title_Text}
+    //       </View>
+    //       <View style={styles_profilepage.newbuttons_container}>
+    //         <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} onPress={() => savethis(id)} >
+    //           <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
+    //           <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
+    //         </TouchableOpacity>
+    //         <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
+    //         <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
+    //           <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
+    //         </TouchableOpacity>
+    //       </View>
           
-        </View>
+    //     </View>
         
-      </ScrollView>
-      <View >
+    //   </ScrollView>
+      
         {Not_Title_Text}
-      </View>
-    </View>
+      
+    //</View>
   );
 }
 export default ProfilePage;
