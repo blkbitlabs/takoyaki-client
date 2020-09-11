@@ -153,7 +153,7 @@ const styles_profilepage = StyleSheet.create({
     marginVertical: verticalScale(2),
     alignItems: 'center',
     width: width - scale(40),
-    height: 10,
+    height: hasNotch() ? verticalScale(35) : verticalScale(42),
     borderRadius: 9,
     flexDirection: 'row',
   },
@@ -331,7 +331,7 @@ function ProfilePage({ route, navigation }) {
       </View>
     );
     Not_Title_Text = (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: "green"}}>
           <FlatList>
             data={jason.chapters}
             renderItem={(item) => 
@@ -406,7 +406,7 @@ function ProfilePage({ route, navigation }) {
         blurRadius={27}
         style={styles_profilepage.container}
       />
-      <ScrollView
+      <ScrollView style={{backgroundColor: "black"}}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
