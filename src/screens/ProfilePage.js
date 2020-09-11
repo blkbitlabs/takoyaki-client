@@ -10,6 +10,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import { BlurView, VibrancyView } from '@react-native-community/blur';
 var RNFS = require('react-native-fs');
@@ -336,7 +337,13 @@ function ProfilePage({ route, navigation }) {
         <Text style={styles_profilepage.subtitle}>GENRES</Text>
         <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
         <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
-        {chapters_button}
+        <FlatList>
+          data={jason.chapters},
+          renderItem={(item) => 
+            
+
+          }
+        </FlatList>
       </View>
     );
   } else {
