@@ -245,7 +245,7 @@ function ProfilePage({ route, navigation }) {
 `;
   let [didload, setdidload] = useState(false);
   useEffect(() => {
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Source.txt', 'utf8').then(
+    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'current_source.db', 'utf8').then(
       e => {
         setdidload(false);
         set_srcc(e);

@@ -1,59 +1,63 @@
-/* eslint-disable react-native/no-inline-styles */
-import 'react-native-gesture-handler';
-import * as React from 'react';
-//import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Favorites from '../screens/Favorites';
-import Download from '../screens/Downloads';
-import {Settings_page} from '../screens/Settings_page';
-import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons';
-import HomeNavigator from '../navigation/HomeNavigator';
-import Ionicons from 'react-native-vector-icons/dist/Ionicons';
-import BottomNavBar from './BottomNavBar';
+/* MainStackNavigator - blkbit inc. */
 
+/* NPM Imports */
+import "react-native-gesture-handler";
+import * as React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Favorites from "../screens/Favorites";
+import Download from "../screens/Downloads";
+import { Settings_page } from "../screens/Settings_page";
+import HomeNavigator from "../navigation/HomeNavigator";
+import BottomNavBar from "./BottomNavBar";
+
+/* Constants */
 const Tab = createBottomTabNavigator();
-function MainStackNavigator({navgation}) {
+
+/* Main Code */
+function MainStackNavigator({ navgation }) {
+  /* MainStackNavigator Generator */
+
   return (
-    //<NavigationContainer>
     <Tab.Navigator
       initialRouteName="HomeNavigator"
       barStyle={{
-        backgroundColor: '#141414',
+        backgroundColor: "black",
       }}
-      tabBar={props => {
+      tabBar={(props) => {
         return <BottomNavBar {...props} />;
-      }}>
+      }}
+    >
       <Tab.Screen
         name="HomeNavigator"
         component={HomeNavigator}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: "home",
         }}
       />
       <Tab.Screen
         name="Favorites"
         component={Favorites}
         options={{
-          tabBarLabel: 'Favorite',
+          tabBarLabel: "star",
         }}
       />
       <Tab.Screen
         name="Download"
         component={Download}
         options={{
-          tabBarLabel: 'Download',
+          tabBarLabel: "download",
         }}
       />
       <Tab.Screen
         name="Settings_page"
         component={Settings_page}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: "settings",
         }}
       />
     </Tab.Navigator>
-    // </NavigationContainer>
   );
 }
 
+/* Exports */
 export default MainStackNavigator;
