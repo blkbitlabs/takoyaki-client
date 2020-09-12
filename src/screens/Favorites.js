@@ -44,18 +44,12 @@ function search(text){
 }
   const [text, setText] = useState("")
   return (
-      
     <NewTopBar> 
       <BlurView style={styles.container_main} blurType="extraDark">
-        <TextInput style={styles.searchbar} placeholder="Search"  onChangeText={text => setText(text)} defaultValue={text} />
-        
-
+        <TextInput style={styles.searchbar} placeholder="Search"  onChangeText={text => setText(text)} defaultValue={text} /> 
       </BlurView>
     </NewTopBar>
-
-    
-    
-    );
+  );
 }
 
 export default Favorites;
