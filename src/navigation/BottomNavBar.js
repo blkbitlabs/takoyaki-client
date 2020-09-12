@@ -42,12 +42,7 @@ function BottomNavBar({ state, descriptors, navigation }) {
       <View style={styles.blur_view}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
+          const label = options.tabBarLabel;
           const isFocused = state.index === index;
 
           const onPress = () => {
@@ -71,7 +66,9 @@ function BottomNavBar({ state, descriptors, navigation }) {
 
           let icon_component = (
             <Icon
-              name={label.toLowerCase()}
+              name={
+                isFocused ? options.tabBarLabelSelected : options.tabBarLabel
+              }
               fill={isFocused ? '#0475FF' : 'white'}
               width={27}
               height={27}

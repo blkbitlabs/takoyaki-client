@@ -1,14 +1,14 @@
 /* MainStackNavigator - blkbit inc. */
 
 /* NPM Imports */
-import "react-native-gesture-handler";
-import * as React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Favorites from "../screens/Favorites";
-import Download from "../screens/Downloads";
-import { Settings_page } from "../screens/Settings_page";
-import HomeNavigator from "../navigation/HomeNavigator";
-import BottomNavBar from "./BottomNavBar";
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Favorites from '../screens/Favorites';
+import Download from '../screens/Downloads';
+import { Settings_page } from '../screens/Settings_page';
+import HomeNavigator from '../navigation/HomeNavigator';
+import BottomNavBar from './BottomNavBar';
 
 /* Constants */
 const Tab = createBottomTabNavigator();
@@ -19,40 +19,43 @@ function MainStackNavigator({ navgation }) {
 
   return (
     <Tab.Navigator
-      initialRouteName="HomeNavigator"
+      initialRouteName='HomeNavigator'
       barStyle={{
-        backgroundColor: "black",
+        backgroundColor: 'black'
       }}
       tabBar={(props) => {
         return <BottomNavBar {...props} />;
-      }}
-    >
+      }}>
       <Tab.Screen
-        name="HomeNavigator"
+        name='HomeNavigator'
         component={HomeNavigator}
         options={{
-          tabBarLabel: "home",
+          tabBarLabel: 'grid-outline',
+          tabBarLabelSelected: 'grid'
         }}
       />
       <Tab.Screen
-        name="Favorites"
+        name='Favorites'
         component={Favorites}
         options={{
-          tabBarLabel: "star",
+          tabBarLabel: 'star-outline',
+          tabBarLabelSelected: 'star'
         }}
       />
       <Tab.Screen
-        name="Download"
+        name='Download'
         component={Download}
         options={{
-          tabBarLabel: "download",
+          tabBarLabel: 'cloud-download-outline',
+          tabBarLabelSelected: 'cloud-download'
         }}
       />
       <Tab.Screen
-        name="Settings_page"
+        name='Settings_page'
         component={Settings_page}
         options={{
-          tabBarLabel: "settings",
+          tabBarLabel: 'options-2-outline',
+          tabBarLabelSelected: 'options-2'
         }}
       />
     </Tab.Navigator>
