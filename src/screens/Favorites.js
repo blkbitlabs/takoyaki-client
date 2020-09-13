@@ -7,8 +7,8 @@ import { Icon } from 'react-native-eva-icons';
 import NewTopBar from '../navigation/NewTopBar';
 
 //DB IMPORTS
-/*import { Database } from "@nozbe/watermelondb";
-import models from './src/db/models'*/
+import { Database } from "@nozbe/watermelondb";
+import models from './src/db/models'
 
 
 /* Variables */
@@ -54,7 +54,6 @@ function Favorites({ navigation }) {
 
 
   //DATABASE TEST
-  /*
   database.action(async() => {
     const newPost = await database.create(models => {
       models.name = 'New post'
@@ -62,7 +61,7 @@ function Favorites({ navigation }) {
     })
   }).wait(600)
   const post = database.find('New post').wait(600)
-  console.log(post)*/
+  console.log(post)
 
 
   /* Favorites Page Generator */
