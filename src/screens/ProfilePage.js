@@ -284,11 +284,11 @@ function ProfilePage({ route, navigation }) {
       </ScrollView>
  
       
-      <FlatList style={styles_profilepage.chapterList}>
+      <FlatList style={styles_profilepage.chapterList}
         data={chapters}
         renderItem={({item}) => <Text style={{color: "white"}}>{item.key}</Text>}
         
-      </FlatList>
+      />
        
     </View>
   );
@@ -307,8 +307,8 @@ const styles_profilepage = StyleSheet.create({
   },
 
   chapterList: {
-    backgroundColor: "black",
-    color: "white",
+    backgroundColor: "green",
+    color: "black",
   },
 
 
