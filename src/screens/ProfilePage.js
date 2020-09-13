@@ -225,7 +225,7 @@ function ProfilePage({ route, navigation }) {
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <BlurView
+        <BlurView style={styles_profilepage.blurview}
           blurType="extraDark"
           blurAmount={10}>
           <StatusBar
@@ -284,6 +284,10 @@ const styles_profilepage = StyleSheet.create({
   topScroll: {
     flex: 1,
     backgroundColor: "black"
+  },
+
+  blurview: {
+    flex: 1
   },
 
   container: {
