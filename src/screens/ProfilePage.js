@@ -283,7 +283,6 @@ const styles_profilepage = StyleSheet.create({
   // scrollView top
   topScroll: {
     flex: 1,
-    height: 500,
     backgroundColor: "black"
   },
 
