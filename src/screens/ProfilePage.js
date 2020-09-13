@@ -294,7 +294,8 @@ const styles_profilepage = StyleSheet.create({
 
   // scrollView top
   topScroll: {
-    backgroundColor: "black"
+    backgroundColor: "black",
+    flex: 1
   },
 
   blurview: {
