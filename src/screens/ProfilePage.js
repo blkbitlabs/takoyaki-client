@@ -295,7 +295,6 @@ const styles_profilepage = StyleSheet.create({
   // scrollView top
   topScroll: {
     backgroundColor: "black",
-    flex: 1
   },
 
   blurview: {
@@ -305,7 +304,6 @@ const styles_profilepage = StyleSheet.create({
   chapterList: {
     backgroundColor: "green",
     color: "black",
-    flex: 1
   },
 
 
