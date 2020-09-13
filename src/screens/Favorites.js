@@ -6,9 +6,15 @@ import { StyleSheet, View, TextInput, Text } from 'react-native';
 import { Icon } from 'react-native-eva-icons';
 import NewTopBar from '../navigation/NewTopBar';
 
+//DB IMPORTS
+/*import { Database } from "@nozbe/watermelondb";
+import models from './src/db/models'*/
+
+
 /* Variables */
 var RNFS = require('react-native-fs');
-
+const database = new Database({ modelClasses: [Manga] })
+const newManga = database.collections.get("Favorites_DB")
 /* Styles */
 const styles = StyleSheet.create({
   container_main: {
@@ -45,6 +51,20 @@ const styles = StyleSheet.create({
 
 /* Main Code */
 function Favorites({ navigation }) {
+
+
+  //DATABASE TEST
+  /*
+  database.action(async() => {
+    const newPost = await database.create(models => {
+      models.name = 'New post'
+      models.url = 'Lorem ipsum...'
+    })
+  }).wait(600)
+  const post = database.find('New post').wait(600)
+  console.log(post)*/
+
+
   /* Favorites Page Generator */
 
   useEffect(() => {
@@ -52,23 +72,6 @@ function Favorites({ navigation }) {
       search(search_text);
     }
   });
-<<<<<<< HEAD
-  const [dbtext, setdbtext] = useState("")
-function search(text){
-
-  RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'Favdb.txt', 'utf8').then(
-    e => { setdbtext(e)
-    },
-  );
-  console.log(dbtext.split(','))
-}
-  const [text, setText] = useState("")
-  return (
-    <NewTopBar> 
-      <BlurView style={styles.container_main} blurType="extraDark">
-        <TextInput style={styles.searchbar} placeholder="Search"  onChangeText={text => setText(text)} defaultValue={text} /> 
-      </BlurView>
-=======
 
   const [db_data, store_db] = useState('');
   const [search_text, set_search_text] = useState('');
@@ -103,7 +106,6 @@ function search(text){
           />
         </View>
       </View>
->>>>>>> 81f44d0fc8dd90f9268adf327fee70c7b7a6d1c4
     </NewTopBar>
   );
 }

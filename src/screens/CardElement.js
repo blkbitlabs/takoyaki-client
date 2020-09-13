@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
+import FastImage from 'react-native-fast-image'
 const {width} = Dimensions.get('window');
 var RNFS = require('react-native-fs');
 const guidelineBaseWidth = 350;
@@ -78,14 +79,10 @@ function CardElement(props) {
   let path = RNFS.CachesDirectoryPath + '/' + String(props.id) + '.jpg';
   useEffect(() => {
     setloading(true);
-    RNFS.downloadFile({fromUrl: props.imgsrc.uri, toFile: path}).promise.then(
-      e => {
-        setloading(false);
-      },
-    );
   }, [path, props.imgsrc.uri]);
-  if (isloading) {
-    imageee = (
+  return (
+    <View style={[styles_CardElement.Card, {marginLeft: props.marg}]}>
+      { isloading && (
       <View>
         <TouchableOpacity
           style={[styles_CardElement.insideCard_, {height: '75%'}]}>
@@ -100,30 +97,24 @@ function CardElement(props) {
           <View style={styles_CardElement.insideTextGenre_} />
         </View>
       </View>
-    );
-  } else {
-    imageee = (
+    )}
       <TouchableOpacity
         style={[styles_CardElement.insideCard, {height: '75%'}]}
         onPress={() => {
           props.nav.navigate('ProfilePage', {
             id: props.id,
             id_name: props.name,
-            id_cover: {uri: 'file://' + path},
+            id_cover: 'file://' + path,
             nav_mangaa: props.nav,
           });
         }}>
-        <Image
-          source={{uri: 'file://' + path}}
+        <FastImage
+          source={{uri: props.imgsrc.uri,priority: FastImage.priority.normal,}}
           style={styles_CardElement.insideCardImage} 
+          resizeMode={FastImage.resizeMode.contain}
+          onLoadEnd = { () => setloading(false) }
         />
       </TouchableOpacity>
-    );
-  }
-
-  return (
-    <View style={[styles_CardElement.Card, {marginLeft: props.marg}]}>
-      {imageee}
       <Text
         numberOfLines={2}
         ellipsizeMode="tail"

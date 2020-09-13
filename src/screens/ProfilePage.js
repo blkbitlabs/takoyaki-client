@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-native-eva-icons';
+import FastImage from 'react-native-fast-image'
 import {
   View,
   Text,
@@ -385,11 +386,13 @@ function ProfilePage({ route, navigation }) {
         backgroundColor="#6a51ae"
         opacity={0.8}
       />
-      <Image
-        source={id_cover}
-        blurRadius={27}
+      
+      <FastImage
+        source={{ uri: id_cover,priority: FastImage.priority.normal}}
         style={styles_profilepage.container}
+        resizeMode={FastImage.resizeMode.cover}
       />
+      <BlurView style={styles_profilepage.container} blurType="regular"/>
       <ScrollView
         horizontal={false}
         showsHorizontalScrollIndicator={false}
@@ -418,7 +421,12 @@ function ProfilePage({ route, navigation }) {
                 blurAmount={70}
                 blurRadius={200}
               />
-              <Image style={styles_profilepage.coverImage} source={id_cover} />
+              <FastImage
+                source={{ uri: id_cover,priority: FastImage.priority.normal}}
+                style={styles_profilepage.coverImage}
+                resizeMode={FastImage.resizeMode.cover}
+                onLoadEnd={() => setdidload(true)}
+              />
             </View>
             {Title_Text}
           </View>
