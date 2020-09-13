@@ -244,11 +244,7 @@ function ProfilePage({ route, navigation }) {
             backgroundColor="#6a51ae"
             opacity={0.8}
           />
-          <Image
-            source={id_cover}
-            blurRadius={27}
-            style={styles_profilepage.container}
-          />
+          
           <View style={styles_profilepage.overlayView}>
             <View style={styles_profilepage.overlayViewInside}>
               <View style={styles_profilepage.overlayViewInsideImageContainer}>
@@ -285,7 +281,7 @@ function ProfilePage({ route, navigation }) {
  
       
       <FlatList style={styles_profilepage.chapterList}
-        data={chapters}
+        data={jason.chapters}
         renderItem={({item}) => <Text style={{color: "white"}}>{item.key}</Text> }   
       />
        
