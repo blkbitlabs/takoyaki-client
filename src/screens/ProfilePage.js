@@ -304,7 +304,7 @@ const styles_profilepage = StyleSheet.create({
     width: width,
     height: height,
     flex: 1,
-    position: 'absolute',
+    //position: 'absolute',
     resizeMode: 'cover',
   },
   container_2: {
@@ -316,7 +316,7 @@ const styles_profilepage = StyleSheet.create({
     height: height,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    position: 'absolute',
+    //position: 'absolute',
     flexDirection: 'column',
   },
   overlayViewInside: {
@@ -367,7 +367,7 @@ const styles_profilepage = StyleSheet.create({
     borderRadius: 12.5,
   },
   coverImagebg: {
-    position: 'absolute',
+    //position: 'absolute',
     borderRadius: 15,
     width: 132 + 6,
     height: 174,
@@ -464,7 +464,7 @@ const styles_profilepage = StyleSheet.create({
     paddingHorizontal: leftpad - (70 - 66),
     marginTop: 4,
     width: '100%',
-    height: 100,
+    height: (height / width) * 20,
   },
   newbuttons: {
     backgroundColor: 'rgba(255,255,255,0.2)',
