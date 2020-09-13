@@ -90,8 +90,8 @@ package-lock.json
 /packages/react-native-codegen/**/*.xcodeproj
 
 # CocoaPods
-/template/ios/Pods/
-/template/ios/Podfile.lock
+/ios/Pods/
+/ios/Podfile.lock
 /packages/rn-tester/Gemfile.lock
 
 # Ignore RNTester specific Pods, but keep the __offline_mirrors__ here.
@@ -110,5 +110,3 @@ package-lock.json
 
 # Android memory profiler files
 *.hprof
-
-ios

@@ -5,29 +5,14 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Text } from 'react-native';
 import { Icon } from 'react-native-eva-icons';
 import NewTopBar from '../navigation/NewTopBar';
+import { Q } from '@nozbe/watermelondb';
 
-//DB IMPORTS
-import { Database, Q } from '@nozbe/watermelondb';
-import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
-import { mySchema } from '../db/schema';
-import FavoritesModel from '../db/models';
-
-const ada = new SQLiteAdapter({
-  dbName: 'takoyaki',
-  schema: mySchema
-});
-
-console.log('here')
-
-var db = new Database({
-  adapter: ada,
-  modelClasses: [FavoritesModel],
-  actionsEnabled: true,
-});
+/* Local Imports */
+import { db } from '../db/database';
 
 /* Variables */
-var RNFS = require('react-native-fs');
-const newManga = db.collections.get('favs');
+const favorites_db = db.collections.get('favorites');
+
 /* Styles */
 const styles = StyleSheet.create({
   container_main: {
@@ -75,8 +60,15 @@ function Favorites({ navigation }) {
   const [search_text, set_search_text] = useState('');
 
   function search(text) {
-    (async() => {
-      console.log(await newManga.query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`))).fetch())
+    /* Search DB for manga */
+
+    // TODO: Use search results
+    (async () => {
+      console.log(
+        await favorites_db
+          .query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`)))
+          .fetch()
+      );
     })();
   }
 

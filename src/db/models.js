@@ -3,7 +3,7 @@ import { Model } from "@nozbe/watermelondb";
 import { field } from "@nozbe/watermelondb/decorators";
 
 export default class FavoritesModel extends Model {
-  static table = 'favs'
+  static table = 'favorites'
 
   @field('name')
   name
