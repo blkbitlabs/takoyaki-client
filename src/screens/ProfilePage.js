@@ -225,9 +225,7 @@ function ProfilePage({ route, navigation }) {
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <BlurView style={styles_profilepage.blurview}
-          blurType="extraDark"
-          blurAmount={10}>
+        
           <StatusBar
             barStyle="light-content"
             backgroundColor="#6a51ae"
@@ -263,7 +261,7 @@ function ProfilePage({ route, navigation }) {
             </View>
             
           </View>
-        </BlurView>
+        
       </ScrollView>
  
       <BlurView>
