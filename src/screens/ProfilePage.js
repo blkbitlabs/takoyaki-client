@@ -259,7 +259,13 @@ function ProfilePage({ route, navigation }) {
                 <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
               </TouchableOpacity>
             </View>
-            
+            <View style={styles_profilepage.overlayViewDescription}>
+              <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
+              <Text style={styles_profilepage.description}>{description}</Text>
+              <Text style={styles_profilepage.subtitle}>GENRES</Text>
+              <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
+              <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
+            </View>
           </View>
         
       </ScrollView>
