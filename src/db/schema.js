@@ -5,7 +5,7 @@ export const mySchema = appSchema({
   version: 2,
   tables: [
     tableSchema({
-      name: "Favorites_DB",
+      name: 'favs',
       columns: [
         { name: "url", type: "string" },
         { name: "name", type: "string"}

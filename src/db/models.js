@@ -1,11 +1,13 @@
 // models
 import { Model } from "@nozbe/watermelondb";
-import { field, relation } from "@nozbe/watermelondb/decorators";
+import { field } from "@nozbe/watermelondb/decorators";
 
-export default class models extends Model {
-  static table = "favoritesdb";
+export default class FavoritesModel extends Model {
+  static table = 'favs'
 
-  static associations = {
-    columns: {name: "url", type: "string"  }
-  };
+  @field('name')
+  name
+
+  @field('url')
+  url
 }

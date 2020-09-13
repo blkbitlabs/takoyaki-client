@@ -7,14 +7,27 @@ import { Icon } from 'react-native-eva-icons';
 import NewTopBar from '../navigation/NewTopBar';
 
 //DB IMPORTS
-import { Database } from "@nozbe/watermelondb";
-import models from './src/db/models'
+import { Database, Q } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
+import { mySchema } from '../db/schema';
+import FavoritesModel from '../db/models';
 
+const ada = new SQLiteAdapter({
+  dbName: 'takoyaki',
+  schema: mySchema
+});
+
+console.log('here')
+
+var db = new Database({
+  adapter: ada,
+  modelClasses: [FavoritesModel],
+  actionsEnabled: true,
+});
 
 /* Variables */
 var RNFS = require('react-native-fs');
-const database = new Database({ modelClasses: [Manga] })
-const newManga = database.collections.get("Favorites_DB")
+const newManga = db.collections.get('favs');
 /* Styles */
 const styles = StyleSheet.create({
   container_main: {
@@ -51,19 +64,6 @@ const styles = StyleSheet.create({
 
 /* Main Code */
 function Favorites({ navigation }) {
-
-
-  //DATABASE TEST
-  database.action(async() => {
-    const newPost = await database.create(models => {
-      models.name = 'New post'
-      models.url = 'Lorem ipsum...'
-    })
-  }).wait(600)
-  const post = database.find('New post').wait(600)
-  console.log(post)
-
-
   /* Favorites Page Generator */
 
   useEffect(() => {
@@ -72,16 +72,12 @@ function Favorites({ navigation }) {
     }
   });
 
-  const [db_data, store_db] = useState('');
   const [search_text, set_search_text] = useState('');
 
   function search(text) {
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'favorites.db', 'utf8').then(
-      (e) => {
-        store_db(e);
-      }
-    );
-    console.log(db_data.split(','));
+    (async() => {
+      console.log(await newManga.query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`))).fetch())
+    })();
   }
 
   return (
