@@ -226,7 +226,7 @@ function ProfilePage({ route, navigation }) {
         <View style={styles_profilepage.chapterbutton_tag} />
         <View style={styles_profilepage.chapterbutton_}>
           <Text style={styles_profilepage.chapterbutton_name}>
-            {item.key}
+            {item.title}
           </Text>
         </View>
       </TouchableOpacity>
