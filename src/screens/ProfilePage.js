@@ -296,7 +296,8 @@ const styles_profilepage = StyleSheet.create({
 
   chapterList: {
     backgroundColor: "black",
-    color: "white"
+    color: "white",
+    flex: 1
   },
 
 
