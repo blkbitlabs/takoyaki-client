@@ -265,14 +265,14 @@ function ProfilePage({ route, navigation }) {
           </View>
         </BlurView>
       </ScrollView>
-
+ 
       <BlurView>
         <FlatList>
           data={jason.chapters}
           renderItem={({item}) => chapterButton(item)}
           keyExtractor={(item) => item.id}
         </FlatList>
-      </BlurView>
+      </BlurView>  
     </View>
   );
 }
@@ -283,6 +283,7 @@ const styles_profilepage = StyleSheet.create({
   // scrollView top
   topScroll: {
     flex: 1,
+    height: 500,
     backgroundColor: "black"
   },
 
