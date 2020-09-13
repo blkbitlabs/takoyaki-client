@@ -137,7 +137,7 @@ function ProfilePage({ route, navigation }) {
       </View>
     );
     Not_Title_Text = (
-        <SafeAreaView style={{flex: 1, backgroundColor: "green"}}>
+        
           <FlatList>
             data={jason.chapters}
             renderItem={(item) => 
@@ -158,8 +158,7 @@ function ProfilePage({ route, navigation }) {
               </TouchableOpacity>
             }
             keyExtractor={(item) => item.id}
-          </FlatList>
-        </SafeAreaView>      
+          </FlatList>     
     );
   } else {
     Title_Text = (
