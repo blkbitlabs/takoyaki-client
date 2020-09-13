@@ -270,7 +270,7 @@ function ProfilePage({ route, navigation }) {
       <BlurView>
         <FlatList>
           data={jason.chapters}
-          renderItem={chapterButton(item)}
+          renderItem={({item}) => chapterButton(item)}
           keyExtractor={(item) => item.id}
         </FlatList>
       </BlurView>
