@@ -1,18 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-native-eva-icons';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Image,
-  StatusBar,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-  SafeAreaView
-} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, StatusBar, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { BlurView, VibrancyView } from '@react-native-community/blur';
 var RNFS = require('react-native-fs');
 import { hasNotch } from 'react-native-device-info';
@@ -38,7 +27,266 @@ const leftpad = scale(19);
 const z = hasNotch()
   ? topbarheight + verticalScale(70)
   : topbarheight + verticalScale(74);
+
+function ProfilePage({ route, navigation }) {
+  const { id } = route.params;
+  const { id_name } = route.params;
+  const { id_cover } = route.params;
+  const [srcc, set_srcc] = useState('');
+  let url = 'https://takoyaki.chetasr.co/manga';
+  const [jason, set_jason] = useState({
+    author: 'chetas',
+    chapters: [],
+    chapters_number: 0,
+    description: 'NIL',
+  });
+  const xml = `
+  <svg width="32" height="32" viewBox="0 0 32 32">
+    <style>
+      .red {
+        fill: #ff0000;
+      }
+    </style>
+    <rect class="red" x="0" y="0" width="32" height="32" />
+  </svg>
+`;
+  let [didload, setdidload] = useState(false);
+  useEffect(() => {
+    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'current_source.db', 'utf8').then(
+      e => {
+        setdidload(false);
+        set_srcc(e);
+        fetch(url + '?id=' + `${id}` + `&src=${e}`)
+          .then(response => response.json())
+          .then(responseJson => {
+            set_jason(responseJson.result);
+            setdidload(true);
+          })
+          .catch(error => console.error(error));
+      },
+    );
+  }, [id, url]);
+  function savethis(){
+    let arr = [id, id_name, (JSON.stringify(id_cover["uri"])).substring(1,((JSON.stringify(id_cover["uri"])).length) - 1)]
+   RNFS.writeFile(
+      RNFS.CachesDirectoryPath + '/' + 'Favdb.txt',
+      `${arr + ','}`,
+      'utf8',
+    );
+  }
+  let author = 'NIL';
+  let chapters_data = [];
+  let description = 'NIL';
+  let how_many_chapers = 0;
+  let how_many_chapers_extra = 0;
+  let genres = [];
+  let chapters_button = new Array(how_many_chapers);
+  let genres_button = new Array(genres.length);
+  let Title_Text;
+  let Not_Title_Text;
+  let i, oo;
+  if (didload && srcc != '') {
+    author = jason.author;
+    let o;
+    for (o = 0; o < jason.genres.length; o++) {
+      genres[o] = jason.genres[o];
+    }
+    chapters_data = jason.chapters;
+    how_many_chapers = jason.chapters_number;
+    description = jason.description;
+    how_many_chapers_extra =
+      description.length > 300 ? (description.length - 300) / 25 / 0.83 : 0;
+    for (i = 0; i < how_many_chapers; i++) {
+      let hmmkthen = String(chapters_data[i].id);
+      chapters_button[i] = (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('MangaReader', {
+              id_chap: hmmkthen,
+              id_src: srcc,
+            });
+          }}
+          style={styles_profilepage.chapterbutton}>
+          <View style={styles_profilepage.chapterbutton_tag} />
+          <View style={styles_profilepage.chapterbutton_}>
+            <Text style={styles_profilepage.chapterbutton_name}>
+              {chapters_data[i].title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+    for (oo = 0; oo < genres.length; oo++) {
+      genres_button[oo] = (
+        <View style={styles_profilepage.tags}>
+          <Text style={styles_profilepage.tagstext}>
+            {genres[oo].toUpperCase()}
+          </Text>
+        </View>
+      );
+    }
+    Title_Text = (
+      <View style={styles_profilepage.overlayViewInsideTitle}>
+        <Text
+          numberOfLines={4}
+          ellipsizeMode="tail"
+          style={styles_profilepage.title}>
+          {id_name}
+        </Text>
+        <Text style={styles_profilepage.author}>{author}</Text>
+      </View>
+    );
+    Not_Title_Text = (
+        <SafeAreaView style={{flex: 1, backgroundColor: "green"}}>
+          <FlatList>
+            data={jason.chapters}
+            renderItem={(item) => 
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('MangaReader', {
+                    id_chap: item.id,
+                    id_src: srcc,
+                  });
+                }}
+                style={styles_profilepage.chapterbutton}>
+                <View style={styles_profilepage.chapterbutton_tag} />
+                <View style={styles_profilepage.chapterbutton_}>
+                  <Text style={styles_profilepage.chapterbutton_name}>
+                    {item.title}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            }
+            keyExtractor={(item) => item.id}
+          </FlatList>
+        </SafeAreaView>      
+    );
+  } else {
+    Title_Text = (
+      <View style={styles_profilepage.overlayViewInsideTitle}>
+        <View style={styles_profilepage.title_loading} />
+        <View style={styles_profilepage.author_loading} />
+      </View>
+    );
+    Not_Title_Text = (
+      <View style={styles_profilepage.overlayViewDescription}>
+        <View
+          style={[styles_profilepage.description_loading, { width: '40%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '60%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '40%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '50%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '20%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '20%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '60%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '30%' }]}
+        />
+        <View
+          style={[styles_profilepage.description_loading, { width: '10%' }]}
+        />
+      </View>
+    );
+  }
+
+  const chapterButton = ({item}) => {
+    return  (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('MangaReader', {
+            id_chap: item.id,
+            id_src: srcc,
+          });
+        }}
+        style={styles_profilepage.chapterbutton}>
+        <View style={styles_profilepage.chapterbutton_tag} />
+        <View style={styles_profilepage.chapterbutton_}>
+          <Text style={styles_profilepage.chapterbutton_name}>
+            {item.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    )
+  };
+  return (
+    <View>     
+      <ScrollView style={{backgroundColor: "black"}}
+        horizontal={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
+        <BlurView
+          blurType="extraDark"
+          blurAmount={10}>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="#6a51ae"
+            opacity={0.8}
+          />
+          <Image
+            source={id_cover}
+            blurRadius={27}
+            style={styles_profilepage.container}
+          />
+          <View style={styles_profilepage.overlayView}>
+            <View style={styles_profilepage.overlayViewInside}>
+              <View style={styles_profilepage.overlayViewInsideImageContainer}>
+                <BlurView
+                  style={styles_profilepage.coverImagebg}
+                  blurType="extraDark"
+                  blurAmount={70}
+                  blurRadius={200}
+                />
+                <Image style={styles_profilepage.coverImage} source={id_cover} />
+              </View>
+              {Title_Text}
+            </View>
+            <View style={styles_profilepage.newbuttons_container}>
+              <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} onPress={() => savethis(id)} >
+                <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
+                <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
+                <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
+                <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
+              </TouchableOpacity>
+            </View>
+            
+          </View>
+        </BlurView>
+      </ScrollView>
+
+      <BlurView>
+        <FlatList>
+          data={jason.chapters}
+          renderItem={chapterButton(item)}
+          keyExtractor={(item) => item.id}
+        </FlatList>
+      </BlurView>
+    </View>
+  );
+}
+
+// Styles for profile page
 const styles_profilepage = StyleSheet.create({
+
+  // scrollView top
+  topScroll: {
+    flex: 1,
+    backgroundColor: "black"
+  },
+
   container: {
     width: width,
     flex: 1,
@@ -222,255 +470,5 @@ const styles_profilepage = StyleSheet.create({
     fontSize: moderateScale(17),
   }
 });
-function ProfilePage({ route, navigation }) {
-  const { id } = route.params;
-  const { id_name } = route.params;
-  const { id_cover } = route.params;
-  const [srcc, set_srcc] = useState('');
-  let url = 'https://takoyaki.chetasr.co/manga';
-  const [jason, set_jason] = useState({
-    author: 'chetas',
-    chapters: [],
-    chapters_number: 0,
-    description: 'NIL',
-  });
-  const xml = `
-  <svg width="32" height="32" viewBox="0 0 32 32">
-    <style>
-      .red {
-        fill: #ff0000;
-      }
-    </style>
-    <rect class="red" x="0" y="0" width="32" height="32" />
-  </svg>
-`;
-  let [didload, setdidload] = useState(false);
-  useEffect(() => {
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'current_source.db', 'utf8').then(
-      e => {
-        setdidload(false);
-        set_srcc(e);
-        fetch(url + '?id=' + `${id}` + `&src=${e}`)
-          .then(response => response.json())
-          .then(responseJson => {
-            set_jason(responseJson.result);
-            setdidload(true);
-          })
-          .catch(error => console.error(error));
-      },
-    );
-  }, [id, url]);
-  function savethis(){
-    let arr = [id, id_name, (JSON.stringify(id_cover["uri"])).substring(1,((JSON.stringify(id_cover["uri"])).length) - 1)]
-   RNFS.writeFile(
-      RNFS.CachesDirectoryPath + '/' + 'Favdb.txt',
-      `${arr + ','}`,
-      'utf8',
-    );
-  }
-  let author = 'NIL';
-  let chapters_data = [];
-  let description = 'NIL';
-  let how_many_chapers = 0;
-  let how_many_chapers_extra = 0;
-  let genres = [];
-  let chapters_button = new Array(how_many_chapers);
-  let genres_button = new Array(genres.length);
-  let Title_Text;
-  let Not_Title_Text;
-  let i, oo;
-  if (didload && srcc != '') {
-    author = jason.author;
-    let o;
-    for (o = 0; o < jason.genres.length; o++) {
-      genres[o] = jason.genres[o];
-    }
-    chapters_data = jason.chapters;
-    how_many_chapers = jason.chapters_number;
-    description = jason.description;
-    how_many_chapers_extra =
-      description.length > 300 ? (description.length - 300) / 25 / 0.83 : 0;
-    for (i = 0; i < how_many_chapers; i++) {
-      let hmmkthen = String(chapters_data[i].id);
-      chapters_button[i] = (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('MangaReader', {
-              id_chap: hmmkthen,
-              id_src: srcc,
-            });
-          }}
-          style={styles_profilepage.chapterbutton}>
-          <View style={styles_profilepage.chapterbutton_tag} />
-          <View style={styles_profilepage.chapterbutton_}>
-            <Text style={styles_profilepage.chapterbutton_name}>
-              {chapters_data[i].title}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      );
-    }
-    for (oo = 0; oo < genres.length; oo++) {
-      genres_button[oo] = (
-        <View style={styles_profilepage.tags}>
-          <Text style={styles_profilepage.tagstext}>
-            {genres[oo].toUpperCase()}
-          </Text>
-        </View>
-      );
-    }
-    Title_Text = (
-      <View style={styles_profilepage.overlayViewInsideTitle}>
-        <Text
-          numberOfLines={4}
-          ellipsizeMode="tail"
-          style={styles_profilepage.title}>
-          {id_name}
-        </Text>
-        <Text style={styles_profilepage.author}>{author}</Text>
-      </View>
-    );
-    Not_Title_Text = (
-        <SafeAreaView style={{flex: 1, backgroundColor: "green"}}>
-          <FlatList>
-            data={jason.chapters}
-            renderItem={(item) => 
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('MangaReader', {
-                    id_chap: item.id,
-                    id_src: srcc,
-                  });
-                }}
-                style={styles_profilepage.chapterbutton}>
-                <View style={styles_profilepage.chapterbutton_tag} />
-                <View style={styles_profilepage.chapterbutton_}>
-                  <Text style={styles_profilepage.chapterbutton_name}>
-                    {item.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            }
-            keyExtractor={(item) => item.id}
-          </FlatList>
-        </SafeAreaView>      
-    );
-  } else {
-    Title_Text = (
-      <View style={styles_profilepage.overlayViewInsideTitle}>
-        <View style={styles_profilepage.title_loading} />
-        <View style={styles_profilepage.author_loading} />
-      </View>
-    );
-    Not_Title_Text = (
-      <View style={styles_profilepage.overlayViewDescription}>
-        <View
-          style={[styles_profilepage.description_loading, { width: '40%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '60%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '40%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '50%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '20%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '20%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '60%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '30%' }]}
-        />
-        <View
-          style={[styles_profilepage.description_loading, { width: '10%' }]}
-        />
-      </View>
-    );
-  }
 
-  const chapterButton = ({item}) => {
-    return  (
-      <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('MangaReader', {
-              id_chap: item.id,
-              id_src: srcc,
-            });
-          }}
-          style={styles_profilepage.chapterbutton}>
-          <View style={styles_profilepage.chapterbutton_tag} />
-          <View style={styles_profilepage.chapterbutton_}>
-            <Text style={styles_profilepage.chapterbutton_name}>
-              {item.title}
-            </Text>
-          </View>
-        </TouchableOpacity>
-    )
-  };
-  return (
-    // <View style={styles_profilepage.container_2}>
-    //   <StatusBar
-    //     barStyle="light-content"
-    //     backgroundColor="#6a51ae"
-    //     opacity={0.8}
-    //   />
-    //   <Image
-    //     source={id_cover}
-    //     blurRadius={27}
-    //     style={styles_profilepage.container}
-    //   />
-    //   <ScrollView style={{backgroundColor: "black"}}
-    //     horizontal={false}
-    //     showsHorizontalScrollIndicator={false}
-    //     showsVerticalScrollIndicator={false}>
-    //     <BlurView
-    //       blurType="extraDark"
-    //       blurAmount={10}
-    //     />
-    //     <View style={styles_profilepage.overlayView}>
-    //       <View style={styles_profilepage.overlayViewInside}>
-    //         <View style={styles_profilepage.overlayViewInsideImageContainer}>
-    //           <BlurView
-    //             style={styles_profilepage.coverImagebg}
-    //             blurType="extraDark"
-    //             blurAmount={70}
-    //             blurRadius={200}
-    //           />
-    //           <Image style={styles_profilepage.coverImage} source={id_cover} />
-    //         </View>
-    //         {Title_Text}
-    //       </View>
-    //       <View style={styles_profilepage.newbuttons_container}>
-    //         <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} onPress={() => savethis(id)} >
-    //           <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
-    //           <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
-    //         <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
-    //           <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
-    //         </TouchableOpacity>
-    //       </View>
-          
-    //     </View>
-        
-    //   </ScrollView>
-      
-    <SafeAreaView style={{flex: 1, backgroundColor: "black"}}>
-    <FlatList>
-      data={jason.chapters}
-      renderItem={(item) => chapterButton(item)}
-      keyExtractor={(item) => item.id}
-    </FlatList>
-  </SafeAreaView> 
-      
-    //</View>
-  );
-}
 export default ProfilePage;
