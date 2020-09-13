@@ -271,9 +271,9 @@ function ProfilePage({ route, navigation }) {
       </ScrollView>
  
       
-      <FlatList>
+      <FlatList style={styles_profilepage.chapterList}>
         data={jason.chapters}
-        renderItem={({item}) => <Text>{item.title}</Text>}
+        renderItem={({item}) => chapterButton(item)}
         keyExtractor={(item) => item.id}
       </FlatList>
        
@@ -293,6 +293,12 @@ const styles_profilepage = StyleSheet.create({
   blurview: {
     flex: 1
   },
+
+  chapterList: {
+    backgroundColor: "black",
+    color: "white"
+  },
+
 
   container: {
     width: width,
