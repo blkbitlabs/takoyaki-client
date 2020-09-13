@@ -286,7 +286,7 @@ function ProfilePage({ route, navigation }) {
       
       <FlatList style={styles_profilepage.chapterList}
         data={chapters}
-        renderItem={({item}) => chapterButton(item)}   
+        renderItem={({item}) => <Text style={{color: "white"}}>{item.key}</Text> }   
       />
        
     </View>
