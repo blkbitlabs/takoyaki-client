@@ -220,8 +220,8 @@ function ProfilePage({ route, navigation }) {
     )
   };
   return (
-    <View>     
-      <ScrollView style={styles_profilepage.container_2}
+    <View style={styles_profilepage.container_2}>     
+      <ScrollView style={styles_profilepage.topScroll}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
