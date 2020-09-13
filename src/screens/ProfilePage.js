@@ -272,7 +272,7 @@ function ProfilePage({ route, navigation }) {
  
       
       <FlatList style={styles_profilepage.chapterList}>
-        data={jason.chapters}
+        data={chapters_data}
         renderItem={({item}) => <Text style={{color: "white"}}>{item.title}</Text>}
         keyExtractor={(item) => item.id}
       </FlatList>
