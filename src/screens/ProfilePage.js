@@ -200,6 +200,19 @@ function ProfilePage({ route, navigation }) {
     );
   }
 
+  const chapters = [
+    {key: 'Devin'},
+          {key: 'Dan'},
+          {key: 'Dominic'},
+          {key: 'Jackson'},
+          {key: 'James'},
+          {key: 'Joel'},
+          {key: 'John'},
+          {key: 'Jillian'},
+          {key: 'Jimmy'},
+          {key: 'Julie'}
+  ];
+
   const chapterButton = ({item}) => {
     return  (
       <TouchableOpacity
@@ -272,9 +285,9 @@ function ProfilePage({ route, navigation }) {
  
       
       <FlatList style={styles_profilepage.chapterList}>
-        data={jason.chapters}
-        renderItem={({item}) => <Text style={{color: "white"}}>{item.title}</Text>}
-        keyExtractor={(item) => item.id}
+        data={chapters}
+        renderItem={({item}) => <Text style={{color: "white"}}>{item.key}</Text>}
+        
       </FlatList>
        
     </View>
