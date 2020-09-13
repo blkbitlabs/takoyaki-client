@@ -8,5 +8,4 @@ export default class models extends Model {
   static associations = {
     columns: {name: "url", type: "string"  }
   };
-  @field('url') url;
 }
