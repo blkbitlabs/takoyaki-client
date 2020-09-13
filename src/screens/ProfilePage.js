@@ -285,7 +285,7 @@ function ProfilePage({ route, navigation }) {
  
       
       <FlatList style={styles_profilepage.chapterList}
-        data={chapters_data}
+        data={chapters}
         renderItem={({item}) => chapterButton(item)}   
       />
        
