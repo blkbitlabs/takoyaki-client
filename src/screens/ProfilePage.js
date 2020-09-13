@@ -272,7 +272,7 @@ function ProfilePage({ route, navigation }) {
  
       
       <FlatList style={styles_profilepage.chapterList}>
-        data={[]}
+        data={jason.chapters}
         renderItem={({item}) => <Text style={{color: "white"}}>{item.title}</Text>}
         keyExtractor={(item) => item.id}
       </FlatList>
@@ -384,14 +384,11 @@ const styles_profilepage = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: undefined,
-    height: undefined, //width * 0.0966183574879227,
   },
   tags: {
     paddingHorizontal: scale(7),
     marginVertical: 6,
     marginRight: scale(9),
-    width: undefined,
     height: 22.6,
     justifyContent: 'center',
     borderRadius: 40,
@@ -467,7 +464,7 @@ const styles_profilepage = StyleSheet.create({
     paddingHorizontal: leftpad - (70 - 66),
     marginTop: 4,
     width: '100%',
-    height: (height / width) * 20,
+    height: 100,
   },
   newbuttons: {
     backgroundColor: 'rgba(255,255,255,0.2)',
