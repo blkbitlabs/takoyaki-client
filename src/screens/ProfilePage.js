@@ -288,37 +288,38 @@ const styles_profilepage = StyleSheet.create({
 
   container: {
     width: width,
+    height: height,
     flex: 1,
     position: 'absolute',
     resizeMode: 'cover',
   },
   container_2: {
-    
+    flex: 1,
   },
   overlayView: {
-    //marginTop: topbarheight + leftpad,
+    marginTop: topbarheight + leftpad,
     width: width,
-    height: 500,
+    height: height,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    //position: 'absolute',
+    position: 'absolute',
     flexDirection: 'column',
   },
   overlayViewInside: {
     flexDirection: 'row',
     width: '100%',
-    height: 10,
+    height: (174) + (leftpad / 2),
   },
   overlayViewInsideImageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 10,
+    height: hasNotch() ? 175 : 180,
     width: 140,
     marginLeft: leftpad - (70 - 66),
   },
   overlayViewInsideTitle: {
     alignSelf: 'flex-end',
-    height: 10,
+    height: 180 - (z - (topbarheight + leftpad)),
     width: width - 140,
     padding: '4.0%',
     paddingRight: '16%',
@@ -327,7 +328,7 @@ const styles_profilepage = StyleSheet.create({
     paddingHorizontal: leftpad - (70 - 66),
     paddingTop: leftpad / 2,
     width: '100%',
-    height: 10,
+    height: undefined,
   },
   subtitle: {
     fontFamily: 'SFProDisplay-Semibold',
@@ -348,14 +349,14 @@ const styles_profilepage = StyleSheet.create({
   },
   coverImage: {
     width: 126 + 6,
-    height: 10,
+    height: 168,
     borderRadius: 12.5,
   },
   coverImagebg: {
     position: 'absolute',
     borderRadius: 15,
     width: 132 + 6,
-    height: 10,
+    height: 174,
   },
   author: {
     fontFamily: 'SFProDisplay-Light',
@@ -370,14 +371,14 @@ const styles_profilepage = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: undefined,
-    height: 10, //width * 0.0966183574879227,
+    height: undefined, //width * 0.0966183574879227,
   },
   tags: {
     paddingHorizontal: scale(7),
     marginVertical: 6,
     marginRight: scale(9),
     width: undefined,
-    height: 10,
+    height: 22.6,
     justifyContent: 'center',
     borderRadius: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
