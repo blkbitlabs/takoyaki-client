@@ -333,19 +333,19 @@ const styles_profilepage = StyleSheet.create({
   },
   subtitle: {
     fontFamily: 'SFProDisplay-Semibold',
-    color: 'black',
+    color: 'white',
     fontSize: moderateScale(16),
   },
   description: {
     paddingTop: '2.5%',
     paddingBottom: '5%',
     fontFamily: 'SFProDisplay-Light',
-    color: 'black',
+    color: 'white',
     fontSize: moderateScale(14),
   },
   title: {
     fontFamily: 'SFProDisplay-Bold',
-    color: 'black',
+    color: 'white',
     fontSize: moderateScale(18),
   },
   coverImage: {
@@ -389,11 +389,11 @@ const styles_profilepage = StyleSheet.create({
     paddingHorizontal: scale(5),
     fontFamily: 'SFProDisplay-Semibold',
     fontSize: moderateScale(12, 0.25),
-    color: 'black',
+    color: 'white',
   },
   chapterscontainer: {
     fontFamily: 'SFProDisplay-Semibold',
-    color: 'black',
+    color: 'white',
     fontSize: moderateScale(16),
     marginTop: verticalScale(0),
     marginBottom: 12.4,
