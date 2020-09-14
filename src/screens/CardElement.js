@@ -104,7 +104,7 @@ function CardElement(props) {
           props.nav.navigate('ProfilePage', {
             id: props.id,
             id_name: props.name,
-            id_cover: 'file://' + path,
+            id_cover: props.imgsrc.uri,
             nav_mangaa: props.nav,
           });
         }}>

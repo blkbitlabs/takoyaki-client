@@ -5,6 +5,9 @@ import { field } from "@nozbe/watermelondb/decorators";
 export default class FavoritesModel extends Model {
   static table = 'favorites'
 
+  @field('manga_id')
+  manga_id
+
   @field('name')
   name
 

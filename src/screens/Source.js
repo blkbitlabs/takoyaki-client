@@ -58,7 +58,6 @@ function Source(props) {
   }
 
   return (
-    <View style={styles.source_container}>
       <TouchableOpacity
         style={styles.source_background}
         onPress={() => {
@@ -66,7 +65,6 @@ function Source(props) {
         }}>
         <Text style={styles.source_text}>{props.name_}</Text>
       </TouchableOpacity>
-    </View>
   );
 }
 

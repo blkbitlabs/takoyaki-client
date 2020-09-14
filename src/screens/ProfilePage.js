@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-native-eva-icons';
-import FastImage from 'react-native-fast-image'
+import FastImage from 'react-native-fast-image';
 import {
   View,
   Text,
@@ -10,20 +10,23 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
-  ScrollView,
+  ScrollView
 } from 'react-native';
-import { BlurView, VibrancyView } from '@react-native-community/blur';
+import { BlurView } from '@react-native-community/blur';
 var RNFS = require('react-native-fs');
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { Q } from '@nozbe/watermelondb';
+import { db } from '../db/database';
+const favorites_db = db.collections.get('favorites');
 const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
-const scale = size => (width / guidelineBaseWidth) * size;
-const verticalScale = size => (height / guidelineBaseHeight) * size;
+const scale = (size) => (width / guidelineBaseWidth) * size;
+const verticalScale = (size) => (height / guidelineBaseHeight) * size;
 const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
-const chaptersheight = numberofchapters => {
+const chaptersheight = (numberofchapters) => {
   if (hasNotch()) {
     return numberofchapters - 5;
   } else {
@@ -43,10 +46,10 @@ const styles_profilepage = StyleSheet.create({
     height: height,
     flex: 1,
     position: 'absolute',
-    resizeMode: 'cover',
+    resizeMode: 'cover'
   },
   container_2: {
-    flex: 1,
+    flex: 1
   },
   overlayView: {
     marginTop: topbarheight + leftpad,
@@ -55,64 +58,64 @@ const styles_profilepage = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     position: 'absolute',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   overlayViewInside: {
     flexDirection: 'row',
     width: '100%',
-    height: (174) + (leftpad / 2),
+    height: 174 + leftpad / 2
   },
   overlayViewInsideImageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: hasNotch() ? 175 : 180,
     width: 140,
-    marginLeft: leftpad - (70 - 66),
+    marginLeft: leftpad - (70 - 66)
   },
   overlayViewInsideTitle: {
     alignSelf: 'flex-end',
     height: 180 - (z - (topbarheight + leftpad)),
     width: width - 140,
     padding: '4.0%',
-    paddingRight: '16%',
+    paddingRight: '16%'
   },
   overlayViewDescription: {
     paddingHorizontal: leftpad - (70 - 66),
     paddingTop: leftpad / 2,
     width: '100%',
-    height: undefined,
+    height: undefined
   },
   subtitle: {
     fontFamily: 'SFProDisplay-Semibold',
     color: 'white',
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16)
   },
   description: {
     paddingTop: '2.5%',
     paddingBottom: '5%',
     fontFamily: 'SFProDisplay-Light',
     color: 'white',
-    fontSize: moderateScale(14),
+    fontSize: moderateScale(14)
   },
   title: {
     fontFamily: 'SFProDisplay-Bold',
     color: 'white',
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(18)
   },
   coverImage: {
     width: 126 + 6,
     height: 168,
-    borderRadius: 12.5,
+    borderRadius: 12.5
   },
   coverImagebg: {
     position: 'absolute',
     borderRadius: 15,
     width: 132 + 6,
-    height: 174,
+    height: 174
   },
   author: {
     fontFamily: 'SFProDisplay-Light',
-    color: '#868686',
+    color: '#868686'
   },
   tagscontainer: {
     paddingTop: 7,
@@ -123,7 +126,7 @@ const styles_profilepage = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: undefined,
-    height: undefined, //width * 0.0966183574879227,
+    height: undefined //width * 0.0966183574879227,
   },
   tags: {
     paddingHorizontal: scale(7),
@@ -133,21 +136,21 @@ const styles_profilepage = StyleSheet.create({
     height: 22.6,
     justifyContent: 'center',
     borderRadius: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.2)'
   },
   tagstext: {
     alignSelf: 'center',
     paddingHorizontal: scale(5),
     fontFamily: 'SFProDisplay-Semibold',
     fontSize: moderateScale(12, 0.25),
-    color: 'white',
+    color: 'white'
   },
   chapterscontainer: {
     fontFamily: 'SFProDisplay-Semibold',
     color: 'white',
     fontSize: moderateScale(16),
     marginTop: verticalScale(0),
-    marginBottom: 12.4,
+    marginBottom: 12.4
   },
   chapterbutton: {
     marginVertical: verticalScale(2),
@@ -155,7 +158,7 @@ const styles_profilepage = StyleSheet.create({
     width: width - scale(40),
     height: hasNotch() ? verticalScale(35) : verticalScale(42),
     borderRadius: 9,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   chapterbutton_: {
     height: '100%',
@@ -163,41 +166,41 @@ const styles_profilepage = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)',
     borderBottomRightRadius: 7,
-    borderTopRightRadius: 7,
+    borderTopRightRadius: 7
   },
   chapterbutton_tag: {
     width: '1.6%',
     height: '100%',
     backgroundColor: '#5F5F5F',
     borderBottomLeftRadius: 7,
-    borderTopLeftRadius: 7,
+    borderTopLeftRadius: 7
   },
   chapterbutton_name: {
     paddingLeft: scale(15),
     paddingRight: scale(15),
     fontFamily: 'SFProDisplay-Light',
     color: 'white',
-    fontSize: moderateScale(15),
+    fontSize: moderateScale(15)
   },
   title_loading: {
     marginBottom: 5,
     width: '70%',
     height: '10%',
     backgroundColor: 'grey',
-    borderRadius: 10,
+    borderRadius: 10
   },
   description_loading: {
     marginVertical: 7,
     height: '2.9%',
     borderRadius: 10,
-    backgroundColor: 'grey',
+    backgroundColor: 'grey'
   },
   author_loading: {
     marginTop: 2,
     width: ' 20%',
     height: '10%',
     borderRadius: 10,
-    backgroundColor: 'grey',
+    backgroundColor: 'grey'
   },
   newbuttons_container: {
     flexDirection: 'row',
@@ -205,13 +208,13 @@ const styles_profilepage = StyleSheet.create({
     paddingHorizontal: leftpad - (70 - 66),
     marginTop: 4,
     width: '100%',
-    height: (height / width) * 20,
+    height: (height / width) * 20
   },
   newbuttons: {
     backgroundColor: 'rgba(255,255,255,0.2)',
     borderRadius: 8,
     width: '47%',
-    height: '100%',
+    height: '100%'
   },
   newbuttonfont: {
     color: 'white',
@@ -219,7 +222,7 @@ const styles_profilepage = StyleSheet.create({
     fontFamily: 'SFProDisplay-Regular',
     alignSelf: 'center',
     paddingTop: scale(9.5),
-    fontSize: moderateScale(17),
+    fontSize: moderateScale(17)
   }
 });
 function ProfilePage({ route, navigation }) {
@@ -233,40 +236,64 @@ function ProfilePage({ route, navigation }) {
     chapters: [],
     chapters_number: 0,
     description: 'NIL',
+    genres: []
   });
-  const xml = `
-  <svg width="32" height="32" viewBox="0 0 32 32">
-    <style>
-      .red {
-        fill: #ff0000;
-      }
-    </style>
-    <rect class="red" x="0" y="0" width="32" height="32" />
-  </svg>
-`;
+  const [starred, set_starred] = useState(false);
   let [didload, setdidload] = useState(false);
+
   useEffect(() => {
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'current_source.db', 'utf8').then(
-      e => {
-        setdidload(false);
-        set_srcc(e);
-        fetch(url + '?id=' + `${id}` + `&src=${e}`)
-          .then(response => response.json())
-          .then(responseJson => {
-            set_jason(responseJson.result);
-            setdidload(true);
-          })
-          .catch(error => console.error(error));
-      },
-    );
-  }, [id, url]);
-  function savethis(){
-    let arr = [id, id_name, (JSON.stringify(id_cover["uri"])).substring(1,((JSON.stringify(id_cover["uri"])).length) - 1)]
-   RNFS.writeFile(
-      RNFS.CachesDirectoryPath + '/' + 'Favdb.txt',
-      `${arr + ','}`,
-      'utf8',
-    );
+    (async () => {
+      await db.action(async () => {
+        const manga = await favorites_db
+          .query(Q.where('manga_id', Q.eq(id)))
+          .fetch();
+        if (manga.length != 0) {
+          set_starred(false);
+        } else {
+          set_starred(true);
+        }
+      });
+    })();
+    RNFS.readFile(
+      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
+      'utf8'
+    ).then((e) => {
+      setdidload(false);
+      set_srcc(e);
+      fetch(url + '?id=' + `${id}` + `&src=${e}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          set_jason(responseJson.result);
+          setdidload(true);
+        })
+        .catch((error) => console.error(error));
+    });
+  }, [id, url, ]);
+
+  function savethis() {
+    (async () => {
+      await db.action(async () => {
+        // try to find post by id
+        const manga = await favorites_db
+          .query(Q.where('manga_id', Q.eq(id)))
+          .fetch();
+        console.log(manga);
+        if (manga.length != 0) {
+          await manga[0].markAsDeleted();
+          set_starred(false);
+          console.log('deleted');
+        } else {
+          // if post was not found, create it
+          const newStar = await favorites_db.create((manga) => {
+            manga.manga_id = id;
+            manga.url = id_cover;
+            manga.name = id_name;
+          });
+          console.log('added');
+          set_starred(true);
+        }
+      });
+    })();
   }
   let author = 'NIL';
   let chapters_data = [];
@@ -297,7 +324,7 @@ function ProfilePage({ route, navigation }) {
           onPress={() => {
             navigation.navigate('MangaReader', {
               id_chap: hmmkthen,
-              id_src: srcc,
+              id_src: srcc
             });
           }}
           style={styles_profilepage.chapterbutton}>
@@ -323,7 +350,7 @@ function ProfilePage({ route, navigation }) {
       <View style={styles_profilepage.overlayViewInsideTitle}>
         <Text
           numberOfLines={4}
-          ellipsizeMode="tail"
+          ellipsizeMode='tail'
           style={styles_profilepage.title}>
           {id_name}
         </Text>
@@ -379,20 +406,21 @@ function ProfilePage({ route, navigation }) {
       </View>
     );
   }
+
   return (
     <View style={styles_profilepage.container_2}>
       <StatusBar
-        barStyle="light-content"
-        backgroundColor="#6a51ae"
+        barStyle='light-content'
+        backgroundColor='#6a51ae'
         opacity={0.8}
       />
-      
+
       <FastImage
-        source={{ uri: id_cover,priority: FastImage.priority.normal}}
+        source={{ uri: id_cover, priority: FastImage.priority.normal }}
         style={styles_profilepage.container}
         resizeMode={FastImage.resizeMode.cover}
       />
-      <BlurView style={styles_profilepage.container} blurType="regular"/>
+      <BlurView style={styles_profilepage.container} blurType='regular' />
       <ScrollView
         horizontal={false}
         showsHorizontalScrollIndicator={false}
@@ -404,12 +432,20 @@ function ProfilePage({ route, navigation }) {
               (verticalScale(64.7) + z) +
               (hasNotch()
                 ? verticalScale(35) *
-                chaptersheight(how_many_chapers + how_many_chapers_extra + (height / width) * 20)
+                  chaptersheight(
+                    how_many_chapers +
+                      how_many_chapers_extra +
+                      (height / width) * 20
+                  )
                 : verticalScale(42) *
-                chaptersheight(how_many_chapers + how_many_chapers_extra + (height / width) * 20)),
-            marginTop: z,
+                  chaptersheight(
+                    how_many_chapers +
+                      how_many_chapers_extra +
+                      (height / width) * 20
+                  )),
+            marginTop: z
           }}
-          blurType="extraDark"
+          blurType='extraDark'
           blurAmount={10}
         />
         <View style={styles_profilepage.overlayView}>
@@ -417,12 +453,12 @@ function ProfilePage({ route, navigation }) {
             <View style={styles_profilepage.overlayViewInsideImageContainer}>
               <BlurView
                 style={styles_profilepage.coverImagebg}
-                blurType="extraDark"
+                blurType='extraDark'
                 blurAmount={70}
                 blurRadius={200}
               />
               <FastImage
-                source={{ uri: id_cover,priority: FastImage.priority.normal}}
+                source={{ uri: id_cover, priority: FastImage.priority.normal }}
                 style={styles_profilepage.coverImage}
                 resizeMode={FastImage.resizeMode.cover}
                 onLoadEnd={() => setdidload(true)}
@@ -431,13 +467,42 @@ function ProfilePage({ route, navigation }) {
             {Title_Text}
           </View>
           <View style={styles_profilepage.newbuttons_container}>
-            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} onPress={() => savethis(id)} >
-              <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='star-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
-              <Text style={styles_profilepage.newbuttonfont}> Add to Starred </Text></View>
+            <TouchableOpacity
+              style={styles_profilepage.newbuttons}
+              activeOpacity={0.2}
+              onPress={() => savethis(id)}>
+              <View
+                flexDirection='row'
+                style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Icon
+                  name={starred ? 'star' : 'star-outline'}
+                  width={19}
+                  height={19}
+                  fill='white'
+                  style={{ alignSelf: 'center', marginRight: 4, marginTop: 11 }}
+                />
+                <Text style={styles_profilepage.newbuttonfont}>
+                  {' '}
+                  {starred ? 'Starred' : 'Add to Starred'}{' '}
+                </Text>
+              </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles_profilepage.newbuttons} activeOpacity={0.2} blurType="chromeMaterialDark">
-            <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
-              <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
+            <TouchableOpacity
+              style={styles_profilepage.newbuttons}
+              activeOpacity={0.2}
+              blurType='chromeMaterialDark'>
+              <View
+                flexDirection='row'
+                style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Icon
+                  name='cloud-download-outline'
+                  width={19}
+                  height={19}
+                  fill='white'
+                  style={{ alignSelf: 'center', marginRight: 4, marginTop: 11 }}
+                />
+                <Text style={styles_profilepage.newbuttonfont}> Download </Text>
+              </View>
             </TouchableOpacity>
           </View>
           {Not_Title_Text}

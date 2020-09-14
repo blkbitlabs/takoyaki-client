@@ -7,6 +7,7 @@ export const mySchema = appSchema({
     tableSchema({
       name: 'favorites',
       columns: [
+        { name: "manga_id", type: "string"},
         { name: "url", type: "string" },
         { name: "name", type: "string"}
       ]
