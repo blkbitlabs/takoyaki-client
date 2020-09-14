@@ -111,7 +111,7 @@ function CardElement(props) {
         <FastImage
           source={{uri: props.imgsrc.uri,priority: FastImage.priority.normal,}}
           style={styles_CardElement.insideCardImage} 
-          resizeMode={FastImage.resizeMode.contain}
+          resizeMode={FastImage.resizeMode.stretch}
           onLoadEnd = { () => setloading(false) }
         />
       </TouchableOpacity>

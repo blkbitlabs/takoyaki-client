@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
   parent_container: {
     flex: 1,
     paddingTop: 0,
-    backgroundColor: '#141414'
+    backgroundColor: 'black'
   },
 
   body_container: {
     flex: 1,
-    backgroundColor: '#141414',
+    backgroundColor: 'black',
     paddingBottom: bottombarheight
   },
 
