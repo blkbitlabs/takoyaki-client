@@ -230,6 +230,7 @@ function ProfilePage({ route, navigation }) {
   const { id_name } = route.params;
   const { id_cover } = route.params;
   const [srcc, set_srcc] = useState('');
+  const [starred, set_starred] = useState(false);
   let url = 'https://takoyaki.chetasr.co/manga';
   const [jason, set_jason] = useState({
     author: 'chetas',
@@ -238,9 +239,7 @@ function ProfilePage({ route, navigation }) {
     description: 'NIL',
     genres: []
   });
-  const [starred, set_starred] = useState(false);
   let [didload, setdidload] = useState(false);
-
   useEffect(() => {
     (async () => {
       await db.action(async () => {
@@ -248,9 +247,9 @@ function ProfilePage({ route, navigation }) {
           .query(Q.where('manga_id', Q.eq(id)))
           .fetch();
         if (manga.length != 0) {
-          set_starred(false);
+          set_starred(true); 
         } else {
-          set_starred(true);
+          set_starred(false);  
         }
       });
     })();
