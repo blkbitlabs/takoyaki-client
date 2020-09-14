@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
 import ProfilePage from '../screens/ProfilePage';
 import MangaPage from '../screens/MangaPage';
-import Topbar from './Topbar';
+import NewTopBar from '../navigation/NewTopBar';
 
 /* Constants */
 const Stack = createStackNavigator();
@@ -23,8 +23,10 @@ function HomeNavigator() {
       headerMode='float'
       screenOptions={{
         header: () => {
-          return <Topbar />;
-        }
+          return <NewTopBar />;
+        
+        },
+        headerTransparent: true
       }}>
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen

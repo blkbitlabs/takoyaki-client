@@ -274,12 +274,12 @@ function Home({ navigation }) {
   }
 
   return (
-    <View style={styles.parent_container}>
       <ScrollView
         horizontal={false}
         contentInset={{ top: topbarheight + (hasNotch() ? 7 : 9) }}
         contentOffset={{ y: -topbarheight - (hasNotch() ? 7 : 9) }}
         showsVerticalScrollIndicator={false}
+        style={styles.parent_container}
         refreshControl={
           <RefreshControl
             tintColor='#E50914'
@@ -317,7 +317,6 @@ function Home({ navigation }) {
           </View>
         </View>
       </ScrollView>
-    </View>
   );
 }
 

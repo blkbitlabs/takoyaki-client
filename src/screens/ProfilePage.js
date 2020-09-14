@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  Image,
   StatusBar,
   TouchableOpacity,
   ScrollView
@@ -408,12 +407,6 @@ function ProfilePage({ route, navigation }) {
 
   return (
     <View style={styles_profilepage.container_2}>
-      <StatusBar
-        barStyle='light-content'
-        backgroundColor='#6a51ae'
-        opacity={0.8}
-      />
-
       <FastImage
         source={{ uri: id_cover, priority: FastImage.priority.normal }}
         style={styles_profilepage.container}
