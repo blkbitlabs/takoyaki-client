@@ -3,13 +3,18 @@
 /* NPM Imports */
 import React, { useState, useEffect } from 'react';
 import {
-  Dimensions, StyleSheet, Text, TouchableOpacity, View
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView
 } from 'react-native';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { db } from '../db/database';
 
 /* Local Imports */
-import Source from './Source';
 import NewTopBar from '../navigation/NewTopBar';
 
 /* Variables */
@@ -21,16 +26,21 @@ const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
 const scale = (size) => (width / guidelineBaseWidth) * size;
 const verticalScale = (size) => (height / guidelineBaseHeight) * size;
+const moderateScale = (size, factor = 0.5) =>
+  size + (scale(size) - size) * factor;
+const topbarheight = hasNotch()
+  ? getStatusBarHeight() + verticalScale(36.5)
+  : getStatusBarHeight() + verticalScale(48);
 
+const bottombarheight = hasNotch()
+  ? getStatusBarHeight() + verticalScale(29.5)
+  : getStatusBarHeight() + verticalScale(32);
 /* Styles */
 const styles = StyleSheet.create({
   body: {
     flexDirection: 'column',
     flex: 1,
-    paddingTop: hasNotch()
-      ? getStatusBarHeight() + verticalScale(36.5) + 20
-      : getStatusBarHeight() + verticalScale(51) + 20,
-    position: 'absolute',
+    paddingTop: topbarheight + (hasNotch() ? 7 : 9),
     height: height,
     width: width,
     backgroundColor: 'black',
@@ -38,30 +48,31 @@ const styles = StyleSheet.create({
   },
 
   settings_block_title: {
-    fontFamily: 'SFProDisplay-Bold',
-    fontSize: 20,
+    fontFamily: 'SFProDisplay-Heavy',
+    fontSize: moderateScale(22),
+    marginBottom: verticalScale(10),
     color: 'white'
   },
 
   settings_block: {
-    height: undefined,
-    marginBottom: 10,
+    marginBottom: scale(10),
     paddingLeft: scale(19),
-    width: width
+    marginTop: verticalScale(4),
+    marginBottom: verticalScale(4)
   },
 
   setting_container: {
-    marginTop: scale(16),
     alignItems: 'center',
-    width: width - scale(40),
-    height: verticalScale(35),
-    flexDirection: 'row'
+    flexDirection: 'column'
   },
 
   setting_background: {
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center',
+    height: verticalScale(35),
+    width: width - scale(40),
+    marginBottom: verticalScale(10),
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     backgroundColor: '#2B2B2B',
     borderRadius: 10
   },
@@ -70,7 +81,24 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-Regular',
     color: '#007AFF',
     fontSize: 17,
-    paddingLeft: 20
+    paddingLeft: 20,
+    alignSelf: 'flex-start'
+  },
+
+  option_text_dropdown: {
+    fontFamily: 'SFProDisplay-Regular',
+    color: 'white',
+    fontSize: 17,
+    paddingRight: 20,
+    alignSelf: 'flex-end'
+  },
+
+  option_text_white: {
+    fontFamily: 'SFProDisplay-Regular',
+    color: '#B8B8B8',
+    fontSize: 17,
+    paddingLeft: 20,
+    alignSelf: 'flex-start'
   }
 });
 
@@ -114,6 +142,17 @@ export function Settings_page({ navigation }) {
       });
   }, []);
 
+  function store_source_id(x) {
+    /* Store source id in file */
+
+    RNFS.writeFile(
+      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
+      `${x}`,
+      'utf8'
+    );
+    console.log('Stored source ' + x);
+  }
+
   let source_component = new Array(id_array.length);
   let source_components_list;
 
@@ -123,40 +162,78 @@ export function Settings_page({ navigation }) {
         name_: name_array[i],
         id_: id_array[i]
       };
-      source_component[i] = <Source {...source_props} />;
+      source_component[i] = (
+        <View style={styles.setting_background}>
+          <View>
+            <Text style={styles.option_text_white}>Source</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              store_source_id(String(source_props.id_));
+            }}>
+            <Text style={styles.option_text_dropdown}>
+              {source_props.name_}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
     }
-    source_components_list = source_component;
+    source_components_list = (
+      <View style={styles.setting_container}>{source_component}</View>
+    );
   } else {
     source_components_list = (
       <View style={styles.setting_container}>
-        <TouchableOpacity style={styles.setting_background}>
-          <Text style={styles.chapterbutton_name}>..loading</Text>
-        </TouchableOpacity>
+        <View style={styles.setting_background}>
+          <View>
+            <Text style={styles.option_text_white}>Source</Text>
+          </View>
+          <TouchableOpacity>
+            <Text style={styles.option_text_dropdown}>Loading</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 
   return (
     <NewTopBar>
-      <View style={styles.body}>
-        <View style={styles.settings_block}>
-          <Text style={styles.settings_block_title}>Source Settings</Text>
-          {source_components_list}
-        </View>
-        <View style={styles.settings_block}>
-          <Text style={styles.settings_block_title}>Cache Settings</Text>
-          <View style={styles.setting_container}>
-            <View style={styles.setting_background}>
-              <TouchableOpacity
-                onPress={() => {
-                  clear_cache();
-                }}>
-                <Text style={styles.option_text_blue}>Clear Cache</Text>
-              </TouchableOpacity>
+      <ScrollView
+        horizontal={false}
+        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: 'black' }}>
+        <View style={styles.body}>
+          <View style={styles.settings_block}>
+            <Text style={styles.settings_block_title}>Source Settings</Text>
+            {source_components_list}
+          </View>
+          <View style={styles.settings_block}>
+            <Text style={styles.settings_block_title}>Cache Settings</Text>
+            <View style={styles.setting_container}>
+              <View style={styles.setting_background}>
+                <TouchableOpacity
+                  onPress={() => { 
+                    clear_cache();
+                  }}>
+                  <Text style={styles.option_text_blue}>Clear Cache</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.setting_container}>
+              <View style={styles.setting_background}>
+                <TouchableOpacity
+                  onPress={async () => {
+                    await db.action(async () => {
+                      db.unsafeResetDatabase();
+                    });
+                  }}>
+                  <Text style={styles.option_text_blue}>Clear DB</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </NewTopBar>
   );
 }
