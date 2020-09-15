@@ -26,7 +26,7 @@ function HomeNavigator() {
           return <NewTopBar />;
         
         },
-        headerTransparent: true
+        headerTransparent: true,
       }}>
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen

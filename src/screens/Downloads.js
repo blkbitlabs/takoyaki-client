@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
-import Topbar from '../navigation/Topbar';
+import NewTopBar from '../navigation/NewTopBar';
 
 function Downloads({navigation}) {
-  return <Topbar />;
+  return <NewTopBar />;
 }
 
 export default Downloads;

@@ -1,6 +1,9 @@
 /* LocalDB Schema - blkbit inc. */
+
+/* NPM Imports */
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
+/* Exports */
 export const mySchema = appSchema({
   version: 2,
   tables: [
