@@ -12,7 +12,6 @@ import {
   ScrollView
 } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
-var RNFS = require('react-native-fs');
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { Q } from '@nozbe/watermelondb';
@@ -252,10 +251,7 @@ function ProfilePage({ route, navigation }) {
         }
       });
     })();
-    RNFS.readFile(
-      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
-      'utf8'
-    ).then((e) => {
+    db.adapter.getLocal("source").then((e) => {
       setdidload(false);
       set_srcc(e);
       fetch(url + '?id=' + `${id}` + `&src=${e}`)

@@ -145,11 +145,7 @@ export function Settings_page({ navigation }) {
   function store_source_id(x) {
     /* Store source id in file */
 
-    RNFS.writeFile(
-      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
-      `${x}`,
-      'utf8'
-    );
+    (async() => {await db.adapter.setLocal('source', String(x))})();
     console.log('Stored source ' + x);
   }
 
@@ -163,7 +159,7 @@ export function Settings_page({ navigation }) {
         id_: id_array[i]
       };
       source_component[i] = (
-        <View style={styles.setting_background}>
+        <View style={styles.setting_background} key={source_props.id_}>
           <View>
             <Text style={styles.option_text_white}>Source</Text>
           </View>

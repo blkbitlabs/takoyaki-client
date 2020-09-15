@@ -7,13 +7,13 @@ import {
 } from 'react-native';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { db } from '../db/database';
 
 /* Local Imports */
 import CardElement from '../screens/CardElement';
 import CardLoading from '../screens/CardLoading';
 
 /* Variables */
-var RNFS = require('react-native-fs');
 
 /* Constants */
 const { width, height } = Dimensions.get('window');
@@ -87,10 +87,7 @@ function Home({ navigation }) {
   const [isfetched_new, set_fetched_new] = useState(false);
 
   useEffect(() => {
-    RNFS.readFile(
-      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
-      'utf8'
-    ).then((source) => {
+    db.adapter.getLocal("source").then((source) => {
       fetch(`https://takoyaki.chetasr.co/home?src=${source}`)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -113,10 +110,7 @@ function Home({ navigation }) {
     set_fetched_last_updated(false);
     set_fetched_top(false);
     set_fetched_new(false);
-    RNFS.readFile(
-      RNFS.CachesDirectoryPath + '/' + 'current_source.db',
-      'utf8'
-    ).then((source) => {
+    db.adapter.getLocal("source").then((source) => {
       fetch(`https://takoyaki.chetasr.co/home?src=${source}`)
         .then((response) => response.json())
         .then((responseJson) => {
