@@ -45,6 +45,7 @@ function NewTopBar(props) {
 
   return (
     <View>
+      <StatusBar barStyle={'light-content'} />
       {props.children}
       <VibrancyView
         style={styles.top_bar_container}
