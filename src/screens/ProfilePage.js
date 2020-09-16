@@ -245,13 +245,13 @@ function ProfilePage({ route, navigation }) {
           .query(Q.where('manga_id', Q.eq(id)))
           .fetch();
         if (manga.length != 0) {
-          set_starred(true); 
+          set_starred(true);
         } else {
-          set_starred(false);  
+          set_starred(false);
         }
       });
     })();
-    db.adapter.getLocal("source").then((e) => {
+    db.adapter.getLocal('source').then((e) => {
       setdidload(false);
       set_srcc(e);
       fetch(url + '?id=' + `${id}` + `&src=${e}`)
@@ -262,7 +262,7 @@ function ProfilePage({ route, navigation }) {
         })
         .catch((error) => console.error(error));
     });
-  }, [id, url, ]);
+  }, [id, url]);
 
   function savethis() {
     (async () => {
