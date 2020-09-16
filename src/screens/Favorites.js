@@ -59,18 +59,20 @@ function Favorites({ navigation }) {
 
   const [search_text, set_search_text] = useState('');
 
+  const [search_result, set_result]  = useState("")
+
   function search(text) {
     /* Search DB for manga */
-
     // TODO: Use search results
     (async () => {
       console.log(
-        await favorites_db
+        set_result(await favorites_db
           .query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`)))
-          .fetch()
+          .fetch())
       );
     })();
   }
+  console.log(search_result)
 
   return (
     <NewTopBar>

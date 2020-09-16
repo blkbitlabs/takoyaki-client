@@ -140,7 +140,8 @@ function Home({ navigation }) {
           name: last_updated_data[i].name,
           time: last_updated_data[i].time,
           id: last_updated_data[i].id,
-          nav: navigation
+          nav: navigation,
+          position: i + 1,
         };
         last_updated_component[i] = <CardElement {...props} />;
       } else {
@@ -152,7 +153,8 @@ function Home({ navigation }) {
           time: last_updated_data[i].time,
           id: last_updated_data[i].id,
           marg: leftpad,
-          nav: navigation
+          nav: navigation,
+          position: i + 1
         };
         last_updated_component[i] = <CardElement {...props} />;
       }
@@ -186,7 +188,8 @@ function Home({ navigation }) {
           name: top_data[k].name,
           time: top_data[k].time,
           id: top_data[k].id,
-          nav: navigation
+          nav: navigation,
+          position: k + 1,
         };
         top_component[k] = <CardElement {...props} />;
       } else {
@@ -198,7 +201,8 @@ function Home({ navigation }) {
           time: top_data[k].time,
           id: top_data[k].id,
           marg: leftpad,
-          nav: navigation
+          nav: navigation,
+          position: k + 1,
         };
         top_component[k] = <CardElement {...props} />;
       }
@@ -232,7 +236,8 @@ function Home({ navigation }) {
           name: new_data[p].name,
           time: new_data[p].time,
           id: new_data[p].id,
-          nav: navigation
+          nav: navigation,
+          position: p + 1,
         };
         new_releases_component[p] = <CardElement {...props} />;
       } else {
@@ -244,7 +249,8 @@ function Home({ navigation }) {
           time: new_data[p].time,
           id: new_data[p].id,
           marg: leftpad,
-          nav: navigation
+          nav: navigation,
+          position: p + 1
         };
         new_releases_component[p] = <CardElement {...props} />;
       }

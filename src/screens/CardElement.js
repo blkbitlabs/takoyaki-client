@@ -74,7 +74,13 @@ const styles_CardElement = StyleSheet.create({
 });
 function CardElement(props) {
   const [isloading, setloading] = useState(false);
-  let imageee;
+  let priority_;
+  if(props.position>3){
+    priority_ = FastImage.priority.low
+  }
+  else{
+    priority_ = FastImage.priority.high
+  }
   //TEST WORKS !
   let path = RNFS.CachesDirectoryPath + '/' + String(props.id) + '.jpg';
   useEffect(() => {
@@ -109,7 +115,7 @@ function CardElement(props) {
           });
         }}>
         <FastImage
-          source={{uri: props.imgsrc.uri,priority: FastImage.priority.normal,}}
+          source={{uri: props.imgsrc.uri,priority: priority_,}}
           style={styles_CardElement.insideCardImage} 
           resizeMode={FastImage.resizeMode.stretch}
           onLoadEnd = { () => setloading(false) }

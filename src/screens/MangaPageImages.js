@@ -1,17 +1,20 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+/* Manga Page Image Reader Engine - blkbit inc. */
+
+//NPM IMPORTS
+import React, { useState } from 'react';
 import {
   View,
-  Image,
-  StyleSheet,
-  Dimensions,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
-//import AutoHeightImage from 'react-native-auto-height-image';
-const {width, height} = Dimensions.get('window');
-var RNFS = require('react-native-fs');
+import FastImage from 'react-native-fast-image'
+
+
+//TOP BAR
+
 import {hasNotch} from 'react-native-device-info';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+const {width, height} = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
 const scale = size => (width / guidelineBaseWidth) * size;
@@ -20,64 +23,47 @@ const topbarheight = hasNotch()
   ? getStatusBarHeight() + verticalScale(36.5)
   : getStatusBarHeight() + verticalScale(48);
 
+
+
+//Main Code
 function MangaPageImages(props) {
-  const [isitdoneyet, setisitdoneyet] = useState(true);
-  const path =
-    RNFS.CachesDirectoryPath +
-    '/' +
-    `${props.manga_images_src_id}_${props.manga_images_src_iterator}.jpg`;
 
-  console.log(path);
+  //Variables
+  let mangapages;
+  const [height_, setheight_] = useState(height);
+  const [isfetched, set_isfetched] = useState(false);
+  let aspectratio;
 
-  useEffect(() => {
-    setisitdoneyet(false);
+  //Code to load with priority=
 
-    RNFS.downloadFile({
-      fromUrl: props.manga_images_src,
-      toFile: path,
-    }).promise.then(e => {
-      setisitdoneyet(true);
-    });
-  }, [path, props.manga_images_src]);
 
-  let whattoshow;
-  const [_w, set_w] = useState(width);
-  const [_h, set_h] = useState(height);
-  let ffs;
-  if (isitdoneyet) {
-    Image.getSize('file://' + path, (w, h) => {
-      set_h(h);
-      set_w(w);
-    });
-    if (props.manga_images_src_iterator === 1) {
-      ffs = (_h / _w) * width;
-    } else {
-      ffs = (_h / _w) * width;
-    }
-    whattoshow = (
-      <Image
-        style={{
-          width: width,
-          height: ffs,
-          resizeMode: 'stretch',
-        }}
-        source={{uri: 'file://' + path}}
-      />
-    );
-  } else {
-    whattoshow = (
-      <ActivityIndicator
+  //Renders each page
+  mangapages = (
+    <FastImage
+      style={{
+        width: width,
+        height: height_,
+      }}
+      resizeMode={"stretch"}
+      source={{
+        uri: props.manga_images_src,
+        priority: FastImage.priority.high,
+      }}
+      onLoad={event => setheight_((event.nativeEvent.height / event.nativeEvent.width) * width)}
+    />
+  );
+
+  return <View style={{ width: width, height: aspectratio }}>
+    { !isfetched && (<ActivityIndicator
         size="large"
         style={{
           width: width,
           height: height - topbarheight,
-          alignSelf: 'center',
         }}
         color="red"
       />
-    );
-  }
-  return <View style={{width: width, height: ffs}}>{whattoshow}</View>;
+    )}
+    {mangapages}</View>;
 }
 
 export default MangaPageImages;
