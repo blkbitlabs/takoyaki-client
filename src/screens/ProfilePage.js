@@ -76,10 +76,10 @@ function ProfilePage({ route, navigation }) {
   }
 
   // initialisations 
-  this.state = { viewRef: null };
+  const { viewRef, set_viewRef } = useState(null);
 
   const imageLoaded = () => {
-    this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
+    set_viewRef(findNodeHandle(this.backgroundImage));
   }
   let author = 'NIL';
   let chapters_data = [];
@@ -226,7 +226,7 @@ function ProfilePage({ route, navigation }) {
                   blurType="extraDark"
                   blurAmount={70}
                   blurRadius={200}
-                  viewRef={this.state.viewRef}
+                  viewRef={viewRef}
                 />
                 <Image 
                   style={styles_profilepage.absolute} 
