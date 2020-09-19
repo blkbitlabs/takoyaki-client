@@ -284,12 +284,11 @@ const styles_profilepage = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    flex: 1
   },
 
   // scrollView top
   topScroll: {
-    backgroundColor: "black",
+    backgroundColor: "transparent",
   },
 
   blurview: {
