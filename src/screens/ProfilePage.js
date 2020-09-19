@@ -201,10 +201,12 @@ function ProfilePage({ route, navigation }) {
 
   return (
     <View style={styles_profilepage.container_2}>     
-      <Image
-        source={id_cover}
-        style={styles_profilepage.backgroundImage}
-      />
+      <View style={styles_profilepage.absolute}>
+        <Image
+          source={id_cover}
+          style={styles_profilepage.backgroundImage}
+        />
+      </View>
       <BlurView 
         style={styles_profilepage.absolute}
         blurType="extraDark"
