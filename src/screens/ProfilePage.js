@@ -200,7 +200,7 @@ function ProfilePage({ route, navigation }) {
 
 
   return (
-    <View>     
+    <View style={styles_profilepage.container_2}>     
       <View style={styles_profilepage.absolute}>
         <Image
           source={id_cover}
