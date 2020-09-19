@@ -228,13 +228,14 @@ function ProfilePage({ route, navigation }) {
           <View style={styles_profilepage.overlayView}>
             <View style={styles_profilepage.overlayViewInside}>
               <View style={styles_profilepage.overlayViewInsideImageContainer}>
-                <BlurView
+                <BlurView>
                   style={styles_profilepage.coverImagebg}
                   blurType="extraDark"
                   blurAmount={70}
                   blurRadius={200}
-                />
+                
                 <Image style={styles_profilepage.coverImage} source={id_cover} />
+                </BlurView>
               </View>
               {Title_Text}
             </View>
@@ -258,10 +259,7 @@ function ProfilePage({ route, navigation }) {
           </View>
         
       </ScrollView>
- 
       {Not_Title_Text}
-      
-       
     </View>
   );
 }
