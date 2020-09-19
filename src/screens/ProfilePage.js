@@ -198,26 +198,12 @@ function ProfilePage({ route, navigation }) {
     );
   }
 
-  const chapters = [
-    {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'}
-  ];
-
 
   return (
     <View style={styles_profilepage.container_2}>     
       <Image
         source={id_cover}
         style={styles_profilepage.backgroundImage}
-        blurRadius={27}
       />
       <BlurView 
         style={styles_profilepage.absolute}
@@ -281,6 +267,8 @@ function ProfilePage({ route, navigation }) {
 const styles_profilepage = StyleSheet.create({
 
   backgroundImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
     resizeMode: 'cover'
   },
