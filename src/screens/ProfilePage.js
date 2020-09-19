@@ -241,6 +241,12 @@ function ProfilePage({ route, navigation }) {
                 <View flexDirection="row" style={{justifyContent: "center", alignItems: "center"}}><Icon name='cloud-download-outline' width={19} height={19} fill='white' style={{alignSelf: "center", marginRight: 4, marginTop: 11}}/>
                 <Text style={styles_profilepage.newbuttonfont}> Download </Text></View>
               </TouchableOpacity>
+              <BlurView 
+                style={styles_profilepage.absolute}
+                blurType="extraDark"
+                blurAmount={1}
+                blurRadius={200}
+              />
             </View>
             <View style={styles_profilepage.overlayViewDescription}>
               <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
@@ -248,15 +254,15 @@ function ProfilePage({ route, navigation }) {
               <Text style={styles_profilepage.subtitle}>GENRES</Text>
               <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
               <Text style={styles_profilepage.chapterscontainer}>CHAPTERS</Text>
+              <BlurView 
+                style={styles_profilepage.absolute}
+                blurType="extraDark"
+                blurAmount={1}
+                blurRadius={200}
+              />
             </View>
           </View>
 
-          <BlurView 
-            style={styles_profilepage.absolute}
-            blurType="extraDark"
-            blurAmount={10}
-            blurRadius={200}
-          />
             
       </ScrollView>
  
