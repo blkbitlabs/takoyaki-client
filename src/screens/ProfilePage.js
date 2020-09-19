@@ -281,9 +281,8 @@ function ProfilePage({ route, navigation }) {
 const styles_profilepage = StyleSheet.create({
 
   backgroundImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    flex: 1,
+    resizeMode: 'cover'
   },
 
   // scrollView top
