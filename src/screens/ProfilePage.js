@@ -136,29 +136,27 @@ function ProfilePage({ route, navigation }) {
         <Text style={styles_profilepage.author}>{author}</Text>
       </View>
     );
-    Not_Title_Text = (
-        
-          <FlatList>
-            data={jason.chapters}
-            renderItem={(item) => 
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('MangaReader', {
-                    id_chap: item.id,
-                    id_src: srcc,
-                  });
-                }}
-                style={styles_profilepage.chapterbutton}>
-                <View style={styles_profilepage.chapterbutton_tag} />
-                <View style={styles_profilepage.chapterbutton_}>
-                  <Text style={styles_profilepage.chapterbutton_name}>
-                    {item.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            }
-            keyExtractor={(item) => item.id}
-          </FlatList>     
+    Not_Title_Text = (   
+      <FlatList style={styles_profilepage.chapterList}
+        data={jason.chapters}
+        renderItem={({item}) => 
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('MangaReader', {
+              id_chap: item.id,
+              id_src: srcc,
+            });
+          }}
+          style={styles_profilepage.chapterbutton}>
+          <View style={styles_profilepage.chapterbutton_tag} />
+          <View style={styles_profilepage.chapterbutton_}>
+            <Text style={styles_profilepage.chapterbutton_name}>
+              {item.title}
+            </Text>
+          </View>
+        </TouchableOpacity> 
+        }   
+      />     
     );
   } else {
     Title_Text = (
@@ -213,25 +211,7 @@ function ProfilePage({ route, navigation }) {
           {key: 'Julie'}
   ];
 
-  const chapterButton = ({item}) => {
-    return  (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('MangaReader', {
-            id_chap: item.id,
-            id_src: srcc,
-          });
-        }}
-        style={styles_profilepage.chapterbutton}>
-        <View style={styles_profilepage.chapterbutton_tag} />
-        <View style={styles_profilepage.chapterbutton_}>
-          <Text style={styles_profilepage.chapterbutton_name}>
-            {item.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
-  };
+
   return (
     <View style={styles_profilepage.container_2}>     
       <ScrollView style={styles_profilepage.topScroll}
@@ -279,27 +259,8 @@ function ProfilePage({ route, navigation }) {
         
       </ScrollView>
  
+      {Not_Title_Text}
       
-      <FlatList style={styles_profilepage.chapterList}
-        data={jason.chapters}
-        renderItem={({item}) => 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('MangaReader', {
-              id_chap: item.id,
-              id_src: srcc,
-            });
-          }}
-          style={styles_profilepage.chapterbutton}>
-          <View style={styles_profilepage.chapterbutton_tag} />
-          <View style={styles_profilepage.chapterbutton_}>
-            <Text style={styles_profilepage.chapterbutton_name}>
-              {item.title}
-            </Text>
-          </View>
-        </TouchableOpacity> 
-        }   
-      />
        
     </View>
   );
