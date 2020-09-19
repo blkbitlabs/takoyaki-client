@@ -222,20 +222,19 @@ function ProfilePage({ route, navigation }) {
             <View style={styles_profilepage.overlayViewInside}>
               <View style={styles_profilepage.overlayViewInsideImageContainer}>
               <Image 
-                  style={styles_profilepage.absolute} 
-                  source={id_cover} 
-                  // ref={img => {
-                  //   this.backgroundImage = img;
-                  // }}
-                  // onLoadEnd={imageLoaded.bind(this)}
-                />
-                <BlurView
-                  style={styles_profilepage.absolute}
-                  blurType="extraDark"
-                  blurAmount={70}
-                  blurRadius={200}
-                />
-                
+                style={styles_profilepage.absolute} 
+                source={id_cover} 
+                // ref={img => {
+                //   this.backgroundImage = img;
+                // }}
+                // onLoadEnd={imageLoaded.bind(this)}
+              />
+              <BlurView
+                style={styles_profilepage.absolute}
+                blurType="extraDark"
+                blurAmount={0.}
+                blurRadius={200}
+              />             
               </View>
               {Title_Text}
             </View>
