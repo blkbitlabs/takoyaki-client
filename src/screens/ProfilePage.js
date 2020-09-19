@@ -250,12 +250,18 @@ function ProfilePage({ route, navigation }) {
               <Text style={styles_profilepage.chapterscontainer}>CHAPTERS</Text>
             </View>
           </View>
-        
+
+          <BlurView 
+            style={styles_profilepage.absolute}
+            blurType="extraDark"
+            blurAmount={10}
+            blurRadius={200}
+          />
+            
       </ScrollView>
  
       {Not_Title_Text}
-      
-       
+             
     </View>
   );
 }
