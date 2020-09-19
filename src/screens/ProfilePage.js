@@ -233,13 +233,13 @@ function ProfilePage({ route, navigation }) {
           <View style={styles_profilepage.overlayView}>
             <View style={styles_profilepage.overlayViewInside}>
               <View style={styles_profilepage.overlayViewInsideImageContainer}>
+                <Image style={styles_profilepage.absolute} source={id_cover} />
                 <BlurView
-                  style={styles_profilepage.coverImagebg}
+                  style={styles_profilepage.absolute}
                   blurType="extraDark"
-                  blurAmount={70}
+                  blurAmount={0.5}
                   blurRadius={200}
                 />
-                <Image style={styles_profilepage.coverImage} source={id_cover} />
               </View>
               {Title_Text}
             </View>
@@ -295,6 +295,13 @@ const styles_profilepage = StyleSheet.create({
     color: "black",
   },
 
+  absolute: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
 
   container: {
     width: width,
