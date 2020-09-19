@@ -78,7 +78,7 @@ function ProfilePage({ route, navigation }) {
   // initialisations 
   this.state = { viewRef: null };
 
-  imageLoaded() {
+  const imageLoaded = () => {
     this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
   }
   let author = 'NIL';
@@ -234,7 +234,7 @@ function ProfilePage({ route, navigation }) {
                   ref={img => {
                     this.backgroundImage = img;
                   }}
-                  onLoadEnd={this.imageLoaded.bind(this)}
+                  onLoadEnd={imageLoaded.bind(this)}
                 />
               </View>
               {Title_Text}
