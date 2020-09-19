@@ -247,7 +247,7 @@ function ProfilePage({ route, navigation }) {
               <Text style={styles_profilepage.description}>{description}</Text>
               <Text style={styles_profilepage.subtitle}>GENRES</Text>
               <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
-              <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
+              <Text style={styles_profilepage.chapterscontainer}>CHAPTERS</Text>
             </View>
           </View>
         
@@ -301,7 +301,6 @@ const styles_profilepage = StyleSheet.create({
   overlayView: {
     marginTop: topbarheight + leftpad,
     width: width,
-    height: height,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     //position: 'absolute',
