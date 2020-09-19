@@ -210,7 +210,7 @@ function ProfilePage({ route, navigation }) {
       <Image 
         style={styles_profilepage.backgroundImage}
         source={id_cover}
-        blurRadius="27"
+        blurRadius={27}
       />
       <ScrollView style={styles_profilepage.topScroll}
         horizontal={false}
