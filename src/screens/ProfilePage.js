@@ -295,7 +295,7 @@ const styles_profilepage = StyleSheet.create({
   },
 
   blurSecond: {
-    top: 100,
+    top: 500,
   },
 
   container: {
