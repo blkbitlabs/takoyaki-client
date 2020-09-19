@@ -200,7 +200,7 @@ function ProfilePage({ route, navigation }) {
 
 
   return (
-    <View style={styles_profilepage.container_2}>     
+    <View>     
       <View style={styles_profilepage.absolute}>
         <Image
           source={id_cover}
@@ -228,12 +228,7 @@ function ProfilePage({ route, navigation }) {
             <View style={styles_profilepage.overlayViewInside}>
               <View style={styles_profilepage.overlayViewInsideImageContainer}>
                 <Image style={styles_profilepage.absolute} source={id_cover} />
-                <BlurView
-                  style={styles_profilepage.absolute}
-                  blurType="extraDark"
-                  blurAmount={0.5}
-                  blurRadius={200}
-                />
+                
               </View>
               {Title_Text}
             </View>
