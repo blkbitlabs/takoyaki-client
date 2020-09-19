@@ -275,13 +275,8 @@ const styles_profilepage = StyleSheet.create({
     backgroundColor: "transparent",
   },
 
-  blurview: {
-    flex: 1
-  },
-
   chapterList: {
-    flex: 1,
-    backgroundColor: "green",
+    backgroundColor: "transparent",
     color: "black",
   },
 
