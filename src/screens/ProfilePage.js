@@ -210,7 +210,7 @@ function ProfilePage({ route, navigation }) {
       <BlurView 
         style={styles_profilepage.absolute}
         blurType="extraDark"
-        blurAmount={0.5}
+        blurAmount={10}
         blurRadius={200}
       />
       <ScrollView style={styles_profilepage.topScroll}
