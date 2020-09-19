@@ -74,6 +74,13 @@ function ProfilePage({ route, navigation }) {
       'utf8',
     );
   }
+
+  // initialisations 
+  this.state = { viewRef: null };
+
+  imageLoaded() {
+    this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
+  }
   let author = 'NIL';
   let chapters_data = [];
   let description = 'NIL';
@@ -82,8 +89,7 @@ function ProfilePage({ route, navigation }) {
   let genres = [];
   let chapters_button = new Array(how_many_chapers);
   let genres_button = new Array(genres.length);
-  let Title_Text;
-  let Not_Title_Text;
+  let Title_Text, Not_Title_Text;
   let i, oo;
   if (didload && srcc != '') {
     author = jason.author;
@@ -198,19 +204,6 @@ function ProfilePage({ route, navigation }) {
     );
   }
 
-  const chapters = [
-    {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'}
-  ];
-
 
   return (
     <View style={styles_profilepage.container_2}>     
@@ -228,14 +221,21 @@ function ProfilePage({ route, navigation }) {
           <View style={styles_profilepage.overlayView}>
             <View style={styles_profilepage.overlayViewInside}>
               <View style={styles_profilepage.overlayViewInsideImageContainer}>
-                <BlurView>
-                  style={styles_profilepage.coverImagebg}
+                <BlurView
+                  style={styles_profilepage.absolute}
                   blurType="extraDark"
                   blurAmount={70}
                   blurRadius={200}
-                
-                <Image style={styles_profilepage.coverImage} source={id_cover} />
-                </BlurView>
+                  viewRef={this.state.viewRef}
+                />
+                <Image 
+                  style={styles_profilepage.absolute} 
+                  source={id_cover} 
+                  ref={img => {
+                    this.backgroundImage = img;
+                  }}
+                  onLoadEnd={this.imageLoaded.bind(this)}
+                />
               </View>
               {Title_Text}
             </View>
@@ -281,6 +281,13 @@ const styles_profilepage = StyleSheet.create({
     color: "black",
   },
 
+  absolute: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
 
   container: {
     width: width,
