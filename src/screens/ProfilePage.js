@@ -206,7 +206,11 @@ function ProfilePage({ route, navigation }) {
 
 
   return (
-    <View style={styles_profilepage.container_2}>     
+    <View style={styles_profilepage.container_2}>  
+      <Image 
+        style={styles_profilepage.backgroundImage}
+        source={id_cover}
+      />
       <ScrollView style={styles_profilepage.topScroll}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
@@ -265,6 +269,13 @@ function ProfilePage({ route, navigation }) {
 
 // Styles for profile page
 const styles_profilepage = StyleSheet.create({
+
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    blurRadius: 27,
+    resizeMode: "cover"
+  },
 
   // scrollView top
   topScroll: {
