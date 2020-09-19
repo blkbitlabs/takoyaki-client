@@ -477,3 +477,5 @@ const styles_profilepage = StyleSheet.create({
     fontSize: moderateScale(17),
   }
 });
+
+export default ProfilePage;
