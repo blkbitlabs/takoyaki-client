@@ -219,6 +219,12 @@ function ProfilePage({ route, navigation }) {
         style={styles_profilepage.backgroundImage}
         blurRadius={27}
       />
+      <BlurView 
+        style={styles_profilepage.absolute}
+        blurType="extraDark"
+        blurAmount={0.5}
+        blurRadius={200}
+      />
       <ScrollView style={styles_profilepage.topScroll}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
