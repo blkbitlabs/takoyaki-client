@@ -213,16 +213,18 @@ function ProfilePage({ route, navigation }) {
         blurAmount={10}
         blurRadius={200}
       />
-      <BlurView 
-        style={[styles_profilepage.absolute ,styles_profilepage.blurSecond]}
-        blurType="extraDark"
-        blurAmount={10}
-        blurRadius={200}
-      />
+      
       <ScrollView style={styles_profilepage.topScroll}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
+
+        <BlurView 
+          style={[styles_profilepage.absolute ,styles_profilepage.blurSecond]}
+          blurType="extraDark"
+          blurAmount={10}
+          blurRadius={200}
+        />
         
           <StatusBar
             barStyle="light-content"
