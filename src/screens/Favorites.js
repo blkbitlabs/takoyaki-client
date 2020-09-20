@@ -2,7 +2,7 @@
 
 /* NPM Imports */
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Icon } from 'react-native-eva-icons';
 import { Q } from '@nozbe/watermelondb';
 
