@@ -81,6 +81,7 @@ function BottomNavBar({ state, descriptors, navigation }) {
 
           return (
             <TouchableOpacity
+              key={label.toLowerCase()}
               accessibilityRole='button'
               accessibilityStates={isFocused ? ['selected'] : []}
               accessibilityLabel={options.tabBarAccessibilityLabel}
