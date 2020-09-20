@@ -278,7 +278,7 @@ function ProfilePage({ route, navigation }) {
           console.log('deleted');
         } else {
           // if post was not found, create it
-          const newStar = await favorites_db.create((manga) => {
+          await favorites_db.create((manga) => {
             manga.manga_id = id;
             manga.url = id_cover;
             manga.name = id_name;
