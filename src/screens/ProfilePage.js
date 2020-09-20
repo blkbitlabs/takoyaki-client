@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-native-eva-icons';
 import FastImage from 'react-native-fast-image';
 import {
-  View,
-  Text,
-  StyleSheet,
   Dimensions,
+  ScrollView,
   StatusBar,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  ScrollView
+  View
 } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { hasNotch } from 'react-native-device-info';

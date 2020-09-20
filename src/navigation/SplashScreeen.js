@@ -1,16 +1,24 @@
-/* eslint-disable react-native/no-inline-styles */
+/* Splashscreen - blkbit inc. */
+
+/* NPM Imports */
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import LottieView from 'lottie-react-native';
-import {View, Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('window');
-function SplashScreeen({navigation}) {
+import { View, Dimensions } from 'react-native';
+
+/* Constants */
+const { width, height } = Dimensions.get('window');
+
+/* Main Code */
+function SplashScreeen({ navigation }) {
+  /* Splashscreen Generator */
+
   return (
     <View
       style={{
         flex: 1,
-        flexDirection: 'row', //column ????
-        backgroundColor: 'black',
+        flexDirection: 'row',
+        backgroundColor: 'black'
       }}>
       <View
         style={{
@@ -18,14 +26,14 @@ function SplashScreeen({navigation}) {
           width: '100%',
           backgroundColor: 'black',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center'
         }}>
         <LottieView
           style={{
             height: 400,
-            width: 500,
+            width: 500
           }}
-          resizeMode="cover"
+          resizeMode='cover'
           source={require('./TakoyakiSplash.json')}
           loop={false}
           autoPlay={true}
@@ -36,4 +44,5 @@ function SplashScreeen({navigation}) {
   );
 }
 
+/* Exports */
 export default SplashScreeen;

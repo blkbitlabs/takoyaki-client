@@ -1,14 +1,14 @@
 /* Settings Page - blkbit inc. */
 
 /* NPM Imports */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  ScrollView
+  View
 } from 'react-native';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -145,7 +145,9 @@ export function Settings_page({ navigation }) {
   function store_source_id(x) {
     /* Store source id in file */
 
-    (async() => {await db.adapter.setLocal('source', String(x))})();
+    (async () => {
+      await db.adapter.setLocal('source', String(x));
+    })();
     console.log('Stored source ' + x);
   }
 
@@ -208,7 +210,7 @@ export function Settings_page({ navigation }) {
             <View style={styles.setting_container}>
               <View style={styles.setting_background}>
                 <TouchableOpacity
-                  onPress={() => { 
+                  onPress={() => {
                     clear_cache();
                   }}>
                   <Text style={styles.option_text_blue}>Clear Cache</Text>

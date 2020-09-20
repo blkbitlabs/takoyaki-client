@@ -3,7 +3,12 @@
 /* NPM Imports */
 import React, { useState, useEffect } from 'react';
 import {
-  Dimensions, RefreshControl, ScrollView, StyleSheet, Text, View
+  Dimensions,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
 } from 'react-native';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -87,7 +92,7 @@ function Home({ navigation }) {
   const [isfetched_new, set_fetched_new] = useState(false);
 
   useEffect(() => {
-    db.adapter.getLocal("source").then((source) => {
+    db.adapter.getLocal('source').then((source) => {
       fetch(`https://takoyaki.chetasr.co/home?src=${source}`)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -110,7 +115,7 @@ function Home({ navigation }) {
     set_fetched_last_updated(false);
     set_fetched_top(false);
     set_fetched_new(false);
-    db.adapter.getLocal("source").then((source) => {
+    db.adapter.getLocal('source').then((source) => {
       fetch(`https://takoyaki.chetasr.co/home?src=${source}`)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -141,7 +146,7 @@ function Home({ navigation }) {
           time: last_updated_data[i].time,
           id: last_updated_data[i].id,
           nav: navigation,
-          position: i + 1,
+          position: i + 1
         };
         last_updated_component[i] = <CardElement {...props} />;
       } else {
@@ -189,7 +194,7 @@ function Home({ navigation }) {
           time: top_data[k].time,
           id: top_data[k].id,
           nav: navigation,
-          position: k + 1,
+          position: k + 1
         };
         top_component[k] = <CardElement {...props} />;
       } else {
@@ -202,7 +207,7 @@ function Home({ navigation }) {
           id: top_data[k].id,
           marg: leftpad,
           nav: navigation,
-          position: k + 1,
+          position: k + 1
         };
         top_component[k] = <CardElement {...props} />;
       }
@@ -237,7 +242,7 @@ function Home({ navigation }) {
           time: new_data[p].time,
           id: new_data[p].id,
           nav: navigation,
-          position: p + 1,
+          position: p + 1
         };
         new_releases_component[p] = <CardElement {...props} />;
       } else {
@@ -274,49 +279,49 @@ function Home({ navigation }) {
   }
 
   return (
-      <ScrollView
-        horizontal={false}
-        contentInset={{ top: topbarheight + (hasNotch() ? 7 : 9) }}
-        contentOffset={{ y: -topbarheight - (hasNotch() ? 7 : 9) }}
-        showsVerticalScrollIndicator={false}
-        style={styles.parent_container}
-        refreshControl={
-          <RefreshControl
-            tintColor='#E50914'
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }>
-        <View style={styles.body_container}>
-          <View style={styles.section_container}>
-            <Text style={styles.heading_text}>Last Updated</Text>
-            <ScrollView
-              horizontal={true}
-              style={styles.card_row_container}
-              showsHorizontalScrollIndicator={false}>
-              {last_updated_component}
-            </ScrollView>
-          </View>
-          <View style={styles.section_container}>
-            <Text style={styles.heading_text}>Top Titles</Text>
-            <ScrollView
-              horizontal={true}
-              style={styles.card_row_container}
-              showsHorizontalScrollIndicator={false}>
-              {top_component}
-            </ScrollView>
-          </View>
-          <View style={styles.section_container}>
-            <Text style={styles.heading_text}>New Releases</Text>
-            <ScrollView
-              horizontal={true}
-              style={styles.card_row_container}
-              showsHorizontalScrollIndicator={false}>
-              {new_releases_component}
-            </ScrollView>
-          </View>
+    <ScrollView
+      horizontal={false}
+      contentInset={{ top: topbarheight + (hasNotch() ? 7 : 9) }}
+      contentOffset={{ y: -topbarheight - (hasNotch() ? 7 : 9) }}
+      showsVerticalScrollIndicator={false}
+      style={styles.parent_container}
+      refreshControl={
+        <RefreshControl
+          tintColor='#E50914'
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }>
+      <View style={styles.body_container}>
+        <View style={styles.section_container}>
+          <Text style={styles.heading_text}>Last Updated</Text>
+          <ScrollView
+            horizontal={true}
+            style={styles.card_row_container}
+            showsHorizontalScrollIndicator={false}>
+            {last_updated_component}
+          </ScrollView>
         </View>
-      </ScrollView>
+        <View style={styles.section_container}>
+          <Text style={styles.heading_text}>Top Titles</Text>
+          <ScrollView
+            horizontal={true}
+            style={styles.card_row_container}
+            showsHorizontalScrollIndicator={false}>
+            {top_component}
+          </ScrollView>
+        </View>
+        <View style={styles.section_container}>
+          <Text style={styles.heading_text}>New Releases</Text>
+          <ScrollView
+            horizontal={true}
+            style={styles.card_row_container}
+            showsHorizontalScrollIndicator={false}>
+            {new_releases_component}
+          </ScrollView>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 

@@ -12,7 +12,7 @@ import { db } from './src/db/database';
 /* Exports */
 export default function App() {
   useEffect(() => {
-    (async() => await db.adapter.setLocal('source', 'mgdx'))();
+    (async () => await db.adapter.setLocal('source', 'mgdx'))();
     SplashScreen.hide();
   });
   return <SplashScreenNav />;

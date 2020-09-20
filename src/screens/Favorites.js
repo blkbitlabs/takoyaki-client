@@ -4,11 +4,11 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Text } from 'react-native';
 import { Icon } from 'react-native-eva-icons';
-import NewTopBar from '../navigation/NewTopBar';
 import { Q } from '@nozbe/watermelondb';
 
 /* Local Imports */
 import { db } from '../db/database';
+import NewTopBar from '../navigation/NewTopBar';
 
 /* Variables */
 const favorites_db = db.collections.get('favorites');
@@ -59,20 +59,22 @@ function Favorites({ navigation }) {
 
   const [search_text, set_search_text] = useState('');
 
-  const [search_result, set_result]  = useState("")
+  const [search_result, set_result] = useState('');
 
   function search(text) {
     /* Search DB for manga */
     // TODO: Use search results
     (async () => {
       console.log(
-        set_result(await favorites_db
-          .query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`)))
-          .fetch())
+        set_result(
+          await favorites_db
+            .query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`)))
+            .fetch()
+        )
       );
     })();
   }
-  console.log(search_result)
+  console.log(search_result);
 
   return (
     <NewTopBar>

@@ -1,4 +1,4 @@
-/* HomeNavigator - blkbit inc. */
+/* NewTopbar - blkbit inc. */
 
 /* NPM Imports */
 import React from 'react';
