@@ -321,6 +321,7 @@ function ProfilePage({ route, navigation }) {
               id_src: srcc
             });
           }}
+          key={chapters_data[i].id}
           style={styles_profilepage.chapterbutton}>
           <View style={styles_profilepage.chapterbutton_tag} />
           <View style={styles_profilepage.chapterbutton_}>
