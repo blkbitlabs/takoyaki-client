@@ -16,6 +16,7 @@ import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { Q } from '@nozbe/watermelondb';
 import { db } from '../db/database';
+import { xor } from 'lodash';
 const favorites_db = db.collections.get('favorites');
 const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
@@ -238,6 +239,7 @@ function ProfilePage({ route, navigation }) {
     genres: []
   });
   let [didload, setdidload] = useState(false);
+  let [height_dynamic, set_dheight ] = useState(height)
   useEffect(() => {
     (async () => {
       await db.action(async () => {
@@ -353,9 +355,9 @@ function ProfilePage({ route, navigation }) {
       </View>
     );
     Not_Title_Text = (
-      <View style={styles_profilepage.overlayViewDescription}>
+      <View onLayout={(x,y,ew,h) => {set_dheight(x[ "nativeEvent"]["layout"]["height"])}} style={styles_profilepage.overlayViewDescription}>
         <Text style={styles_profilepage.subtitle}>DESCRIPTION</Text>
-        <Text style={styles_profilepage.description}>{description}</Text>
+        <Text  style={styles_profilepage.description}>{description}</Text>
         <Text style={styles_profilepage.subtitle}>GENRES</Text>
         <View style={styles_profilepage.tagscontainer}>{genres_button}</View>
         <Text style={[styles_profilepage.chapterscontainer]}>CHAPTERS</Text>
@@ -415,7 +417,7 @@ function ProfilePage({ route, navigation }) {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <BlurView
-          style={{
+          /*style={{
             height:
               height -
               (verticalScale(64.7) + z) +
@@ -433,7 +435,9 @@ function ProfilePage({ route, navigation }) {
                       (height / width) * 20
                   )),
             marginTop: z
-          }}
+          }}*/
+          style={{height: 
+            (verticalScale(64.7) + z) + height_dynamic, marginTop: z}}
           blurType='extraDark'
           blurAmount={10}
         />
