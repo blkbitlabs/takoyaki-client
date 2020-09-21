@@ -146,6 +146,7 @@ function Home({ navigation }) {
           time: last_updated_data[i].time,
           id: last_updated_data[i].id,
           nav: navigation,
+          marg: 7,
           position: i + 1
         };
         last_updated_component[i] = <CardElement {...props} />;
@@ -169,7 +170,7 @@ function Home({ navigation }) {
       if (h !== 0) {
         const props = {
           loading: !isfetched_last_updated,
-          marg: 0
+          marg: 7
         };
         last_updated_component[h] = <CardLoading {...props} />;
       } else {
@@ -194,6 +195,7 @@ function Home({ navigation }) {
           time: top_data[k].time,
           id: top_data[k].id,
           nav: navigation,
+          marg: 7,
           position: k + 1
         };
         top_component[k] = <CardElement {...props} />;
@@ -217,7 +219,7 @@ function Home({ navigation }) {
       if (c !== 0) {
         const props = {
           loading: !isfetched_top,
-          marg: 0
+          marg: 7,
         };
         top_component[c] = <CardLoading {...props} />;
       } else {
@@ -241,6 +243,7 @@ function Home({ navigation }) {
           name: new_data[p].name,
           time: new_data[p].time,
           id: new_data[p].id,
+          marg: 7,
           nav: navigation,
           position: p + 1
         };
@@ -265,7 +268,7 @@ function Home({ navigation }) {
       if (f !== 0) {
         const props = {
           loading: !isfetched_new,
-          marg: 0
+          marg: 7,
         };
         new_releases_component[f] = <CardLoading {...props} />;
       } else {

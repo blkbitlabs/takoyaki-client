@@ -15,12 +15,13 @@ const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
 
 /* Styles */
-const styles_CardElement = StyleSheet.create({
-  placeholder_container: {
+const styles = StyleSheet.create({
+  card_container: {
     width: scale(125),
     marginHorizontal: scale(8),
     margin: moderateScale(3)
   },
+
 
   placeholder_image_container: {
     borderRadius: 15,
@@ -55,31 +56,24 @@ const styles_CardElement = StyleSheet.create({
 });
 
 /* Main Code */
-function CardLoading(proops) {
+function CardLoading(props) {
   /* CardLoading Generator */
 
-  return (
-    <View
-      style={[
-        styles_CardElement.placeholder_container,
-        { marginLeft: proops.marg }
-      ]}>
-      <TouchableOpacity
-        style={[
-          styles_CardElement.placeholder_image_container,
-          { height: '75%' }
-        ]}>
+  return ( 
+    <View style={[styles.card_container, { marginLeft: props.marg }]}>
+  <View>
+      <TouchableOpacity style={[styles.placeholder_image_container, { height: '75%' }]}>
         <ActivityIndicator
           color='#E50914'
-          style={styles_CardElement.placeholder_image}
-          animating={proops.loading}
+          style={styles.placeholder_image}
+          animating={props.loading}
         />
       </TouchableOpacity>
       <View style={{ height: '25%', width: '100%' }}>
-        <View style={styles_CardElement.placeholder_title} />
-        <View style={styles_CardElement.placeholder_subtitle} />
+        <View style={styles.placeholder_title} />
+        <View style={styles.placeholder_subtitle} />
       </View>
-    </View>
+    </View></View>
   );
 }
 
