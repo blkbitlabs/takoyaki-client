@@ -220,7 +220,7 @@ function ProfilePage({ route, navigation }) {
         showsVerticalScrollIndicator={false}>
 
         <BlurView 
-          style={[styles_profilepage.absolute ,styles_profilepage.blurSecond]}
+          style={[styles_profilepage.absolute ,styles_profilepage.blurSecond]} //can be easily done with onLayout()
           blurType="extraDark"
           blurAmount={10}
           blurRadius={200}
