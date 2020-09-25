@@ -30,32 +30,48 @@ function MainStackNavigator({ navgation }) {
         name='HomeNavigator'
         component={HomeNavigator}
         options={{
+<<<<<<< HEAD
+          tabBarLabel: 'home'
+=======
           tabBarLabel: 'grid-outline',
           tabBarLabelSelected: 'grid'
+>>>>>>> master
         }}
       />
       <Tab.Screen
         name='Favorites'
         component={Favorites}
         options={{
+<<<<<<< HEAD
+          tabBarLabel: 'star'
+=======
           tabBarLabel: 'star-outline',
           tabBarLabelSelected: 'star'
+>>>>>>> master
         }}
       />
       <Tab.Screen
         name='Download'
         component={Download}
         options={{
+<<<<<<< HEAD
+          tabBarLabel: 'download'
+=======
           tabBarLabel: 'cloud-download-outline',
           tabBarLabelSelected: 'cloud-download'
+>>>>>>> master
         }}
       />
       <Tab.Screen
         name='Settings_page'
         component={Settings_page}
         options={{
+<<<<<<< HEAD
+          tabBarLabel: 'settings'
+=======
           tabBarLabel: 'options-2-outline',
           tabBarLabelSelected: 'options-2'
+>>>>>>> master
         }}
       />
     </Tab.Navigator>

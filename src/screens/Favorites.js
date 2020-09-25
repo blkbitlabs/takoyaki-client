@@ -2,12 +2,16 @@
 
 /* NPM Imports */
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Icon } from 'react-native-eva-icons';
+import { Q } from '@nozbe/watermelondb';
+
+/* Local Imports */
+import { db } from '../db/database';
 import NewTopBar from '../navigation/NewTopBar';
 
 /* Variables */
-var RNFS = require('react-native-fs');
+const favorites_db = db.collections.get('favorites');
 
 /* Styles */
 const styles = StyleSheet.create({
@@ -53,17 +57,24 @@ function Favorites({ navigation }) {
     }
   });
 
-  const [db_data, store_db] = useState('');
   const [search_text, set_search_text] = useState('');
 
+  const [search_result, set_result] = useState('');
+
   function search(text) {
-    RNFS.readFile(RNFS.CachesDirectoryPath + '/' + 'favorites.db', 'utf8').then(
-      (e) => {
-        store_db(e);
-      }
-    );
-    console.log(db_data.split(','));
+    /* Search DB for manga */
+    // TODO: Use search results
+    (async () => {
+      console.log(
+        set_result(
+          await favorites_db
+            .query(Q.where('name', Q.like(`%${Q.sanitizeLikeString(text)}%`)))
+            .fetch()
+        )
+      );
+    })();
   }
+  console.log(search_result);
 
   return (
     <NewTopBar>

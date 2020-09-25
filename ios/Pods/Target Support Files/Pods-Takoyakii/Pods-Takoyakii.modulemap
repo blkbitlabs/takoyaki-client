@@ -1,0 +1,6 @@
+module Pods_Takoyakii {
+  umbrella header "Pods-Takoyakii-umbrella.h"
+
+  export *
+  module * { export * }
+}

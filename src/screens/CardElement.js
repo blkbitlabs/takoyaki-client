@@ -1,136 +1,145 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+/* NewTopbar - blkbit inc. */
+
+/* NPM Imports */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
   Dimensions,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
-import {ActivityIndicator} from 'react-native-paper';
-const {width} = Dimensions.get('window');
+import { ActivityIndicator } from 'react-native-paper';
+import FastImage from 'react-native-fast-image';
+
+/* Variables */
 var RNFS = require('react-native-fs');
+
+/* Constants */
+const { width } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
-const scale = size => (width / guidelineBaseWidth) * size;
+const scale = (size) => (width / guidelineBaseWidth) * size;
 const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
 
-const styles_CardElement = StyleSheet.create({ 
-  Card: {
+/* Styles */
+const styles = StyleSheet.create({
+  card_container: {
     width: scale(125),
     marginHorizontal: scale(8),
-    margin: moderateScale(3),
+    margin: moderateScale(3)
   },
-  insideCard: {
+
+  card_image_container: {
     borderRadius: 15,
-    width: scale(125),
+    width: scale(125)
   },
-  insideCardImage: {
+
+  card_image: {
     height: '100%',
     borderRadius: 15,
     width: '100%',
-    resizeMode: 'cover',
+    resizeMode: 'cover'
   },
-  insideText: {
+
+  card_title: {
     marginTop: 6,
     fontFamily: 'SFProDisplay-Medium',
     fontSize: moderateScale(15),
-    color: 'white',
+    color: 'white'
   },
-  insideTextGenre: {
+
+  card_subtitle: {
     fontFamily: 'SFProDisplay-Regular',
     fontSize: moderateScale(12),
-    color: '#D3D3D3',
+    color: '#D3D3D3'
   },
-  insideCard_: {
+
+  placeholder_image_container: {
     borderRadius: 15,
     backgroundColor: '#222831',
-    width: scale(125),
+    width: scale(125)
   },
-  insideCardImage_: {
+
+  placeholder_image: {
     backgroundColor: '#222831',
     height: '100%',
     borderRadius: 15,
-    width: '100%',
+    width: '100%'
   },
-  insideText_: {
+
+  placeholder_title: {
     marginLeft: moderateScale(4),
     marginTop: 12,
     width: '70%',
     borderRadius: 30,
     height: '12.5%',
-    backgroundColor: 'grey',
+    backgroundColor: 'grey'
   },
-  insideTextGenre_: {
+
+  placeholder_subtitle: {
     marginLeft: moderateScale(4),
     marginTop: 4,
     width: '80%',
     borderRadius: 30,
     height: '12.5%',
-    backgroundColor: 'grey',
-  },
+    backgroundColor: 'grey'
+  }
 });
+
+/* Main Code */
 function CardElement(props) {
-  const [isloading, setloading] = useState(false);
-  let imageee;
-  //TEST WORKS !
+  /* CardElement Generator */
+
+  const [is_loading, set_loading] = useState(false);
+  let image_priority;
+  if (props.position > 3) {
+    image_priority = FastImage.priority.low;
+  } else {
+    image_priority = FastImage.priority.high;
+  }
   let path = RNFS.CachesDirectoryPath + '/' + String(props.id) + '.jpg';
   useEffect(() => {
-    setloading(true);
-    RNFS.downloadFile({fromUrl: props.imgsrc.uri, toFile: path}).promise.then(
-      e => {
-        setloading(false);
-      },
-    );
+    set_loading(true);
   }, [path, props.imgsrc.uri]);
-  if (isloading) {
-    imageee = (
-      <View>
-        <TouchableOpacity
-          style={[styles_CardElement.insideCard_, {height: '75%'}]}>
-          <ActivityIndicator
-            color="#E50914"
-            style={styles_CardElement.insideCardImage_}
-            animating={props.loading}
-          />
-        </TouchableOpacity>
-        <View style={{height: '25%', width: '100%'}}>
-          <View style={styles_CardElement.insideText_} /> 
-          <View style={styles_CardElement.insideTextGenre_} />
+  return (
+    <View style={[styles.card_container, { marginLeft: props.marg }]}>
+      {is_loading && (
+        <View>
+          <TouchableOpacity style={[styles.placeholder_image_container, { height: '75%' }]}>
+            <ActivityIndicator
+              color='#E50914'
+              style={styles.placeholder_image}
+              animating={props.loading}
+            />
+          </TouchableOpacity>
+          <View style={{ height: '25%', width: '100%' }}>
+            <View style={styles.placeholder_title} />
+            <View style={styles.placeholder_subtitle} />
+          </View>
         </View>
-      </View>
-    );
-  } else {
-    imageee = (
+      )}
       <TouchableOpacity
-        style={[styles_CardElement.insideCard, {height: '75%'}]}
+        style={[styles.card_image_container, { height: '75%' }]}
         onPress={() => {
           props.nav.navigate('ProfilePage', {
             id: props.id,
             id_name: props.name,
-            id_cover: {uri: 'file://' + path},
-            nav_mangaa: props.nav,
+            id_cover: props.imgsrc.uri,
+            nav_mangaa: props.nav
           });
         }}>
-        <Image
-          source={{uri: 'file://' + path}}
-          style={styles_CardElement.insideCardImage} 
+        <FastImage
+          source={{ uri: props.imgsrc.uri, priority: image_priority }}
+          style={styles.card_image}
+          resizeMode={FastImage.resizeMode.stretch}
+          onLoadEnd={() => set_loading(false)}
         />
       </TouchableOpacity>
-    );
-  }
-
-  return (
-    <View style={[styles_CardElement.Card, {marginLeft: props.marg}]}>
-      {imageee}
-      <Text
-        numberOfLines={2}
-        ellipsizeMode="tail"
-        style={styles_CardElement.insideText}>
+      <Text numberOfLines={2} ellipsizeMode='tail' style={styles.card_title}>
         {props.name}
       </Text>
-      <Text style={styles_CardElement.insideTextGenre}>{props.time}</Text>
+      <Text style={styles.card_subtitle}>{props.time}</Text>
     </View>
   );
 }

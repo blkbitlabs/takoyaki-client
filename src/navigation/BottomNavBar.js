@@ -2,8 +2,8 @@
 
 /* NPM Imports */
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { VibrancyView } from '@react-native-community/blur';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { BlurView } from '@react-native-community/blur';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -38,7 +38,10 @@ function BottomNavBar({ state, descriptors, navigation }) {
 
   return (
     <View>
-      <VibrancyView style={styles.blur_view}></VibrancyView>
+      <BlurView
+        style={styles.blur_view}
+        blurAmount={30}
+        blurRadius={30}></BlurView>
       <View style={styles.blur_view}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
@@ -77,6 +80,7 @@ function BottomNavBar({ state, descriptors, navigation }) {
 
           return (
             <TouchableOpacity
+              key={label.toLowerCase()}
               accessibilityRole='button'
               accessibilityStates={isFocused ? ['selected'] : []}
               accessibilityLabel={options.tabBarAccessibilityLabel}

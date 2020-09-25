@@ -1,4 +1,4 @@
-/* HomeNavigator - blkbit inc. */
+/* NewTopbar - blkbit inc. */
 
 /* NPM Imports */
 import React from 'react';
@@ -45,16 +45,12 @@ function NewTopBar(props) {
 
   return (
     <View>
-      <StatusBar
-        barStyle='light-content'
-        backgroundColor='#black'
-        opacity={0.8}
-      />
+      <StatusBar barStyle={'light-content'} />
       {props.children}
       <VibrancyView
         style={styles.top_bar_container}
         blurType='extraDark'
-        blurAmount={40}
+        blurAmount={30}
         blurRadius={30}
       />
       <Text style={styles.top_bar_text}>TAKOYAKI</Text>

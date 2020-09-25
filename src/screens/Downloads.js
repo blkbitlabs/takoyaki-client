@@ -1,9 +1,17 @@
-import React from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
-import Topbar from '../navigation/Topbar';
+/* NewTopbar - blkbit inc. */
 
-function Downloads({navigation}) {
-  return <Topbar />;
+/* NPM Imports */
+import React from 'react';
+
+/* Local Imports */
+import NewTopBar from '../navigation/NewTopBar';
+
+/* Main Code */
+function Downloads({ navigation }) {
+  /* Downloads page Generator */
+
+  return <NewTopBar />;
 }
 
+/* Exports */
 export default Downloads;
