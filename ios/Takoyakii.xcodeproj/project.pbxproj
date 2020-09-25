@@ -15,10 +15,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		18F7724FF4BFFFBF73A809CC /* libPods-Takoyakii-TakoyakiiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98182F2296607397AB6D031 /* libPods-Takoyakii-TakoyakiiTests.a */; };
 		1ACBB03962A347A2B6038637 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E495B5CC8B464D2694AD3040 /* MaterialCommunityIcons.ttf */; };
-<<<<<<< HEAD
-		1B1F176D250EADCB00FEA56C /* empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F176C250EADCB00FEA56C /* empty.swift */; };
-=======
->>>>>>> master
 		1B7E898E250C236200C60472 /* SFProDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7E8985250C236200C60472 /* SFProDisplay-Medium.otf */; };
 		1B7E898F250C236200C60472 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7E8986250C236200C60472 /* SFProDisplay-Regular.otf */; };
 		1B7E8990250C236200C60472 /* SFProDisplay-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7E8987250C236200C60472 /* SFProDisplay-Black.otf */; };
@@ -83,11 +79,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Takoyakii/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Takoyakii/main.m; sourceTree = "<group>"; };
 		15CB42CCBE42BB342C6198C1 /* Pods-Takoyakii-TakoyakiiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Takoyakii-TakoyakiiTests.release.xcconfig"; path = "Target Support Files/Pods-Takoyakii-TakoyakiiTests/Pods-Takoyakii-TakoyakiiTests.release.xcconfig"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		1B1F176B250EADCA00FEA56C /* Takoyakii-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Takoyakii-Bridging-Header.h"; sourceTree = "<group>"; };
-		1B1F176C250EADCB00FEA56C /* empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = empty.swift; sourceTree = "<group>"; };
-=======
->>>>>>> master
 		1B7E8985250C236200C60472 /* SFProDisplay-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFProDisplay-Medium.otf"; path = "fonts__/SFProDisplay-Medium.otf"; sourceTree = "<group>"; };
 		1B7E8986250C236200C60472 /* SFProDisplay-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFProDisplay-Regular.otf"; path = "fonts__/SFProDisplay-Regular.otf"; sourceTree = "<group>"; };
 		1B7E8987250C236200C60472 /* SFProDisplay-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFProDisplay-Black.otf"; path = "fonts__/SFProDisplay-Black.otf"; sourceTree = "<group>"; };
@@ -265,10 +256,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				1B1F176C250EADCB00FEA56C /* empty.swift */,
-=======
->>>>>>> master
 				13B07FAE1A68108700A75B9A /* Takoyakii */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* TakoyakiiTests */,
@@ -276,10 +263,6 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				24880B55287628BC7E67FAFC /* Pods */,
 				4C7C640CA01F4D7FA5FD7B93 /* Resources */,
-<<<<<<< HEAD
-				1B1F176B250EADCA00FEA56C /* Takoyakii-Bridging-Header.h */,
-=======
->>>>>>> master
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -393,11 +376,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-<<<<<<< HEAD
-						LastSwiftMigration = 1160;
-=======
 						LastSwiftMigration = 1120;
->>>>>>> master
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -742,10 +721,6 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-<<<<<<< HEAD
-				1B1F176D250EADCB00FEA56C /* empty.swift in Sources */,
-=======
->>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,10 +761,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A446B492E80C19ADF0A13F71 /* Pods-Takoyakii-TakoyakiiTests.debug.xcconfig */;
 			buildSettings = {
-<<<<<<< HEAD
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-=======
->>>>>>> master
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -817,10 +788,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 15CB42CCBE42BB342C6198C1 /* Pods-Takoyakii-TakoyakiiTests.release.xcconfig */;
 			buildSettings = {
-<<<<<<< HEAD
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-=======
->>>>>>> master
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = TakoyakiiTests/Info.plist;
@@ -862,10 +829,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Takoyakii;
-<<<<<<< HEAD
-				SWIFT_OBJC_BRIDGING_HEADER = "Takoyakii-Bridging-Header.h";
-=======
->>>>>>> master
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -892,10 +855,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Takoyakii;
-<<<<<<< HEAD
-				SWIFT_OBJC_BRIDGING_HEADER = "Takoyakii-Bridging-Header.h";
-=======
->>>>>>> master
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

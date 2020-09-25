@@ -1,13 +1,8 @@
-/* HomeNavigator - blkbit inc. */
-
-/* NPM Imports */
 import React from 'react';
 import { View, Text, StyleSheet, StatusBar, Dimensions } from 'react-native';
 import { VibrancyView } from '@react-native-community/blur';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-
-/* Constants */
 const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
@@ -15,18 +10,18 @@ const scale = (size) => (width / guidelineBaseWidth) * size;
 const verticalScale = (size) => (height / guidelineBaseHeight) * size;
 const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
-
-/* Styles */
-const styles = StyleSheet.create({
-  top_bar_container: {
+const styles_topbar = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  topBar: {
     paddingLeft: 900,
     height: hasNotch()
       ? getStatusBarHeight() + verticalScale(36.5)
       : getStatusBarHeight() + verticalScale(51),
     position: 'absolute'
   },
-
-  top_bar_text: {
+  topBarText: {
     marginTop: hasNotch()
       ? getStatusBarHeight() - 3.3
       : getStatusBarHeight() + verticalScale(6.8),
@@ -38,29 +33,24 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
-
-/* Main Code */
-function NewTopBar(props) {
-  /* TopBar Generator */
-
+function Topbar(props) {
   return (
     <View>
+      <VibrancyView
+        style={styles_topbar.topBar}
+        blurType='extraDark'
+        blurAmount={40}
+        blurRadius={30}
+      />
       <StatusBar
         barStyle='light-content'
         backgroundColor='#black'
         opacity={0.8}
       />
+      <Text style={styles_topbar.topBarText}>TAKOYAKI</Text>
       {props.children}
-      <VibrancyView
-        style={styles.top_bar_container}
-        blurType='extraDark'
-        blurAmount={40}
-        blurRadius={30}
-      />
-      <Text style={styles.top_bar_text}>TAKOYAKI</Text>
     </View>
   );
 }
 
-/* Exports */
-export default NewTopBar;
+export default Topbar;

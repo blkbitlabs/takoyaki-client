@@ -1,6 +1,0 @@
-module Pods_Takoyakii_TakoyakiiTests {
-  umbrella header "Pods-Takoyakii-TakoyakiiTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
