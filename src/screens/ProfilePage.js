@@ -15,8 +15,8 @@ import { BlurView } from '@react-native-community/blur';
 import { hasNotch } from 'react-native-device-info';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { Q } from '@nozbe/watermelondb';
+import {immutableRelation} from '@nozbe/watermelondb/decorators'
 import { db } from '../db/database';
-import { xor } from 'lodash';
 const favorites_db = db.collections.get('favorites');
 const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
@@ -273,7 +273,6 @@ function ProfilePage({ route, navigation }) {
         const manga = await favorites_db
           .query(Q.where('manga_id', Q.eq(id)))
           .fetch();
-        console.log(manga);
         if (manga.length != 0) {
           await manga[0].markAsDeleted();
           set_starred(false);
@@ -285,6 +284,7 @@ function ProfilePage({ route, navigation }) {
             manga.url = id_cover;
             manga.name = id_name;
           });
+          await db.adapter.setLocal(id_name, id_cover)
           console.log('added');
           set_starred(true);
         }
@@ -417,25 +417,6 @@ function ProfilePage({ route, navigation }) {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <BlurView
-          /*style={{
-            height:
-              height -
-              (verticalScale(64.7) + z) +
-              (hasNotch()
-                ? verticalScale(35) *
-                  chaptersheight(
-                    how_many_chapers +
-                      how_many_chapers_extra +
-                      (height / width) * 20
-                  )
-                : verticalScale(42) *
-                  chaptersheight(
-                    how_many_chapers +
-                      how_many_chapers_extra +
-                      (height / width) * 20
-                  )),
-            marginTop: z
-          }}*/
           style={{height: 
             (verticalScale(64.7) + z) + height_dynamic, marginTop: z}}
           blurType='extraDark'

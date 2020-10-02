@@ -2,7 +2,7 @@
 
 /* NPM Imports */
 import { Model } from '@nozbe/watermelondb';
-import { field } from '@nozbe/watermelondb/decorators';
+import { children, field,relation } from '@nozbe/watermelondb/decorators';
 
 /* Exports */
 export default class FavoritesModel extends Model {
